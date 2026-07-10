@@ -1,0 +1,16 @@
+{
+  "name": "Forja Diária — Mensagem do Dia",
+  "short_name": "Forja Diária",
+  "description": "Mensagem motivacional diária para homens de fé, trabalho e família. Disciplina, honra e fé católica — todo dia às 4h.",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12100d",
+  "theme_color": "#12100d",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

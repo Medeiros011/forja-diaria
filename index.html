@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070605">
+<title>Forja Diária — De pé, soldado</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+  :root{
+    --bg:#070605; --steel:#14110d; --steel2:#1e1a14;
+    --text:#efe6d3; --muted:#9c8e74;
+    --gold:#d3a049; --gold2:#f0c46e;
+    --blood:#a01f1f; --blood2:#c92d2d;
+    --border:#31291d;
+  }
+  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+  }
+
+  /* ====== TELA CHEIA ====== */
+  .hero{
+    position:relative; min-height:100dvh; width:100%;
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .arte{position:absolute; inset:0; z-index:0}
+  .arte svg{width:100%; height:100%; display:block}
+  .veu{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(7,6,5,.82) 0%, rgba(7,6,5,0) 22%),
+      linear-gradient(180deg, rgba(7,6,5,0) 34%, rgba(7,6,5,.66) 66%, rgba(7,6,5,.96) 100%);
+  }
+  .grao{
+    position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.5; mix-blend-mode:overlay;
+    background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size:3px 3px;
+  }
+
+  /* ====== TOPO ====== */
+  .topo{
+    position:relative; z-index:3;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:calc(14px + env(safe-area-inset-top)) 18px 0;
+  }
+  .marca{display:flex; align-items:center; gap:9px}
+  .marca svg{width:30px; height:30px}
+  .marca b{
+    font-size:.82rem; font-weight:900; letter-spacing:.3em; text-transform:uppercase; color:var(--text);
+  }
+  .marca b span{color:var(--gold)}
+  .topo .lado{display:flex; align-items:center; gap:8px}
+  .chip{
+    display:flex; align-items:center; gap:6px;
+    background:rgba(20,17,13,.72); border:1px solid var(--border);
+    border-radius:999px; padding:7px 13px;
+    font-size:.78rem; font-weight:700; color:var(--gold2); letter-spacing:.06em;
+    backdrop-filter:blur(6px);
+  }
+  .iconbtn{
+    width:38px; height:38px; border-radius:999px; cursor:pointer;
+    background:rgba(20,17,13,.72); border:1px solid var(--border); color:var(--muted);
+    font-size:1rem; backdrop-filter:blur(6px);
+  }
+
+  /* ====== CONTEÚDO ====== */
+  .conteudo{
+    position:relative; z-index:3; margin-top:auto;
+    padding:0 22px calc(18px + env(safe-area-inset-bottom));
+    max-width:640px; width:100%; align-self:center;
+    animation:sobe .7s cubic-bezier(.2,.9,.25,1) both;
+  }
+  @keyframes sobe{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:none}}
+
+  .datalinha{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+    color:var(--muted); font-size:.68rem; font-weight:700;
+    letter-spacing:.3em; text-transform:uppercase;
+  }
+  .datalinha i{width:34px; height:2px; background:var(--blood2); flex:none}
+
+  .titulo{
+    font-family:'Arial Black','Arial Bold',Arial,sans-serif;
+    font-weight:900; text-transform:uppercase;
+    font-size:clamp(1.9rem, 9.2vw, 3.1rem); line-height:.98; letter-spacing:.01em;
+    color:#f7edd8; text-shadow:0 4px 26px rgba(0,0,0,.9);
+    margin-bottom:14px;
+  }
+  .titulo em{font-style:normal; color:var(--gold)}
+
+  .mensagem{
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:clamp(1rem, 4.3vw, 1.16rem); line-height:1.55; color:#e7dcc4;
+    text-shadow:0 2px 10px rgba(0,0,0,.9);
+  }
+
+  .verso{
+    margin-top:16px; padding:12px 0 0 14px;
+    border-left:3px solid var(--blood2);
+  }
+  .verso p{
+    font-family:Georgia,serif; font-style:italic;
+    font-size:clamp(.88rem, 3.7vw, 1rem); line-height:1.5; color:var(--gold2);
+    text-shadow:0 2px 8px rgba(0,0,0,.9);
+  }
+  .verso small{
+    display:block; margin-top:6px;
+    font-size:.66rem; font-weight:900; letter-spacing:.28em; text-transform:uppercase; color:var(--gold);
+  }
+
+  /* ====== AÇÕES ====== */
+  .acoes{
+    display:flex; gap:9px; margin-top:22px;
+  }
+  .btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;
+    padding:12px 6px 10px; border-radius:12px; cursor:pointer;
+    background:rgba(20,17,13,.78); border:1px solid var(--border); color:var(--text);
+    font-size:.62rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+    backdrop-filter:blur(6px);
+  }
+  .btn svg{width:20px; height:20px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+  .btn:active{transform:translateY(1px); border-color:var(--gold)}
+  .btn.destaque{background:linear-gradient(160deg,#8f1c1c,#5e1010); border-color:#a83030}
+  .btn.destaque svg{stroke:#f2d9a0}
+  .btn[disabled]{opacity:.45}
+
+  .status{
+    position:relative; z-index:3; align-self:center; max-width:640px; width:calc(100% - 44px);
+    margin:0 auto 14px; padding:11px 14px; border-radius:10px; display:none;
+    background:rgba(20,17,13,.9); border:1px solid var(--border);
+    color:var(--muted); font-size:.8rem; line-height:1.5;
+  }
+  .status.on{display:block}
+  .status.erro{border-color:var(--blood2); color:#dfa091}
+  .spin{
+    display:inline-block; width:13px; height:13px; border-radius:50%;
+    border:2px solid var(--gold); border-top-color:transparent;
+    animation:g .8s linear infinite; vertical-align:-2px; margin-right:8px;
+  }
+  @keyframes g{to{transform:rotate(360deg)}}
+
+  /* ====== MODAL ====== */
+  dialog{
+    background:var(--steel); color:var(--text); border:1px solid var(--border);
+    border-radius:16px; padding:24px; width:min(92vw,470px);
+  }
+  dialog::backdrop{background:rgba(0,0,0,.78)}
+  dialog h2{
+    font-size:.9rem; font-weight:900; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:18px;
+  }
+  .campo{margin-bottom:18px}
+  .campo label{
+    display:block; font-size:.66rem; font-weight:800; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--muted); margin-bottom:7px;
+  }
+  .campo input[type=password]{
+    width:100%; padding:12px; border-radius:9px; border:1px solid var(--border);
+    background:var(--bg); color:var(--text); font-size:.88rem; font-family:monospace;
+  }
+  .campo .dica{font-size:.76rem; color:var(--muted); margin-top:7px; line-height:1.5}
+  .linha-toggle{display:flex; align-items:center; justify-content:space-between; gap:12px}
+  .linha-toggle b{font-size:.86rem}
+  .switch{position:relative; width:46px; height:26px; flex:none}
+  .switch input{opacity:0; width:0; height:0}
+  .switch span{position:absolute; inset:0; border-radius:26px; background:var(--steel2); border:1px solid var(--border); transition:.2s; cursor:pointer}
+  .switch span::after{content:""; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:var(--muted); transition:.2s}
+  .switch input:checked + span{background:var(--blood); border-color:var(--blood2)}
+  .switch input:checked + span::after{background:#f2d9a0; transform:translateX(20px)}
+  .btn-salvar{
+    width:100%; padding:13px; border-radius:10px; border:none; cursor:pointer;
+    background:linear-gradient(160deg,#8f1c1c,#5e1010); color:#f2d9a0;
+    font-weight:900; letter-spacing:.2em; text-transform:uppercase; font-size:.78rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="arte" id="arte"></div>
+  <div class="veu"></div>
+  <div class="grao"></div>
+
+  <div class="topo">
+    <div class="marca">
+      <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#14110d"/><path d="M32 8 L36 26 L54 30 L36 34 L32 56 L28 34 L10 30 L28 26 Z" fill="#d3a049"/><circle cx="32" cy="30" r="4" fill="#a01f1f"/></svg>
+      <b>FORJA <span>DIÁRIA</span></b>
+    </div>
+    <div class="lado">
+      <div class="chip" id="chipStreak" title="Dias consecutivos de pé">🔥 0</div>
+      <button class="iconbtn" id="btnConfig" aria-label="Configurações">⚙</button>
+    </div>
+  </div>
+
+  <div class="conteudo" id="conteudo">
+    <div class="datalinha"><i></i><span id="dataHoje"></span></div>
+    <div class="titulo" id="titulo"></div>
+    <div class="mensagem" id="mensagem"></div>
+    <div class="verso">
+      <p id="versiculo"></p>
+      <small id="referencia"></small>
+    </div>
+    <div class="acoes">
+      <button class="btn destaque" id="btnCompartilhar">
+        <svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
+        Compartilhar
+      </button>
+      <button class="btn" id="btnBaixar">
+        <svg viewBox="0 0 24 24"><path d="M4 17v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/><path d="M8 12l4 4 4-4"/><path d="M12 3v13"/></svg>
+        Baixar
+      </button>
+      <button class="btn" id="btnOutra">
+        <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>
+        Outra
+      </button>
+      <button class="btn" id="btnGerar">
+        <svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.6L20 9.8l-5.8 2.2L12 18l-2.2-6L4 9.8l5.8-2.2z"/></svg>
+        Forjar IA
+      </button>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
+</div>
+
+<dialog id="modalConfig">
+  <h2>⚔ Arsenal</h2>
+  <div class="campo linha-toggle">
+    <b>Toque de alvorada — 4h</b>
+    <label class="switch"><input type="checkbox" id="toggleNotif"><span></span></label>
+  </div>
+  <div class="campo dica" id="notifDica" style="margin-top:-8px"></div>
+  <div class="campo">
+    <label for="inputKey">Chave da API Anthropic (opcional)</label>
+    <input type="password" id="inputKey" placeholder="sk-ant-..." autocomplete="off">
+    <div class="dica">Só é usada pelo botão "Forjar IA", que cria mensagem e arte inéditas sob demanda.
+    O banco de 42 mensagens e 10 artes de batalha funciona 100% offline, sem chave nenhuma.</div>
+  </div>
+  <button class="btn-salvar" id="btnSalvar">Salvar e voltar ao front</button>
+</dialog>
+
+<script>
+"use strict";
+/* ============================== util ============================== */
+const $ = id => document.getElementById(id);
+const K = { key:'forja.apikey', notif:'forja.notif', lastNotif:'forja.lastnotif',
+            msg:d=>'forja.msg.'+d, off:d=>'forja.off.'+d, streak:'forja.streak' };
+const pad = n => String(n).padStart(2,'0');
+function hojeStr(){ const d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function ontemStr(){ const d=new Date(); d.setDate(d.getDate()-1); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function diaN(){ const d=new Date(); return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
+
+const DIAS = ['DOMINGO','SEGUNDA-FEIRA','TERÇA-FEIRA','QUARTA-FEIRA','QUINTA-FEIRA','SEXTA-FEIRA','SÁBADO'];
+const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+
+/* ============================== ARTES DE BATALHA ============================== */
+const ARTES = {
+elmo:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="e0" cx=".5" cy=".38" r=".85"><stop offset="0" stop-color="#2a2115"/><stop offset=".6" stop-color="#120e08"/><stop offset="1" stop-color="#060504"/></radialGradient><linearGradient id="e1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset=".5" stop-color="#c08a34"/><stop offset="1" stop-color="#6e4a16"/></linearGradient><linearGradient id="e2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c92d2d"/><stop offset="1" stop-color="#5e1010"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#e0)"/><path d="M540 120 q-60 -10 -120 40 q120 -20 240 0 q-60 -50 -120 -40z" fill="url(#e2)"/><path d="M330 300 q0 -160 210 -160 q210 0 210 160 l0 90 q0 40 -20 70 l-40 60 l0 260 q0 30 -30 30 l-60 0 l0 -240 q0 -50 -60 -50 q-60 0 -60 50 l0 240 l-60 0 q-30 0 -30 -30 l0 -260 l-40 -60 q-20 -30 -20 -70 z" fill="url(#e1)"/><path d="M420 150 q-120 60 -120 240 l0 60 l40 60 l0 -120 q0 -60 30 -90 z" fill="#8a5c1c" opacity=".55"/><rect x="516" y="330" width="48" height="180" rx="10" fill="#0a0806"/><path d="M360 372 q60 -34 120 -10 l0 44 q-60 -20 -120 6 z" fill="#0a0806"/><path d="M720 372 q-60 -34 -120 -10 l0 44 q60 -20 120 6 z" fill="#0a0806"/><path d="M250 130 q290 -110 580 0 q-40 -80 -120 -96 q-160 -34 -340 0 q-80 16 -120 96z" fill="url(#e2)"/><rect x="0" y="1070" width="1080" height="280" fill="#050403"/><path d="M0 1070 q540 -60 1080 0 l0 30 q-540 -50 -1080 0 z" fill="#1c150c"/></svg>`,
+
+cavaleiro:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="c0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0906"/><stop offset=".5" stop-color="#3a2410"/><stop offset=".78" stop-color="#a86a20"/><stop offset=".92" stop-color="#e8b45c"/></linearGradient><radialGradient id="c1" cx=".5" cy=".78" r=".42"><stop offset="0" stop-color="#ffe2a0"/><stop offset="1" stop-color="#ffe2a0" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#c0)"/><g opacity=".5" stroke="#f0c46e" stroke-width="4"><path d="M540 1050 L240 330"/><path d="M540 1050 L440 250"/><path d="M540 1050 L660 260"/><path d="M540 1050 L830 350"/></g><circle cx="540" cy="1050" r="240" fill="url(#c1)"/><rect x="0" y="1046" width="1080" height="304" fill="#0d0a06"/><path d="M0 1046 q540 -44 1080 0 l0 26 q-540 -38 -1080 0z" fill="#241809"/><g fill="#0a0805"><circle cx="470" cy="700" r="52"/><path d="M430 760 q-70 40 -90 150 l-30 140 l70 0 l40 -120 l60 40 l0 76 l180 0 q20 -70 -40 -100 l-80 -40 q60 -30 60 -100 q0 -60 -60 -80 q-60 -16 -110 34z"/></g><g fill="#0a0805"><rect x="672" y="620" width="26" height="430" rx="8"/><rect x="596" y="700" width="178" height="26" rx="8"/><path d="M672 620 q13 -60 13 -110 q0 50 13 110 z"/><circle cx="685" cy="1058" r="26"/></g></svg>`,
+
+miguel:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="m0" cx=".5" cy=".34" r=".8"><stop offset="0" stop-color="#e8c470"/><stop offset=".34" stop-color="#8a5c1c"/><stop offset=".7" stop-color="#1c1409"/><stop offset="1" stop-color="#070605"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#m0)"/><g opacity=".55" stroke="#f0d08a" stroke-width="3"><path d="M540 460 L140 60"/><path d="M540 460 L940 60"/><path d="M540 460 L60 420"/><path d="M540 460 L1020 420"/><path d="M540 460 L300 20"/><path d="M540 460 L780 20"/></g><g fill="#0c0906"><path d="M520 430 q-160 -60 -300 40 q-90 66 -110 190 q100 -90 210 -100 q-60 60 -70 150 q90 -70 190 -80 z"/><path d="M560 430 q160 -60 300 40 q90 66 110 190 q-100 -90 -210 -100 q60 60 70 150 q-90 -70 -190 -80 z"/><circle cx="540" cy="400" r="46"/><path d="M500 456 q-30 90 -20 210 l-40 240 l66 0 l34 -180 l34 180 l66 0 l-40 -240 q10 -120 -20 -210 q-40 -24 -80 0z"/><rect x="524" y="120" width="30" height="250" rx="10"/><rect x="470" y="176" width="140" height="26" rx="8"/></g><rect x="0" y="1080" width="1080" height="270" fill="#050403"/><path d="M0 1080 q540 -50 1080 0 l0 24 q-540 -44 -1080 0z" fill="#1a1208"/></svg>`,
+
+leao:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="l0" cx=".5" cy=".42" r=".8"><stop offset="0" stop-color="#3a2510"/><stop offset=".55" stop-color="#150f08"/><stop offset="1" stop-color="#060504"/></radialGradient><linearGradient id="l1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#8a5514"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#l0)"/><g fill="url(#l1)"><path d="M540 180 L610 330 L760 250 L730 420 L900 400 L790 540 L950 610 L780 660 L860 810 L700 750 L710 920 L590 800 L540 960 L490 800 L370 920 L380 750 L220 810 L300 660 L130 610 L290 540 L180 400 L350 420 L320 250 L470 330 Z" opacity=".92"/></g><circle cx="540" cy="560" r="210" fill="#c08a34"/><circle cx="540" cy="560" r="210" fill="#000" opacity=".18"/><g fill="#0c0906"><ellipse cx="470" cy="512" rx="26" ry="34"/><ellipse cx="610" cy="512" rx="26" ry="34"/><path d="M540 570 l-40 50 q40 30 80 0 z"/><path d="M540 620 l0 46 q-50 46 -110 24 q50 10 82 -30 M540 666 q50 46 110 24 q-50 10 -82 -30" stroke="#0c0906" stroke-width="16" fill="none"/></g><path d="M410 470 q56 -40 116 -6 M554 464 q56 -34 116 6" stroke="#0c0906" stroke-width="18" fill="none"/><rect x="0" y="1100" width="1080" height="250" fill="#050403"/></svg>`,
+
+golias:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="g0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d0b08"/><stop offset=".55" stop-color="#43290f"/><stop offset=".8" stop-color="#a4691f"/><stop offset=".95" stop-color="#dda94c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#g0)"/><circle cx="760" cy="960" r="120" fill="#ffe0a0" opacity=".9"/><rect x="0" y="1020" width="1080" height="330" fill="#0d0a06"/><path d="M0 1020 q540 -40 1080 0 l0 24 q-540 -34 -1080 0z" fill="#221607"/><g fill="#0a0805"><circle cx="800" cy="420" r="62"/><path d="M740 500 q-60 20 -70 120 l-20 400 l70 0 l30 -300 l50 0 l30 300 l70 0 l-20 -400 q-10 -100 -70 -120 q-35 -14 -70 0z"/><rect x="690" y="330" width="220" height="34" rx="12"/><path d="M900 520 l90 -40 l14 30 l-88 46 z"/><rect x="988" y="430" width="22" height="140" rx="8"/></g><g fill="#0d0a06"><circle cx="300" cy="820" r="30"/><path d="M280 856 q-34 14 -40 80 l-14 84 l36 0 l18 -70 l30 16 l0 54 l36 0 q6 -44 -16 -60 l-30 -22 q26 -20 22 -56 q-4 -32 -42 -26z"/><path d="M310 800 q60 -80 130 -90" stroke="#0d0a06" stroke-width="12" fill="none"/><circle cx="446" cy="706" r="14"/></g></svg>`,
+
+estandarte:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="s0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0806"/><stop offset=".45" stop-color="#33200c"/><stop offset=".7" stop-color="#8a5514"/><stop offset=".85" stop-color="#d3a049"/></linearGradient><linearGradient id="s1" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c92d2d"/><stop offset="1" stop-color="#6e1414"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#s0)"/><circle cx="540" cy="880" r="170" fill="#ffdf9a" opacity=".85"/><path d="M0 1350 L0 1010 L330 720 L560 900 L800 760 L1080 980 L1080 1350 Z" fill="#0d0a06"/><path d="M330 720 L560 900 L800 760 L1080 980 L1080 1030 L800 820 L560 960 L330 780 L0 1064 L0 1010 Z" fill="#241708"/><g fill="#0a0805"><circle cx="430" cy="470" r="34"/><path d="M406 512 q-40 16 -46 90 l-16 110 l40 0 l22 -90 l34 18 l0 72 l42 0 q8 -50 -18 -68 l-34 -26 q30 -22 26 -64 q-6 -38 -50 -42z"/><rect x="512" y="220" width="16" height="430" rx="6"/></g><path d="M528 236 q150 -30 130 40 q-16 56 30 60 q-90 40 -160 10 z" fill="url(#s1)"/><path d="M576 264 l0 56 M548 292 l56 0" stroke="#f2d9a0" stroke-width="12"/></svg>`,
+
+lobo:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="w0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070d"/><stop offset=".6" stop-color="#0c1322"/><stop offset="1" stop-color="#1b2438"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#w0)"/><g fill="#e8e4d8"><circle cx="240" cy="200" r="2.6"/><circle cx="480" cy="120" r="2"/><circle cx="820" cy="180" r="2.4"/><circle cx="940" cy="330" r="1.8"/><circle cx="640" cy="260" r="1.6"/><circle cx="140" cy="420" r="2"/><circle cx="360" cy="330" r="1.5"/><circle cx="760" cy="90" r="1.7"/></g><circle cx="720" cy="380" r="150" fill="#e9e0c8"/><circle cx="720" cy="380" r="150" fill="#c8bfa6" opacity=".4"/><path d="M0 1350 L0 1000 L260 830 L480 960 L720 840 L1080 1010 L1080 1350 Z" fill="#070a12"/><g fill="#060910"><path d="M330 830 q-10 -80 40 -130 q30 -30 34 -80 q4 -46 40 -60 q20 -10 30 -34 l50 -84 q10 40 -4 84 l60 -20 q-10 36 -44 60 q30 4 50 -6 q-6 40 -50 60 q-16 60 -60 84 q-30 90 -96 126 z"/></g><path d="M0 1000 L260 830 L480 960 L720 840 L1080 1010 L1080 1060 L720 894 L480 1014 L260 884 L0 1054 Z" fill="#101a2c"/></svg>`,
+
+punhos:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="p0" cx=".5" cy=".44" r=".8"><stop offset="0" stop-color="#33200c"/><stop offset=".55" stop-color="#140e07"/><stop offset="1" stop-color="#060504"/></radialGradient><linearGradient id="p1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#7a4c14"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#p0)"/><g fill="#ffca6a"><circle cx="380" cy="300" r="6"/><circle cx="700" cy="240" r="5"/><circle cx="560" cy="180" r="4"/><circle cx="300" cy="460" r="3.4"/><circle cx="800" cy="400" r="3.8"/><circle cx="480" cy="120" r="3"/><circle cx="660" cy="360" r="2.6"/></g><g><path d="M420 980 l0 -280 q0 -50 40 -50 l0 -60 q0 -34 34 -34 q30 0 30 34 l0 -20 q0 -34 34 -34 q32 0 32 34 l0 20 q0 -30 32 -30 q32 0 32 34 l0 40 q40 -20 58 10 q14 26 -6 60 l-60 100 l0 176 z" fill="url(#p1)"/><path d="M420 980 l282 0 l0 60 q0 40 -40 40 l-202 0 q-40 0 -40 -40 z" fill="#8a5c1c"/><g stroke="#0c0906" stroke-width="12" fill="none"><path d="M494 620 l0 90 M560 610 l0 100 M624 630 l0 80"/></g><path d="M420 760 l282 0" stroke="#0c0906" stroke-width="10"/></g><rect x="0" y="1120" width="1080" height="230" fill="#050403"/></svg>`,
+
+arqueiro:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="q0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0a07"/><stop offset=".5" stop-color="#4a2c10"/><stop offset=".75" stop-color="#b4732a"/><stop offset=".9" stop-color="#eab456"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#q0)"/><circle cx="330" cy="920" r="140" fill="#ffe2a0" opacity=".88"/><rect x="0" y="1010" width="1080" height="340" fill="#0d0a06"/><path d="M0 1010 q540 -36 1080 0 l0 22 q-540 -30 -1080 0z" fill="#201507"/><g fill="#0a0805"><circle cx="560" cy="560" r="40"/><path d="M540 610 q-50 20 -56 110 l-20 290 l54 0 l30 -240 l40 10 l16 230 l54 0 l-10 -300 q-6 -84 -58 -100 q-25 -10 -50 0z"/><path d="M600 620 l190 -36 l0 24 l-186 36 z"/><path d="M770 430 q70 150 0 310 l-24 -10 q60 -140 0 -290 z"/><path d="M770 434 l-16 292" stroke="#0a0805" stroke-width="6"/><path d="M470 596 l320 -20 l0 16 l-318 22 z"/></g></svg>`,
+
+armadura:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="r0" cx=".5" cy=".4" r=".85"><stop offset="0" stop-color="#232a38"/><stop offset=".55" stop-color="#101318"/><stop offset="1" stop-color="#060708"/></radialGradient><linearGradient id="r1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa6b8"/><stop offset=".5" stop-color="#5a6475"/><stop offset="1" stop-color="#242c38"/></linearGradient><linearGradient id="r2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#a06c1c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#r0)"/><g opacity=".4" stroke="#d3a049" stroke-width="2"><path d="M540 640 L200 300"/><path d="M540 640 L880 300"/><path d="M540 640 L140 700"/><path d="M540 640 L940 700"/></g><path d="M330 360 q100 -50 210 -50 q110 0 210 50 l30 210 q10 90 -40 170 q-60 100 -200 150 q-140 -50 -200 -150 q-50 -80 -40 -170 z" fill="url(#r1)"/><path d="M360 390 q90 -44 180 -44 l0 500 q-110 -46 -160 -130 q-40 -66 -32 -140 z" fill="#fff" opacity=".07"/><g fill="url(#r2)"><rect x="512" y="440" width="56" height="300" rx="12"/><rect x="420" y="520" width="240" height="56" rx="12"/></g><path d="M330 360 q100 -50 210 -50 q110 0 210 50" fill="none" stroke="#d3a049" stroke-width="10"/><rect x="0" y="1110" width="1080" height="240" fill="#050404"/></svg>`
+};
+const CHAVES_ARTES = Object.keys(ARTES);
+
+/* ============================== BANCO DE GUERRA — 42 mensagens ============================== */
+const BANCO = [
+{t:'ACORDE E <em>LUTE</em>', a:'miguel', m:'A primeira batalha do dia acontece antes do sol nascer: ficar na cama ou levantar. Todo o resto depende dessa vitória. O inimigo quer você mole, atrasado, se desculpando. Negue isso a ele. De pé, soldado.', v:'"Revesti-vos da armadura de Deus, para poderdes resistir às ciladas do demônio."', r:'Efésios 6, 11'},
+{t:'SEJA HOMEM. <em>SEJA FORTE.</em>', a:'elmo', m:'A ordem é antiga e não envelheceu. Fraqueza não é falta de músculo — é abandonar o posto quando aperta. Sua família precisa de um homem inteiro hoje. Segure a linha.', v:'"Vigiai, permanecei firmes na fé, sede homens, sede fortes."', r:'1 Coríntios 16, 13'},
+{t:'A VIDA É <em>MILÍCIA</em>', a:'armadura', m:'Você não foi colocado nesta terra para passear. Foi alistado. Cada dia é um turno de guarda: contra a preguiça, contra o vício, contra a covardia. Quem entende isso para de reclamar da batalha e começa a treinar para ela.', v:'"A vida do homem sobre a terra é uma milícia."', r:'Jó 7, 1'},
+{t:'MÃOS ADESTRADAS PARA A <em>GUERRA</em>', a:'punhos', m:'Calo na mão é medalha. Cansaço honesto é troféu. Deus não abençoa a mão fechada de quem não tenta — abençoa a mão ferida de quem luta todos os dias pelos seus.', v:'"Bendito seja o Senhor, meu rochedo, que adestra minhas mãos para o combate."', r:'Salmo 144, 1'},
+{t:'ATRAVESSE O <em>VALE</em>', a:'lobo', m:'Haverá noites escuras: conta que não fecha, doença, medo calado que homem não conta pra ninguém. Atravesse. O vale não é sua casa — é caminho. E você não caminha sozinho.', v:'"Ainda que eu atravesse o vale da sombra da morte, nenhum mal temerei, porque estais comigo."', r:'Salmo 23, 4'},
+{t:'LUTE PELOS <em>SEUS</em>', a:'estandarte', m:'Quando a vontade de desistir vier, olhe a foto na sua carteira. É por eles. Cada hora extra, cada tentação recusada, cada madrugada de pé — tudo é muro ao redor da sua casa.', v:'"Lutai pelos vossos irmãos, vossos filhos, vossas filhas, vossas mulheres e vossas casas!"', r:'Neemias 4, 14'},
+{t:'DAVI NÃO <em>ESPEROU</em>', a:'golias', m:'O gigante desafiava há quarenta dias e um exército inteiro tremia. Um pastor correu na direção dele. Coragem não é tamanho, é direção: é mover-se para frente quando todos recuam — em nome do Senhor.', v:'"Tu vens contra mim com espada e lança; eu vou contra ti em nome do Senhor dos exércitos."', r:'1 Samuel 17, 45'},
+{t:'COMBATA O <em>BOM COMBATE</em>', a:'cavaleiro', m:'No fim, só três coisas importarão: você lutou, você terminou, você guardou a fé. Nenhuma delas exige talento. Todas exigem que você não abandone. Hoje é mais um round — lute-o inteiro.', v:'"Combati o bom combate, terminei a minha corrida, guardei a fé."', r:'2 Timóteo 4, 7'},
+{t:'O LEÃO RUGE. <em>VIGIE.</em>', a:'leao', m:'O inimigo não descansa e não avisa. Ele vem na bebida a mais, no olhar comprido, no atalho desonesto. Sobriedade e vigilância não são frescura de santo — são tática de guerra.', v:'"Sede sóbrios e vigiai. O demônio, vosso adversário, anda ao redor como leão que ruge, buscando a quem devorar."', r:'1 Pedro 5, 8'},
+{t:'CAIU? <em>LEVANTA.</em>', a:'punhos', m:'O justo não é o que nunca cai. É o que levanta pela sétima vez com a mesma cara de quem levantou na primeira. Errou ontem? Confesse, conserte e marche. Autopiedade é luxo de desocupado.', v:'"O justo cai sete vezes, e sete vezes se levanta."', r:'Provérbios 24, 16'},
+{t:'FERRO AFIA <em>FERRO</em>', a:'elmo', m:'Homem fraco se cerca de bajulador. Homem forte se cerca de quem o confronta: o amigo que cobra, o padre que corrige, a esposa que fala a verdade. Procure aço, não algodão.', v:'"O ferro com o ferro se afia; assim o homem afia o semblante do seu amigo."', r:'Provérbios 27, 17'},
+{t:'SUOR É <em>ORAÇÃO</em>', a:'arqueiro', m:'Desde o Éden a regra não mudou: o pão vem pelo suor. Trabalho duro feito com fé não é castigo — é a oração mais sincera que um homem pode oferecer. Transforme seu turno de hoje em ofertório.', v:'"Comerás o teu pão com o suor do teu rosto."', r:'Gênesis 3, 19'},
+{t:'SÊ FIRME E <em>CORAJOSO</em>', a:'estandarte', m:'A ordem que Josué recebeu antes de atravessar o Jordão é a mesma que você recebe antes de atravessar esta semana. Não é sugestão. É comando. O medo pode vir junto — mas quem dita o passo é você.', v:'"Sê firme e corajoso. Não te atemorizes, porque o Senhor teu Deus está contigo em qualquer parte para onde fores."', r:'Josué 1, 9'},
+{t:'PREPARE-SE PARA A <em>PROVA</em>', a:'armadura', m:'Você decidiu servir a Deus, ser fiel, ser íntegro? Então espere resistência. A provação não é sinal de que você errou o caminho — é sinal de que está nele. Ajuste o cinto e continue.', v:'"Filho, se vieres servir a Deus, permanece firme na justiça e no temor, e prepara tua alma para a provação."', r:'Eclesiástico 2, 1'},
+{t:'O REINO É DOS <em>VALENTES</em>', a:'miguel', m:'O céu não se conquista de pantufa. Cristo mesmo disse: é preciso força para arrebatá-lo. Reze como quem trava guerra, trabalhe como quem constrói fortaleza, ame como quem defende o que é seu.', v:'"O Reino dos céus é arrebatado à força, e são os violentos que o conquistam."', r:'Mateus 11, 12'},
+{t:'CASA SOBRE A <em>ROCHA</em>', a:'cavaleiro', m:'A tempestade vem para todos — para o preparado e para o desleixado. A diferença não está no vento; está no alicerce. Construa sua casa na rocha: oração diária, palavra cumprida, presença em casa.', v:'"Caiu a chuva, vieram as enchentes, sopraram os ventos contra aquela casa; ela não caiu, porque estava edificada sobre a rocha."', r:'Mateus 7, 25'},
+{t:'ELE JÁ <em>VENCEU</em>', a:'estandarte', m:'Ninguém te prometeu vida mansa — o próprio Cristo garantiu o contrário: no mundo tereis aflições. Mas a frase não termina aí. Você luta ao lado de um General que já venceu a guerra.', v:'"No mundo tereis aflições. Mas tende coragem: eu venci o mundo!"', r:'João 16, 33'},
+{t:'QUEM SERÁ <em>CONTRA NÓS?</em>', a:'miguel', m:'Faça as contas direito. De um lado: o chefe injusto, a conta atrasada, o cansaço, o mundo inteiro se for o caso. Do outro: Deus. A matemática do homem de fé só tem um resultado.', v:'"Se Deus é por nós, quem será contra nós?"', r:'Romanos 8, 31'},
+{t:'TUDO <em>POSSO</em>', a:'punhos', m:'Não é frase de camiseta — é declaração de guerra escrita por um homem preso, açoitado e naufragado três vezes. Paulo não desistiu. A força dele tinha fonte. A sua também tem.', v:'"Tudo posso naquele que me fortalece."', r:'Filipenses 4, 13'},
+{t:'ASAS DE <em>ÁGUIA</em>', a:'arqueiro', m:'O cansaço de hoje não é o seu fim. Homens que esperam no Senhor têm fôlego que a academia não explica: correm e não desfalecem, apanham e levantam, envelhecem e não azedam.', v:'"Os que esperam no Senhor renovam as suas forças; sobem com asas como águias, correm e não se cansam."', r:'Isaías 40, 31'},
+{t:'RESISTA E ELE <em>FOGE</em>', a:'leao', m:'A tentação parece gigante até encontrar a primeira resistência séria. Diga não uma vez, com vontade, e perceba: o inimigo é valentão de esquina — só avança sobre quem não reage.', v:'"Sede submissos a Deus; resisti ao demônio, e ele fugirá de vós."', r:'Tiago 4, 7'},
+{t:'CINGI-VOS E SEDE <em>VALENTES</em>', a:'elmo', m:'Os Macabeus eram poucos contra um império — e escolheram lutar. Melhor cair de pé pelo que é sagrado do que viver ajoelhado diante do que é vil. Aperte o cinto. Hoje tem combate.', v:'"Cingi-vos e sede valentes, porque é melhor morrermos no combate do que ver a desgraça da nossa nação."', r:'1 Macabeus 3, 58-59'},
+{t:'ELE MARCHA <em>CONTIGO</em>', a:'estandarte', m:'Um exército não abandona os seus. E o Deus dos exércitos não abandona os dele. Você pode marchar cansado, ferido, com medo — mas nunca marchará sozinho. Firmeza no passo.', v:'"Sede fortes e corajosos; não temais, porque o Senhor teu Deus marcha contigo; não te deixará nem te abandonará."', r:'Deuteronômio 31, 6'},
+{t:'NÃO CANSE DO <em>BEM</em>', a:'cavaleiro', m:'Ser honesto num mundo esperto parece burrice — até a colheita chegar. Continue plantando: o exemplo pros filhos, o trabalho benfeito, a esmola escondida. A seu tempo, ceifará.', v:'"Não nos cansemos de fazer o bem, porque a seu tempo ceifaremos, se não desfalecermos."', r:'Gálatas 6, 9'},
+{t:'SEM LUTA, SEM <em>PÃO</em>', a:'punhos', m:'São Paulo não passava a mão na cabeça de vagabundo, e olha que ele era santo. Preguiça é deserção. O mundo deve respeito ao homem que produz — e nada ao que só reclama.', v:'"Quem não quer trabalhar, também não coma."', r:'2 Tessalonicenses 3, 10'},
+{t:'SEM MEDO DA <em>NOITE</em>', a:'lobo', m:'O homem que reza de dia não treme de noite. Insônia de guerreiro é diferente de insônia de covarde: um vigia, o outro se rói. Entregue a Deus o que você não controla e durma como sentinela rendida.', v:'"Não temerás os terrores da noite, nem a seta que voa de dia."', r:'Salmo 91, 5'},
+{t:'GUARDIÃO DA <em>CASA</em>', a:'armadura', m:'Alarme, cerca e fechadura protegem pouco se o dono da casa vive longe de Deus. A primeira muralha do seu lar é a sua vida de oração. Reze com sua família — isso é defesa aérea.', v:'"Se o Senhor não guardar a cidade, em vão vigia a sentinela."', r:'Salmo 127, 1'},
+{t:'DISCIPLINA É <em>LIBERDADE</em>', a:'elmo', m:'O corpo é um cavalo forte: ou você doma, ou ele te leva pro barranco. Paulo, o apóstolo dos gentios, tratava o próprio corpo como recruta. Menos vontade, mais treino.', v:'"Castigo o meu corpo e o reduzo à servidão, para que não aconteça que, tendo pregado aos outros, eu mesmo venha a ser reprovado."', r:'1 Coríntios 9, 27'},
+{t:'O SILÊNCIO DE <em>SÃO JOSÉ</em>', a:'cavaleiro', m:'Nenhuma palavra dele foi registrada — só decisões. Acordou, obedeceu, protegeu, trabalhou. Guardou os dois maiores tesouros da história com um martelo na mão e a boca fechada. Seja desse batalhão.', v:'"José, despertando do sono, fez como o Anjo do Senhor lhe havia mandado."', r:'Mateus 1, 24'},
+{t:'HOMEM DE <em>PALAVRA</em>', a:'armadura', m:'Contrato de verdade não precisa de cartório quando o homem tem honra. Prometeu, cumpra. Não pode cumprir, não prometa. Sua palavra é sua lâmina: se entortar uma vez, nunca mais corta igual.', v:'"Seja o vosso falar: sim, sim; não, não. O que passa disso vem do Maligno."', r:'Mateus 5, 37'},
+{t:'PAI É <em>ESCUDO</em>', a:'estandarte', m:'Prover não é só dinheiro. É estar de pé entre sua família e o mal — a porcaria da internet, as más companhias, o desespero. Escudo apanha primeiro. É pra isso que ele existe.', v:'"Se alguém não tem cuidado dos seus e, especialmente, dos da própria casa, negou a fé e é pior que um infiel."', r:'1 Timóteo 5, 8'},
+{t:'A CARNE É FRACA. <em>VENÇA-A.</em>', a:'punhos', m:'Cristo avisou no Getsêmani, de madrugada, enquanto os fortes dormiam: vigiai e orai. A carne sempre vai pedir o caminho mole. O espírito manda. Quem obedece a quem — eis a única pergunta do dia.', v:'"Vigiai e orai, para que não entreis em tentação; o espírito está pronto, mas a carne é fraca."', r:'Mateus 26, 41'},
+{t:'FORÇA SOB <em>CONTROLE</em>', a:'leao', m:'Manso não é fraco. Manso é o leão que poderia rasgar e escolhe proteger. Grito é ruído de homem sem domínio. O forte de verdade fala baixo, decide firme e ninguém duvida.', v:'"Bem-aventurados os mansos, porque possuirão a terra."', r:'Mateus 5, 4'},
+{t:'TOME SUA <em>CRUZ</em>', a:'cavaleiro', m:'Todo homem carrega peso. A diferença é como. Uns arrastam a cruz xingando; outros a carregam como estandarte. Cristo não pediu para você entender o peso — pediu para segui-lo com ele nos ombros.', v:'"Se alguém quer vir após mim, renuncie a si mesmo, tome a sua cruz e siga-me."', r:'Mateus 16, 24'},
+{t:'DE JOELHOS SÓ DIANTE DE <em>DEUS</em>', a:'miguel', m:'O homem que se ajoelha diante de Deus consegue ficar de pé diante de qualquer coisa: chefe, crise, medo. Quem não se curva ao Criador acaba de quatro diante de qualquer ídolo. Escolha seu Rei.', v:'"O Senhor está comigo, nada temerei. Que me poderá fazer o homem?"', r:'Salmo 118, 6'},
+{t:'O FOGO PROVA O <em>OURO</em>', a:'armadura', m:'A dificuldade que você está atravessando não é abandono — é fundição. O metal reclama do fogo, mas é o fogo que separa o ouro da escória. Aguente a temperatura. Está saindo lâmina disso.', v:'"A vossa fé, provada pelo fogo, é mais preciosa que o ouro perecível."', r:'1 Pedro 1, 7'},
+{t:'AVANCE UM <em>PASSO</em>', a:'arqueiro', m:'Ninguém vence a guerra num dia — vence-se a batalha de hoje, e amanhã a de amanhã. Não olhe o tamanho da campanha. Olhe o próximo passo e dê. Perseverança é só isso, repetido por uma vida.', v:'"Corramos com perseverança a corrida que nos é proposta."', r:'Hebreus 12, 1'},
+{t:'DOMINE-SE <em>PRIMEIRO</em>', a:'elmo', m:'De que adianta conquistar lá fora e apanhar do próprio pavio curto, da própria gula, do próprio celular? O maior território a tomar fica dentro do peito. Comece a invasão hoje.', v:'"Melhor é o homem paciente do que o valente, e o que domina o seu espírito do que o conquistador de cidades."', r:'Provérbios 16, 32'},
+{t:'DEUS COMBATE POR <em>VOCÊ</em>', a:'miguel', m:'Tem batalha que se vence lutando — e tem batalha que se vence confiando. Faça a sua parte inteira: trabalhe, reze, proteja. E o que estiver acima das suas forças, entregue ao Senhor dos exércitos.', v:'"O Senhor combaterá por vós; ficai tranquilos."', r:'Êxodo 14, 14'},
+{t:'HERANÇA DE <em>HONRA</em>', a:'estandarte', m:'Seu bisneto vai carregar o seu sobrenome por aí. O que esse nome vai abrir para ele: portas ou vergonha? A herança que importa se constrói hoje, no escondido: caráter, fé, palavra cumprida.', v:'"O homem de bem deixa herança aos filhos de seus filhos."', r:'Provérbios 13, 22'},
+{t:'SENTINELA DA <em>MADRUGADA</em>', a:'lobo', m:'Quatro da manhã é hora de gente séria: padeiro, soldado, pai de família e santo. Enquanto a cidade dorme, o sentinela ora e afia o machado. A madrugada é sua trincheira — ocupe-a.', v:'"Minha alma espera o Senhor, mais do que a sentinela espera pela aurora."', r:'Salmo 130, 6'},
+{t:'ATÉ O ÚLTIMO <em>ROUND</em>', a:'punhos', m:'Não existe aposentadoria de caráter. A fidelidade que vale coroa é a que dura até o fim — no casamento, na fé, na palavra. Você não precisa ser brilhante. Precisa não largar o cinturão.', v:'"Sê fiel até a morte, e eu te darei a coroa da vida."', r:'Apocalipse 2, 10'},
+];
+
+/* ============================== seleção e streak ============================== */
+function mensagemDoDia(){
+  const off = parseInt(localStorage.getItem(K.off(hojeStr()))||'0',10);
+  const i = ((diaN()+off) % BANCO.length + BANCO.length) % BANCO.length;
+  const b = BANCO[i];
+  return { titulo:b.t, mensagem:b.m, versiculo:b.v, referencia:b.r, svg:ARTES[b.a], origem:'banco' };
+}
+
+function atualizarStreak(){
+  let s;
+  try{ s = JSON.parse(localStorage.getItem(K.streak)) || {c:0,u:''}; }catch(e){ s={c:0,u:''}; }
+  const hoje = hojeStr();
+  if(s.u !== hoje){
+    s.c = (s.u === ontemStr()) ? s.c+1 : 1;
+    s.u = hoje;
+    localStorage.setItem(K.streak, JSON.stringify(s));
+  }
+  $('chipStreak').textContent = '🔥 '+s.c+(s.c===1?' dia':' dias');
+}
+
+/* ============================== render ============================== */
+function sanitizarSvg(svg){
+  if(!svg || !/^\s*<svg[\s>]/i.test(svg)) return null;
+  return svg
+    .replace(/<script[\s\S]*?<\/script\s*>/gi,'')
+    .replace(/\son\w+\s*=\s*"[^"]*"/gi,'')
+    .replace(/\son\w+\s*=\s*'[^']*'/gi,'')
+    .replace(/href\s*=\s*"(?!#)[^"]*"/gi,'')
+    .replace(/<foreignObject[\s\S]*?<\/foreignObject\s*>/gi,'');
+}
+
+function render(msg){
+  const svg = sanitizarSvg(msg.svg) || ARTES.elmo;
+  $('arte').innerHTML = svg;
+  const s = $('arte').querySelector('svg');
+  if(s){ s.setAttribute('preserveAspectRatio','xMidYMid slice'); s.removeAttribute('width'); s.removeAttribute('height'); }
+  $('titulo').innerHTML = msg.titulo;             // títulos do banco usam <em> controlado
+  $('mensagem').textContent = msg.mensagem;
+  $('versiculo').textContent = msg.versiculo;
+  $('referencia').textContent = msg.referencia;
+  const c = $('conteudo'); c.style.animation='none'; void c.offsetWidth; c.style.animation='';
+}
+
+function status(html, erro){
+  const el = $('status');
+  el.innerHTML = html||''; el.className = html ? 'status on'+(erro?' erro':'') : 'status';
+}
+
+/* ============================== IA opcional ============================== */
+const SCHEMA = {
+  type:'object',
+  properties:{
+    titulo:{type:'string',description:'Título curto em CAIXA ALTA, máx 5 palavras, sem HTML'},
+    mensagem:{type:'string',description:'Mensagem de 40 a 60 palavras, tom guerreiro'},
+    versiculo:{type:'string',description:'Citação bíblica entre aspas, tradução católica'},
+    referencia:{type:'string',description:'Referência, ex: Josué 1, 9'},
+    svg:{type:'string',description:'Arte SVG completa começando com <svg'}
+  },
+  required:['titulo','mensagem','versiculo','referencia','svg'],
+  additionalProperties:false
+};
+
+const PROMPT_SISTEMA = `Você escreve mensagens diárias para homens católicos brasileiros — trabalhadores, pais de família, guerreiros do cotidiano. Tom: de guerra e honra, direto, viril, sem clichê de autoajuda, sem linguagem corporativa, sem emoji. Imagens permitidas: batalha espiritual, soldados, cavaleiros, São Miguel Arcanjo, São Jorge, Davi, Macabeus, forja, sentinela, escudo, lâmina. Versículos na tradução católica (Ave Maria), preferindo passagens de combate e coragem.
+
+Você também cria a arte do dia: um SVG dramático estilo pôster de guerra.
+Regras do SVG:
+- comece exatamente com <svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+- silhuetas fortes de guerreiros, elmos, espadas, leões, montanhas, estandartes
+- paleta: pretos e aços, dourado #d3a049 / #f0c46e, vermelho sangue #a01f1f / #c92d2d
+- use gradientes; sem texto; sem imagens externas; sem scripts
+- terço inferior bem escuro (o texto do app fica ali)
+- máximo ~4000 caracteres`;
+
+async function forjarIA(){
+  const key = localStorage.getItem(K.key);
+  if(!key){ status('Para forjar com IA, adicione sua chave da API Anthropic em ⚙. O banco de 42 mensagens continua funcionando sem ela.'); return; }
+  const d = new Date();
+  $('btnGerar').disabled = true;
+  status('<span class="spin"></span>Forjando no fogo…');
+  try{
+    const res = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'content-type':'application/json',
+        'x-api-key':key,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-opus-4-8',
+        max_tokens:8000,
+        system:PROMPT_SISTEMA,
+        output_config:{format:{type:'json_schema',schema:SCHEMA}},
+        messages:[{role:'user',content:'Hoje é '+DIAS[d.getDay()]+', '+d.getDate()+' de '+MESES[d.getMonth()]+'. Forje a mensagem de guerra do dia e a arte correspondente. Inédita e cirúrgica.'}]
+      })
+    });
+    if(!res.ok){
+      const err = await res.json().catch(()=>({}));
+      throw new Error((err.error&&err.error.message)||('Erro HTTP '+res.status));
+    }
+    const dados = await res.json();
+    const texto = (dados.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const msg = JSON.parse(texto);
+    msg.origem='ia';
+    msg.titulo = String(msg.titulo).replace(/</g,'&lt;').toUpperCase();
+    if(!sanitizarSvg(msg.svg)) msg.svg = ARTES.miguel;
+    localStorage.setItem(K.msg(hojeStr()), JSON.stringify(msg));
+    render(msg);
+    status('');
+  }catch(e){
+    status('Falha na forja por IA: <b>'+(e.message||e)+'</b>', true);
+  }finally{
+    $('btnGerar').disabled = false;
+  }
+}
+
+/* ============================== PNG / compartilhar ============================== */
+function mensagemAtual(){
+  const salva = localStorage.getItem(K.msg(hojeStr()));
+  if(salva){ try{ return JSON.parse(salva); }catch(e){} }
+  return mensagemDoDia();
+}
+function textoPlano(html){ const d=document.createElement('div'); d.innerHTML=html; return d.textContent; }
+
+function quebrarLinhas(ctx, texto, maxW){
+  const palavras = texto.split(/\s+/); const linhas=[]; let l='';
+  for(const p of palavras){
+    const t = l ? l+' '+p : p;
+    if(ctx.measureText(t).width > maxW && l){ linhas.push(l); l=p; } else l=t;
+  }
+  if(l) linhas.push(l);
+  return linhas;
+}
+
+async function gerarPng(){
+  const msg = mensagemAtual();
+  const svg = sanitizarSvg(msg.svg) || ARTES.elmo;
+  const url = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
+  const img = new Image();
+  await new Promise((ok,ko)=>{ img.onload=ok; img.onerror=ko; img.src=url; });
+  const W=1080,H=1350,c=document.createElement('canvas'); c.width=W; c.height=H;
+  const ctx=c.getContext('2d');
+  ctx.drawImage(img,0,0,W,H); URL.revokeObjectURL(url);
+
+  const g=ctx.createLinearGradient(0,H*.3,0,H);
+  g.addColorStop(0,'rgba(7,6,5,0)'); g.addColorStop(.5,'rgba(7,6,5,.66)'); g.addColorStop(1,'rgba(7,6,5,.96)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const g2=ctx.createLinearGradient(0,0,0,H*.2);
+  g2.addColorStop(0,'rgba(7,6,5,.8)'); g2.addColorStop(1,'rgba(7,6,5,0)');
+  ctx.fillStyle=g2; ctx.fillRect(0,0,W,H*.2);
+
+  ctx.textBaseline='top';
+  ctx.font='900 26px Arial'; ctx.fillStyle='#9c8e74';
+  ctx.fillText('⚔  F O R J A   D I Á R I A', 70, 64);
+
+  const M=76, maxW=W-M*2;
+  ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=16;
+
+  const tit = textoPlano(msg.titulo).toUpperCase();
+  ctx.font='900 74px "Arial Black",Arial';
+  const titL=quebrarLinhas(ctx,tit,maxW);
+  ctx.font='38px Georgia';
+  const msgL=quebrarLinhas(ctx,msg.mensagem,maxW);
+  ctx.font='italic 34px Georgia';
+  const verL=quebrarLinhas(ctx,msg.versiculo,maxW-24);
+
+  const hTit=titL.length*80, hMsg=msgL.length*54, hVer=verL.length*46;
+  let y = H - 84 - 36 - hVer - 30 - hMsg - 26 - hTit;
+
+  ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M, y-24, 120, 8); ctx.shadowBlur=16;
+
+  ctx.font='900 74px "Arial Black",Arial'; ctx.fillStyle='#f7edd8';
+  for(const l of titL){ ctx.fillText(l,M,y); y+=80; } y+=18;
+  ctx.font='38px Georgia'; ctx.fillStyle='#e7dcc4';
+  for(const l of msgL){ ctx.fillText(l,M,y); y+=54; } y+=14;
+  ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M, y, 6, hVer+40); ctx.shadowBlur=16;
+  ctx.font='italic 34px Georgia'; ctx.fillStyle='#f0c46e';
+  for(const l of verL){ ctx.fillText(l,M+24,y+6); y+=46; } y+=14;
+  ctx.font='900 26px Arial'; ctx.fillStyle='#d3a049';
+  ctx.fillText(msg.referencia.toUpperCase(), M+24, y);
+
+  return new Promise(ok=>c.toBlob(ok,'image/png'));
+}
+
+async function baixar(){
+  try{
+    const blob = await gerarPng();
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='forja-diaria-'+hojeStr()+'.png';
+    a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  }catch(e){ status('Falha ao gerar a imagem: '+e, true); }
+}
+
+async function compartilhar(){
+  const m = mensagemAtual();
+  const texto = textoPlano(m.titulo).toUpperCase()+'\n\n'+m.mensagem+'\n\n'+m.versiculo+'\n— '+m.referencia+'\n\n⚔ Forja Diária';
+  try{
+    const blob = await gerarPng();
+    const file = new File([blob],'forja-diaria.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], text:texto, title:'Forja Diária'}); return;
+    }
+    if(navigator.share){ await navigator.share({text:texto, title:'Forja Diária'}); return; }
+    await navigator.clipboard.writeText(texto);
+    status('Mensagem copiada. Cole onde quiser.');
+  }catch(e){ /* cancelado */ }
+}
+
+/* ============================== notificações 4h ============================== */
+async function configurarNotificacoes(ligar){
+  const dica = $('notifDica');
+  if(!('Notification' in window)){ dica.textContent='Este navegador não suporta notificações.'; return false; }
+  if(!ligar){ localStorage.setItem(K.notif,'0'); dica.textContent=''; return false; }
+  const perm = await Notification.requestPermission();
+  if(perm!=='granted'){ dica.textContent='Permissão negada pelo navegador.'; return false; }
+  localStorage.setItem(K.notif,'1');
+  try{
+    const reg = await navigator.serviceWorker.ready;
+    if('periodicSync' in reg){
+      await reg.periodicSync.register('forja-diaria',{minInterval:12*60*60*1000});
+    }
+  }catch(e){}
+  dica.textContent='Ativado. Instale o app na tela inicial (menu do navegador → "Adicionar à tela inicial") para maior confiabilidade do toque das 4h.';
+  return true;
+}
+
+async function talvezNotificar(){
+  if(localStorage.getItem(K.notif)!=='1') return;
+  const agora=new Date();
+  if(agora.getHours()<4) return;
+  const hoje=hojeStr();
+  if(localStorage.getItem(K.lastNotif)===hoje) return;
+  localStorage.setItem(K.lastNotif,hoje);
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    const m=mensagemAtual();
+    reg.showNotification('⚔ 4H. DE PÉ, SOLDADO.',{
+      body:textoPlano(m.titulo).toUpperCase()+' — '+m.referencia,
+      icon:'icon.svg', badge:'icon.svg', tag:'forja-diaria'
+    });
+  }catch(e){}
+}
+
+function agendarProxima4h(){
+  const agora=new Date(); const alvo=new Date(agora);
+  alvo.setHours(4,0,5,0);
+  if(alvo<=agora) alvo.setDate(alvo.getDate()+1);
+  setTimeout(()=>{ talvezNotificar(); render(mensagemDoDia()); agendarProxima4h(); }, alvo-agora);
+}
+
+/* ============================== init ============================== */
+function init(){
+  const d=new Date();
+  $('dataHoje').textContent = DIAS[d.getDay()]+' · '+pad(d.getDate())+' '+MESES[d.getMonth()]+' '+d.getFullYear();
+
+  atualizarStreak();
+  render(mensagemAtual());
+
+  $('btnOutra').onclick = ()=>{
+    const k=K.off(hojeStr());
+    localStorage.setItem(k, String((parseInt(localStorage.getItem(k)||'0',10)+1)));
+    localStorage.removeItem(K.msg(hojeStr()));   // volta ao banco se estava em msg de IA
+    render(mensagemDoDia()); status('');
+  };
+  $('btnGerar').onclick = forjarIA;
+  $('btnBaixar').onclick = baixar;
+  $('btnCompartilhar').onclick = compartilhar;
+
+  $('btnConfig').onclick = ()=>{
+    $('inputKey').value = localStorage.getItem(K.key)||'';
+    $('toggleNotif').checked = localStorage.getItem(K.notif)==='1';
+    $('modalConfig').showModal();
+  };
+  $('btnSalvar').onclick = async ()=>{
+    const v=$('inputKey').value.trim();
+    if(v) localStorage.setItem(K.key,v); else localStorage.removeItem(K.key);
+    await configurarNotificacoes($('toggleNotif').checked);
+    $('modalConfig').close();
+  };
+  $('toggleNotif').onchange = e=>configurarNotificacoes(e.target.checked);
+
+  if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
+  talvezNotificar();
+  agendarProxima4h();
+}
+init();
+</script>
+</body>
+</html>
