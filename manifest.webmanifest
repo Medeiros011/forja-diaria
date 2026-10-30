@@ -1,16 +1,52 @@
 {
-  "name": "Forja Diária — Mensagem do Dia",
+  "name": "Forja Diária — Ritual da Alvorada",
   "short_name": "Forja Diária",
-  "description": "Mensagem motivacional diária para homens de fé, trabalho e família. Disciplina, honra e fé católica — todo dia às 4h.",
+  "description": "Ritual da alvorada para homens de fé, família e disciplina: de pé, oração, palavra, juramento e missão do dia.",
   "lang": "pt-BR",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#12100d",
-  "theme_color": "#12100d",
+  "background_color": "#070605",
+  "theme_color": "#070605",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "id": "./",
+  "shortcuts": [
+    {
+      "name": "Iniciar a forja",
+      "short_name": "Forjar",
+      "url": "./#forjar",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

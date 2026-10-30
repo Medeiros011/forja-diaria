@@ -7,260 +7,392 @@
 <title>Forja Diária — De pé, soldado</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#070605; --steel:#14110d; --steel2:#1e1a14;
-    --text:#efe6d3; --muted:#9c8e74;
-    --gold:#d3a049; --gold2:#f0c46e;
-    --blood:#a01f1f; --blood2:#c92d2d;
-    --border:#31291d;
-  }
-  *{box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent}
-  html,body{height:100%}
-  body{
-    background:var(--bg); color:var(--text);
-    font-family:Arial,Helvetica,sans-serif;
-    overflow-x:hidden;
-  }
+:root{
+  --bg:#070605; --steel:#14110d; --steel2:#1e1a14; --steel3:#29231a;
+  --text:#efe6d3; --muted:#9c8e74; --faint:#6b604d;
+  --gold:#d3a049; --gold2:#f0c46e; --ember:#ff8a2a;
+  --blood:#a01f1f; --blood2:#c92d2d;
+  --border:#31291d;
+  --title:'Oswald','Arial Narrow','Arial Black',Arial,sans-serif;
+  --serif:Georgia,'Times New Roman',serif;
+  --nav-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;background:var(--bg)}
+body{color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;overflow-x:hidden;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
+button{font-family:inherit;color:inherit;border:none;background:none;cursor:pointer}
+input,textarea{font-family:inherit;color:inherit}
+.page{display:none}
+.page.on{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 
-  /* ====== TELA CHEIA ====== */
-  .hero{
-    position:relative; min-height:100dvh; width:100%;
-    display:flex; flex-direction:column; overflow:hidden;
-  }
-  .arte{position:absolute; inset:0; z-index:0}
-  .arte svg{width:100%; height:100%; display:block}
-  .veu{
-    position:absolute; inset:0; z-index:1; pointer-events:none;
-    background:
-      linear-gradient(180deg, rgba(7,6,5,.82) 0%, rgba(7,6,5,0) 22%),
-      linear-gradient(180deg, rgba(7,6,5,0) 34%, rgba(7,6,5,.66) 66%, rgba(7,6,5,.96) 100%);
-  }
-  .grao{
-    position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.5; mix-blend-mode:overlay;
-    background-image:radial-gradient(rgba(255,255,255,.045) 1px, transparent 1px);
-    background-size:3px 3px;
-  }
+/* ====== HERO ====== */
+.hero{position:relative;min-height:calc(100dvh - var(--nav-h) - env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden}
+.arte{position:absolute;inset:0;z-index:0}
+.arte svg{width:100%;height:100%;display:block}
+.brasas{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}
+.veu{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(7,6,5,.85) 0%,rgba(7,6,5,0) 22%),linear-gradient(180deg,rgba(7,6,5,0) 30%,rgba(7,6,5,.72) 62%,rgba(7,6,5,.97) 100%)}
+.topo{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 18px 0}
+.marca{display:flex;align-items:center;gap:9px}
+.marca svg{width:30px;height:30px}
+.marca b{font-family:var(--title);font-size:.95rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
+.marca b span{color:var(--gold)}
+.chips{display:flex;gap:7px}
+.chip{display:flex;align-items:center;gap:5px;background:rgba(20,17,13,.75);border:1px solid var(--border);border-radius:999px;padding:7px 12px;font-size:.8rem;font-weight:700;color:var(--gold2);backdrop-filter:blur(6px)}
+.chip.esc{color:#a9c4e8}
+.hero-c{position:relative;z-index:3;margin-top:auto;padding:0 22px 26px;max-width:640px;width:100%;align-self:center}
+.patente-l{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase}
+.patente-l i{width:34px;height:2px;background:var(--blood2);flex:none}
+.patente-l b{color:var(--gold2)}
+.manchete{font-family:var(--title);font-weight:700;text-transform:uppercase;font-size:clamp(2.6rem,13vw,4.4rem);line-height:.95;letter-spacing:.005em;color:#f7edd8;text-shadow:0 4px 30px rgba(0,0,0,.9);margin-bottom:12px}
+.manchete em{font-style:normal;color:var(--gold)}
+.sub{font-family:var(--serif);font-size:1.05rem;line-height:1.5;color:#e2d6bd;text-shadow:0 2px 10px rgba(0,0,0,.9);margin-bottom:20px}
+.cta{position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px;border-radius:16px;background:linear-gradient(160deg,#b42424,#6a1212);border:1px solid #cf3b3b;color:#fbe6b8;font-family:var(--title);font-size:1.35rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 40px rgba(201,45,45,.35),inset 0 1px 0 rgba(255,255,255,.15);overflow:hidden}
+.cta::after{content:'';position:absolute;inset:-2px;border-radius:16px;box-shadow:0 0 0 0 rgba(255,138,42,.6);animation:pulso 2.2s infinite}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(255,138,42,.55)}70%{box-shadow:0 0 0 18px rgba(255,138,42,0)}100%{box-shadow:0 0 0 0 rgba(255,138,42,0)}}
+.cta small{display:block;font-family:system-ui,sans-serif;font-size:.68rem;letter-spacing:.12em;opacity:.75;font-weight:600;margin-top:3px}
+.cta:active{transform:scale(.98)}
+.missao-card{background:rgba(20,17,13,.82);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:14px;padding:15px 16px;backdrop-filter:blur(8px)}
+.missao-card .rot{font-size:.62rem;font-weight:800;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.missao-card .txt{font-family:var(--title);font-size:1.25rem;font-weight:600;line-height:1.2;text-transform:uppercase;letter-spacing:.02em}
+.missao-card .res{display:flex;gap:8px;margin-top:12px}
+.missao-card .res button{flex:1;padding:11px;border-radius:10px;background:var(--steel2);border:1px solid var(--border);font-weight:800;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
+.missao-card .res .sim{background:linear-gradient(160deg,#7d5a18,#4a3408);border-color:#a8822f;color:#ffe6a8}
+.missao-card.feita{border-left-color:#6fbf73}
+.selo{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:10px}
+.selo.ok{color:#8fd694}.selo.no{color:#e08b7d}
 
-  /* ====== TOPO ====== */
-  .topo{
-    position:relative; z-index:3;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:calc(14px + env(safe-area-inset-top)) 18px 0;
-  }
-  .marca{display:flex; align-items:center; gap:9px}
-  .marca svg{width:30px; height:30px}
-  .marca b{
-    font-size:.82rem; font-weight:900; letter-spacing:.3em; text-transform:uppercase; color:var(--text);
-  }
-  .marca b span{color:var(--gold)}
-  .topo .lado{display:flex; align-items:center; gap:8px}
-  .chip{
-    display:flex; align-items:center; gap:6px;
-    background:rgba(20,17,13,.72); border:1px solid var(--border);
-    border-radius:999px; padding:7px 13px;
-    font-size:.78rem; font-weight:700; color:var(--gold2); letter-spacing:.06em;
-    backdrop-filter:blur(6px);
-  }
-  .iconbtn{
-    width:38px; height:38px; border-radius:999px; cursor:pointer;
-    background:rgba(20,17,13,.72); border:1px solid var(--border); color:var(--muted);
-    font-size:1rem; backdrop-filter:blur(6px);
-  }
+/* ====== SEÇÕES ABAIXO DO HERO ====== */
+.secao{max-width:640px;margin:0 auto;padding:6px 18px 10px}
+.rotulo{font-family:var(--title);font-size:.85rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin:22px 4px 12px;display:flex;align-items:center;gap:10px}
+.rotulo::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:linear-gradient(160deg,var(--steel),#0e0c09);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px}
+.pilar{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:.24em;color:var(--bg);background:var(--gold);padding:4px 9px;border-radius:5px;margin-bottom:12px}
+.titulo{font-family:var(--title);font-weight:700;text-transform:uppercase;font-size:clamp(1.7rem,8vw,2.4rem);line-height:1;margin-bottom:12px;color:#f7edd8}
+.titulo em{font-style:normal;color:var(--gold)}
+.mensagem{font-family:var(--serif);font-size:1.06rem;line-height:1.6;color:#e7dcc4}
+.verso{margin-top:16px;padding:4px 0 2px 14px;border-left:3px solid var(--blood2)}
+.verso p{font-family:var(--serif);font-style:italic;font-size:1rem;line-height:1.5;color:var(--gold2)}
+.verso small{display:block;margin-top:6px;font-size:.64rem;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.ordem{margin-top:16px;display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border-radius:12px;background:rgba(160,31,31,.12);border:1px dashed rgba(201,45,45,.5)}
+.ordem .oi{font-size:1.3rem;line-height:1}
+.ordem b{display:block;font-size:.6rem;letter-spacing:.24em;color:#e08b7d;font-weight:800;margin-bottom:4px}
+.ordem span{font-size:.95rem;line-height:1.4;font-weight:600}
+.acoes{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:16px}
+.btn{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 4px 9px;border-radius:12px;background:var(--steel2);border:1px solid var(--border);font-size:.58rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text)}
+.btn svg{width:19px;height:19px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn:active{border-color:var(--gold);transform:translateY(1px)}
+.btn[disabled]{opacity:.45}
+.btn.on svg{stroke:var(--ember)}
+.status{display:none;margin:4px 0 12px;padding:11px 14px;border-radius:10px;background:var(--steel);border:1px solid var(--border);color:var(--muted);font-size:.82rem;line-height:1.5}
+.status.on{display:block}.status.erro{border-color:var(--blood2);color:#dfa091}
+.spin{display:inline-block;width:13px;height:13px;border-radius:50%;border:2px solid var(--gold);border-top-color:transparent;animation:gira .8s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes gira{to{transform:rotate(360deg)}}
+.pergunta{font-family:var(--title);font-size:1.15rem;font-weight:600;text-transform:uppercase;line-height:1.25;margin-bottom:12px}
+.q{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);font-size:.95rem}
+.q:last-of-type{border-bottom:none}
+.sn{display:flex;gap:6px}
+.sn button{width:46px;padding:8px 0;border-radius:9px;background:var(--steel2);border:1px solid var(--border);font-size:.7rem;font-weight:800;letter-spacing:.08em}
+.sn button.s{background:#2f4a22;border-color:#5f8f45;color:#cdf0b8}
+.sn button.n{background:#4a1d1d;border-color:#8f3a3a;color:#f2c0b6}
+.inp{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 13px;font-size:.95rem;color:var(--text)}
+.inp:focus{outline:none;border-color:var(--gold)}
+textarea.inp{resize:vertical;min-height:84px;font-family:var(--serif);line-height:1.5}
+.btn-p{width:100%;padding:14px;border-radius:12px;background:linear-gradient(160deg,#8f1c1c,#5e1010);border:1px solid #a83030;color:#f6dca3;font-family:var(--title);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.95rem;margin-top:12px}
+.btn-s{width:100%;padding:12px;border-radius:12px;background:var(--steel2);border:1px solid var(--border);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;margin-top:10px}
+.dica{font-size:.8rem;color:var(--muted);line-height:1.5;margin-top:8px}
 
-  /* ====== CONTEÚDO ====== */
-  .conteudo{
-    position:relative; z-index:3; margin-top:auto;
-    padding:0 22px calc(18px + env(safe-area-inset-bottom));
-    max-width:640px; width:100%; align-self:center;
-    animation:sobe .7s cubic-bezier(.2,.9,.25,1) both;
-  }
-  @keyframes sobe{from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:none}}
+/* ====== PROGRESSO ====== */
+.cabec{padding:calc(22px + env(safe-area-inset-top)) 22px 4px;max-width:640px;margin:0 auto}
+.cabec small{font-size:.66rem;font-weight:800;letter-spacing:.3em;color:var(--muted)}
+.cabec h1{font-family:var(--title);font-size:2.3rem;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.rank{display:flex;gap:16px;align-items:center}
+.insignia{width:84px;height:84px;flex:none;border-radius:18px;background:radial-gradient(circle at 50% 35%,#3a2c14,#120e08);border:1px solid #5a4520;display:flex;align-items:center;justify-content:center}
+.insignia svg{width:62px;height:62px}
+.rank h2{font-family:var(--title);font-size:1.6rem;font-weight:700;text-transform:uppercase;line-height:1.05;color:var(--gold2)}
+.rank p{font-size:.82rem;color:var(--muted);margin-top:4px}
+.barra{height:8px;background:var(--steel3);border-radius:99px;overflow:hidden;margin-top:12px}
+.barra i{display:block;height:100%;background:linear-gradient(90deg,var(--blood2),var(--ember),var(--gold2));border-radius:99px;transition:width .8s cubic-bezier(.2,.9,.25,1)}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--steel);border:1px solid var(--border);border-radius:14px;padding:14px}
+.stat small{display:block;font-size:.6rem;font-weight:800;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.stat b{display:block;font-family:var(--title);font-size:1.9rem;font-weight:700;margin-top:4px;line-height:1}
+.stat span{font-size:.75rem;color:var(--faint)}
+.mapa{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+.mapa .col{display:grid;grid-template-rows:repeat(7,1fr);gap:4px}
+.mapa i{aspect-ratio:1;border-radius:4px;background:#1a1610}
+.mapa i.f{background:#8a5a1c}.mapa i.m{background:var(--gold2);box-shadow:0 0 6px rgba(240,196,110,.5)}
+.mapa i.e{background:#3b5578}.mapa i.h{outline:2px solid var(--blood2);outline-offset:1px}.mapa i.x{background:transparent}
+.legenda{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:.7rem;color:var(--muted)}
+.legenda span{display:flex;align-items:center;gap:5px}.legenda i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.hist{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--border)}
+.hist:last-child{border-bottom:none}
+.hist .d{font-size:.7rem;font-weight:800;color:var(--muted);width:44px;flex:none;letter-spacing:.06em;padding-top:2px}
+.hist .t{flex:1;font-size:.92rem;line-height:1.35}
+.hist .r{font-size:1rem}
 
-  .datalinha{
-    display:flex; align-items:center; gap:10px; margin-bottom:14px;
-    color:var(--muted); font-size:.68rem; font-weight:700;
-    letter-spacing:.3em; text-transform:uppercase;
-  }
-  .datalinha i{width:34px; height:2px; background:var(--blood2); flex:none}
+/* ====== ARSENAL ====== */
+.linha{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.linha:last-child{border-bottom:none}
+.linha b{font-size:.93rem;font-weight:600}
+.linha span{display:block;font-size:.75rem;color:var(--muted);margin-top:2px;font-weight:400}
+.switch{position:relative;width:48px;height:28px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;border-radius:28px;background:var(--steel3);border:1px solid var(--border);transition:.2s}
+.switch span::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--muted);transition:.2s}
+.switch input:checked+span{background:var(--blood);border-color:var(--blood2)}
+.switch input:checked+span::after{background:#f2d9a0;transform:translateX(20px)}
+.porque-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;font-weight:600}
+.porque-item span{flex:1}
+.porque-item button{color:var(--faint);font-size:1.3rem;line-height:1;padding:0 4px}
+.add{display:flex;gap:8px}
+.add .inp{flex:1}
+.add button{padding:0 16px;border-radius:10px;background:var(--steel3);border:1px solid var(--border);font-size:1.3rem;color:var(--gold2)}
+input[type=time].inp{color-scheme:dark;font-family:var(--title);font-size:1.4rem;letter-spacing:.06em;width:140px}
 
-  .titulo{
-    font-family:'Arial Black','Arial Bold',Arial,sans-serif;
-    font-weight:900; text-transform:uppercase;
-    font-size:clamp(1.9rem, 9.2vw, 3.1rem); line-height:.98; letter-spacing:.01em;
-    color:#f7edd8; text-shadow:0 4px 26px rgba(0,0,0,.9);
-    margin-bottom:14px;
-  }
-  .titulo em{font-style:normal; color:var(--gold)}
+/* ====== NAV ====== */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);display:flex;background:rgba(10,9,7,.92);backdrop-filter:blur(14px);border-top:1px solid var(--border)}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--faint);font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.nav button.on{color:var(--gold2)}
 
-  .mensagem{
-    font-family:Georgia,'Times New Roman',serif;
-    font-size:clamp(1rem, 4.3vw, 1.16rem); line-height:1.55; color:#e7dcc4;
-    text-shadow:0 2px 10px rgba(0,0,0,.9);
-  }
+/* ====== RITUAL ====== */
+.ritual{position:fixed;inset:0;z-index:100;background:#060504;display:none;flex-direction:column;overflow:hidden}
+.ritual.on{display:flex}
+.ritual .brasas{z-index:0}
+.r-top{position:relative;z-index:2;padding:calc(14px + env(safe-area-inset-top)) 18px 0}
+.segs{display:flex;gap:5px}
+.segs i{flex:1;height:4px;border-radius:4px;background:#2a231a;overflow:hidden;position:relative}
+.segs i.done{background:var(--gold)}
+.segs i.cur{background:linear-gradient(90deg,var(--ember),var(--gold2))}
+.r-info{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.r-info span{font-size:.66rem;font-weight:800;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+.r-info button{width:36px;height:36px;border-radius:50%;background:var(--steel);border:1px solid var(--border);color:var(--muted);font-size:1.1rem}
+.r-body{position:relative;z-index:2;flex:1;overflow-y:auto;display:flex;flex-direction:column;padding:10px 24px 24px;max-width:600px;width:100%;margin:0 auto}
+.r-body>.ent{animation:entra .55s cubic-bezier(.2,.9,.25,1) both}
+@keyframes entra{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.r-kicker{font-size:.7rem;font-weight:800;letter-spacing:.32em;color:var(--blood2);text-transform:uppercase;margin-bottom:10px}
+.r-h{font-family:var(--title);font-size:clamp(2.6rem,13vw,4rem);font-weight:700;text-transform:uppercase;line-height:.95;margin-bottom:14px}
+.r-h em{font-style:normal;color:var(--gold)}
+.r-p{font-family:var(--serif);font-size:1.08rem;line-height:1.55;color:#ddd1b8}
+.r-foot{position:relative;z-index:2;padding:0 24px calc(18px + env(safe-area-inset-bottom));max-width:600px;width:100%;margin:0 auto;display:flex;gap:10px}
+.r-foot .btn-p{margin:0;flex:1}
+.r-foot .btn-s{margin:0;width:auto;padding:12px 18px}
+.relogio{font-family:var(--title);font-size:clamp(4.5rem,24vw,7rem);font-weight:700;line-height:1;color:#f7edd8;letter-spacing:.02em;text-shadow:0 0 40px rgba(255,138,42,.25)}
+.hold{position:relative;width:min(64vw,250px);aspect-ratio:1;margin:28px auto 8px;border-radius:50%;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none}
+.hold svg.anel{position:absolute;inset:0;transform:rotate(-90deg)}
+.hold svg.anel circle{fill:none;stroke-width:7}
+.hold .nucleo{width:78%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 35%,#c4352a,#6a1010 70%);border:2px solid #d9493b;box-shadow:0 0 50px rgba(201,45,45,.45),inset 0 -10px 30px rgba(0,0,0,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#ffe3ac;transition:transform .12s}
+.hold.press .nucleo{transform:scale(.94)}
+.hold .nucleo b{font-family:var(--title);font-size:1.5rem;letter-spacing:.12em}
+.hold .nucleo small{font-size:.62rem;letter-spacing:.2em;font-weight:800;opacity:.8}
+.hold .nucleo svg{width:46px;height:46px;fill:#ffe3ac}
+.hold.feito .nucleo{background:radial-gradient(circle at 50% 35%,#f0c46e,#8a5a1c 70%);border-color:#ffd98a;color:#1a1208}
+.hold.feito .nucleo svg{fill:#1a1208}
+.hint-c{text-align:center;font-size:.8rem;color:var(--muted);letter-spacing:.06em}
+.flash{position:fixed;inset:0;z-index:150;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(255,220,150,.85),rgba(255,138,42,.25) 40%,transparent 70%);opacity:0}
+.flash.go{animation:flash .6s ease-out}
+@keyframes flash{0%{opacity:1}100%{opacity:0}}
+.treme{animation:treme .35s}
+@keyframes treme{20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-3px,2px)}80%{transform:translate(2px,-1px)}}
+.resp{position:relative;width:min(70vw,270px);aspect-ratio:1;margin:30px auto 18px;display:flex;align-items:center;justify-content:center}
+.resp .bola{position:absolute;width:40%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 45% 35%,#ffd98a,#d36a1a 60%,#5a2008);box-shadow:0 0 60px rgba(255,138,42,.5);transition:transform 4s cubic-bezier(.45,0,.55,1)}
+.resp .aro{position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(240,196,110,.35)}
+.resp .txt{position:relative;text-align:center}
+.resp .txt b{display:block;font-family:var(--title);font-size:1.7rem;letter-spacing:.14em;color:#1a0f05;text-shadow:0 1px 0 rgba(255,255,255,.3)}
+.resp .txt span{font-family:var(--title);font-size:1.1rem;color:#2a1608;font-weight:700}
+.agua{display:flex;align-items:center;gap:12px;padding:14px;border-radius:12px;background:var(--steel);border:1px solid var(--border);font-weight:600;cursor:pointer}
+.agua i{width:24px;height:24px;border-radius:7px;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-style:normal;color:var(--bg);font-weight:900;flex:none}
+.agua.ok i{background:var(--gold)}
+.oracao{font-family:var(--serif);font-size:1.08rem;line-height:1.65;color:#e7dcc4;margin-bottom:18px}
+.oracao h4{font-family:var(--title);font-size:.8rem;letter-spacing:.28em;color:var(--gold);margin-bottom:6px;font-weight:600}
+.porques{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.porques div{font-family:var(--title);font-size:clamp(1.8rem,9vw,2.6rem);font-weight:700;text-transform:uppercase;line-height:1.05;color:#f7edd8;opacity:0;animation:entra .7s cubic-bezier(.2,.9,.25,1) forwards}
+.porques div::before{content:'› ';color:var(--blood2)}
+.credo{font-family:var(--serif);font-size:1.15rem;line-height:1.6;font-style:italic;color:var(--gold2);padding-left:14px;border-left:3px solid var(--blood2);margin:6px 0 20px}
+.sug{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.sug button{font-size:.78rem;padding:7px 11px;border-radius:999px;background:var(--steel2);border:1px solid var(--border);color:var(--text);text-align:left}
+.reps{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.rep{border-radius:18px;background:var(--steel);border:1px solid var(--border);padding:18px 10px;text-align:center;user-select:none;-webkit-user-select:none;transition:transform .08s,border-color .2s}
+.rep:active{transform:scale(.96)}
+.rep b{display:block;font-family:var(--title);font-size:3.2rem;font-weight:700;line-height:1}
+.rep small{display:block;font-size:.66rem;font-weight:800;letter-spacing:.2em;color:var(--muted);margin-top:6px}
+.rep span{display:block;font-size:.72rem;color:var(--faint);margin-top:2px}
+.rep.ok{border-color:var(--gold);box-shadow:0 0 22px rgba(240,196,110,.2)}
+.rep.ok b{color:var(--gold2)}
+.fim{text-align:center;justify-content:center;flex:1;display:flex;flex-direction:column;align-items:center}
+.fim .marte{width:120px;height:120px;margin-bottom:6px}
+.fim .forjado{font-family:var(--title);font-size:clamp(3.4rem,18vw,5.4rem);font-weight:700;letter-spacing:.08em;line-height:1;background:linear-gradient(180deg,#fff2c8,#f0c46e 45%,#a8661c);-webkit-background-clip:text;background-clip:text;color:transparent;animation:slam .5s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes slam{from{transform:scale(2.2);opacity:0;filter:blur(8px)}to{transform:none;opacity:1;filter:none}}
+.fim .numero{font-family:var(--title);font-size:5rem;font-weight:700;line-height:1;margin-top:16px;color:#f7edd8}
+.fim .numero small{display:block;font-size:.8rem;letter-spacing:.3em;color:var(--muted);margin-top:4px}
+.promo{margin-top:16px;padding:12px 18px;border-radius:12px;background:linear-gradient(160deg,#7d5a18,#3a2806);border:1px solid #c79a3c;color:#ffe6a8;font-family:var(--title);font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;animation:slam .6s .5s both}
+.fim-linhas{margin-top:18px;width:100%;text-align:left}
+.fim-linhas div{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:.92rem}
+.fim-linhas div b{color:var(--gold2);font-weight:700;min-width:84px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;padding-top:3px}
 
-  .verso{
-    margin-top:16px; padding:12px 0 0 14px;
-    border-left:3px solid var(--blood2);
-  }
-  .verso p{
-    font-family:Georgia,serif; font-style:italic;
-    font-size:clamp(.88rem, 3.7vw, 1rem); line-height:1.5; color:var(--gold2);
-    text-shadow:0 2px 8px rgba(0,0,0,.9);
-  }
-  .verso small{
-    display:block; margin-top:6px;
-    font-size:.66rem; font-weight:900; letter-spacing:.28em; text-transform:uppercase; color:var(--gold);
-  }
-
-  /* ====== AÇÕES ====== */
-  .acoes{
-    display:flex; gap:9px; margin-top:22px;
-  }
-  .btn{
-    flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;
-    padding:12px 6px 10px; border-radius:12px; cursor:pointer;
-    background:rgba(20,17,13,.78); border:1px solid var(--border); color:var(--text);
-    font-size:.62rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
-    backdrop-filter:blur(6px);
-  }
-  .btn svg{width:20px; height:20px; stroke:var(--gold); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
-  .btn:active{transform:translateY(1px); border-color:var(--gold)}
-  .btn.destaque{background:linear-gradient(160deg,#8f1c1c,#5e1010); border-color:#a83030}
-  .btn.destaque svg{stroke:#f2d9a0}
-  .btn[disabled]{opacity:.45}
-
-  .status{
-    position:relative; z-index:3; align-self:center; max-width:640px; width:calc(100% - 44px);
-    margin:0 auto 14px; padding:11px 14px; border-radius:10px; display:none;
-    background:rgba(20,17,13,.9); border:1px solid var(--border);
-    color:var(--muted); font-size:.8rem; line-height:1.5;
-  }
-  .status.on{display:block}
-  .status.erro{border-color:var(--blood2); color:#dfa091}
-  .spin{
-    display:inline-block; width:13px; height:13px; border-radius:50%;
-    border:2px solid var(--gold); border-top-color:transparent;
-    animation:g .8s linear infinite; vertical-align:-2px; margin-right:8px;
-  }
-  @keyframes g{to{transform:rotate(360deg)}}
-
-  /* ====== MODAL ====== */
-  dialog{
-    background:var(--steel); color:var(--text); border:1px solid var(--border);
-    border-radius:16px; padding:24px; width:min(92vw,470px);
-  }
-  dialog::backdrop{background:rgba(0,0,0,.78)}
-  dialog h2{
-    font-size:.9rem; font-weight:900; letter-spacing:.24em; text-transform:uppercase;
-    color:var(--gold); margin-bottom:18px;
-  }
-  .campo{margin-bottom:18px}
-  .campo label{
-    display:block; font-size:.66rem; font-weight:800; letter-spacing:.18em;
-    text-transform:uppercase; color:var(--muted); margin-bottom:7px;
-  }
-  .campo input[type=password]{
-    width:100%; padding:12px; border-radius:9px; border:1px solid var(--border);
-    background:var(--bg); color:var(--text); font-size:.88rem; font-family:monospace;
-  }
-  .campo .dica{font-size:.76rem; color:var(--muted); margin-top:7px; line-height:1.5}
-  .linha-toggle{display:flex; align-items:center; justify-content:space-between; gap:12px}
-  .linha-toggle b{font-size:.86rem}
-  .switch{position:relative; width:46px; height:26px; flex:none}
-  .switch input{opacity:0; width:0; height:0}
-  .switch span{position:absolute; inset:0; border-radius:26px; background:var(--steel2); border:1px solid var(--border); transition:.2s; cursor:pointer}
-  .switch span::after{content:""; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:var(--muted); transition:.2s}
-  .switch input:checked + span{background:var(--blood); border-color:var(--blood2)}
-  .switch input:checked + span::after{background:#f2d9a0; transform:translateX(20px)}
-  .btn-salvar{
-    width:100%; padding:13px; border-radius:10px; border:none; cursor:pointer;
-    background:linear-gradient(160deg,#8f1c1c,#5e1010); color:#f2d9a0;
-    font-weight:900; letter-spacing:.2em; text-transform:uppercase; font-size:.78rem;
-  }
+dialog{background:var(--steel);color:var(--text);border:1px solid var(--border);border-radius:16px;padding:22px;width:min(92vw,460px)}
+dialog::backdrop{background:rgba(0,0,0,.8)}
+.toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:200;background:#1e1a14;border:1px solid var(--gold);color:var(--gold2);padding:12px 18px;border-radius:999px;font-weight:700;font-size:.85rem;transition:.3s;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="arte" id="arte"></div>
-  <div class="veu"></div>
-  <div class="grao"></div>
+<!-- ================= HOJE ================= -->
+<main class="page on" id="pg-hoje">
+  <section class="hero">
+    <div class="arte" id="arte"></div>
+    <canvas class="brasas" id="brasasHero"></canvas>
+    <div class="veu"></div>
+    <div class="topo">
+      <div class="marca">
+        <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#14110d"/><path d="M32 8 L36 26 L54 30 L36 34 L32 56 L28 34 L10 30 L28 26 Z" fill="#d3a049"/><circle cx="32" cy="30" r="4" fill="#a01f1f"/></svg>
+        <b>FORJA <span>DIÁRIA</span></b>
+      </div>
+      <div class="chips">
+        <div class="chip esc" id="chipEscudo" title="Escudos: protegem a sequência se você falhar um dia">🛡 0</div>
+        <div class="chip" id="chipStreak" title="Dias seguidos forjados">🔥 0</div>
+      </div>
+    </div>
+    <div class="hero-c" id="heroC"></div>
+  </section>
 
-  <div class="topo">
-    <div class="marca">
-      <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#14110d"/><path d="M32 8 L36 26 L54 30 L36 34 L32 56 L28 34 L10 30 L28 26 Z" fill="#d3a049"/><circle cx="32" cy="30" r="4" fill="#a01f1f"/></svg>
-      <b>FORJA <span>DIÁRIA</span></b>
+  <div class="secao">
+    <div id="cardsTopo"></div>
+    <div class="rotulo">Palavra do dia</div>
+    <div class="card" id="cardMsg">
+      <span class="pilar" id="pilar"></span>
+      <div class="titulo" id="titulo"></div>
+      <div class="mensagem" id="mensagem"></div>
+      <div class="verso"><p id="versiculo"></p><small id="referencia"></small></div>
+      <div class="ordem"><span class="oi">⚔</span><div><b>ORDEM DO DIA</b><span id="ordem"></span></div></div>
+      <div class="acoes">
+        <button class="btn" id="btnOuvir"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>Ouvir</button>
+        <button class="btn" id="btnCompartilhar"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>Enviar</button>
+        <button class="btn" id="btnBaixar"><svg viewBox="0 0 24 24"><path d="M4 17v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/><path d="M8 12l4 4 4-4"/><path d="M12 3v13"/></svg>Baixar</button>
+        <button class="btn" id="btnOutra"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>Outra</button>
+        <button class="btn" id="btnGerar"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.6L20 9.8l-5.8 2.2L12 18l-2.2-6L4 9.8l5.8-2.2z"/></svg>IA</button>
+      </div>
     </div>
-    <div class="lado">
-      <div class="chip" id="chipStreak" title="Dias consecutivos de pé">🔥 0</div>
-      <button class="iconbtn" id="btnConfig" aria-label="Configurações">⚙</button>
-    </div>
+    <div class="status" id="status"></div>
   </div>
+</main>
 
-  <div class="conteudo" id="conteudo">
-    <div class="datalinha"><i></i><span id="dataHoje"></span></div>
-    <div class="titulo" id="titulo"></div>
-    <div class="mensagem" id="mensagem"></div>
-    <div class="verso">
-      <p id="versiculo"></p>
-      <small id="referencia"></small>
+<!-- ================= PROGRESSO ================= -->
+<main class="page" id="pg-progresso">
+  <div class="cabec"><small>CAMPANHA</small><h1>Progresso</h1></div>
+  <div class="secao" id="progC"></div>
+</main>
+
+<!-- ================= ARSENAL ================= -->
+<main class="page" id="pg-arsenal">
+  <div class="cabec"><small>CONFIGURAÇÕES</small><h1>Arsenal</h1></div>
+  <div class="secao">
+    <div class="rotulo">Meu porquê</div>
+    <div class="card">
+      <div class="dica" style="margin:0 0 12px">Por quem e pelo que você levanta. Aparece no ritual, toda manhã, quando a cama chamar.</div>
+      <div id="listaPorques"></div>
+      <div class="add"><input class="inp" id="novoPorque" maxlength="60" placeholder="Ex.: Minha família"><button id="addPorque" aria-label="Adicionar">+</button></div>
     </div>
-    <div class="acoes">
-      <button class="btn destaque" id="btnCompartilhar">
-        <svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg>
-        Compartilhar
-      </button>
-      <button class="btn" id="btnBaixar">
-        <svg viewBox="0 0 24 24"><path d="M4 17v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/><path d="M8 12l4 4 4-4"/><path d="M12 3v13"/></svg>
-        Baixar
-      </button>
-      <button class="btn" id="btnOutra">
-        <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>
-        Outra
-      </button>
-      <button class="btn" id="btnGerar">
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.6L20 9.8l-5.8 2.2L12 18l-2.2-6L4 9.8l5.8-2.2z"/></svg>
-        Forjar IA
-      </button>
+
+    <div class="rotulo">Meu credo</div>
+    <div class="card">
+      <textarea class="inp" id="credo" maxlength="400"></textarea>
+      <div class="dica">Quem você decidiu ser. Você o jura toda manhã antes de definir a missão do dia.</div>
+      <button class="btn-s" id="credoPadrao">Restaurar o credo padrão</button>
     </div>
+
+    <div class="rotulo">Alvorada</div>
+    <div class="card">
+      <div class="linha"><div><b>Horário de despertar</b><span>Seu alvo diário</span></div><input type="time" class="inp" id="alvo" value="04:00"></div>
+      <div class="linha"><div><b>Toque de alvorada</b><span>Lembrete no horário (o Android pode atrasar)</span></div><label class="switch"><input type="checkbox" id="tNotif"><span></span></label></div>
+      <div class="dica" id="notifDica">Para acordar, use o despertador do celular: o toque do app é um lembrete, não um alarme. Dica: nomeie o alarme como “FORJA — DE PÉ” e abra o app assim que desligar.</div>
+    </div>
+
+    <div class="rotulo">Ritual</div>
+    <div class="card">
+      <div class="linha"><div><b>Respiração de combate</b><span>48 s de respiração em caixa + água</span></div><label class="switch"><input type="checkbox" data-passo="respira"><span></span></label></div>
+      <div class="linha"><div><b>Oração da manhã</b><span>Oferecimento do dia e São Miguel</span></div><label class="switch"><input type="checkbox" data-passo="oracao"><span></span></label></div>
+      <div class="linha"><div><b>Meu porquê</b><span>Lembrar por quem você luta</span></div><label class="switch"><input type="checkbox" data-passo="porque"><span></span></label></div>
+      <div class="linha"><div><b>Primeiro sangue</b><span>20 agachamentos + 10 flexões</span></div><label class="switch"><input type="checkbox" data-passo="corpo"><span></span></label></div>
+      <div class="linha"><div><b>Ler a palavra em voz alta</b><span>Voz automática no ritual</span></div><label class="switch"><input type="checkbox" id="tVoz"><span></span></label></div>
+      <div class="linha"><div><b>Sons de batalha</b><span>Corneta, martelo e tambor</span></div><label class="switch"><input type="checkbox" id="tSom"><span></span></label></div>
+    </div>
+
+    <div class="rotulo">Forja por IA</div>
+    <div class="card">
+      <input type="password" class="inp" id="inputKey" placeholder="sk-ant-..." autocomplete="off" style="font-family:monospace">
+      <div class="dica">Opcional. Usada só pelo botão “IA”, que cria uma mensagem e uma arte inéditas. O banco de 73 mensagens funciona sem internet e sem chave.</div>
+      <button class="btn-s" id="salvarKey">Salvar chave</button>
+    </div>
+
+    <div class="rotulo">Backup</div>
+    <div class="card">
+      <div class="dica" style="margin:0">Seu histórico fica só neste celular. Guarde uma cópia.</div>
+      <button class="btn-s" id="exportar">Exportar histórico</button>
+      <input type="file" id="arqImport" accept=".json" style="display:none">
+      <button class="btn-s" id="importar">Importar histórico</button>
+    </div>
+    <div style="text-align:center;color:var(--faint);font-size:.72rem;padding:18px 0 8px;letter-spacing:.14em">FORJA DIÁRIA 3.0 · DE PÉ, SOLDADO</div>
   </div>
+</main>
 
-  <div class="status" id="status"></div>
+<nav class="nav">
+  <button class="on" data-pg="hoje"><svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 4.5 5 9a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-5 1-7.5z"/></svg>Hoje</button>
+  <button data-pg="progresso"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progresso</button>
+  <button data-pg="arsenal"><svg viewBox="0 0 24 24"><path d="M14.5 3.5l6 6-9 9-6-6z"/><path d="M5.5 12.5 3 21l8.5-2.5"/></svg>Arsenal</button>
+</nav>
+
+<!-- ================= RITUAL ================= -->
+<div class="ritual" id="ritual">
+  <canvas class="brasas" id="brasasRitual"></canvas>
+  <div class="r-top">
+    <div class="segs" id="segs"></div>
+    <div class="r-info"><span id="rPasso"></span><button id="rFechar" aria-label="Sair do ritual">✕</button></div>
+  </div>
+  <div class="r-body" id="rBody"></div>
+  <div class="r-foot" id="rFoot"></div>
 </div>
-
-<dialog id="modalConfig">
-  <h2>⚔ Arsenal</h2>
-  <div class="campo linha-toggle">
-    <b>Toque de alvorada — 4h</b>
-    <label class="switch"><input type="checkbox" id="toggleNotif"><span></span></label>
-  </div>
-  <div class="campo dica" id="notifDica" style="margin-top:-8px"></div>
-  <div class="campo">
-    <label for="inputKey">Chave da API Anthropic (opcional)</label>
-    <input type="password" id="inputKey" placeholder="sk-ant-..." autocomplete="off">
-    <div class="dica">Só é usada pelo botão "Forjar IA", que cria mensagem e arte inéditas sob demanda.
-    O banco de 42 mensagens e 10 artes de batalha funciona 100% offline, sem chave nenhuma.</div>
-  </div>
-  <button class="btn-salvar" id="btnSalvar">Salvar e voltar ao front</button>
-</dialog>
+<div class="flash" id="flash"></div>
+<div class="toast" id="toast"></div>
 
 <script>
 "use strict";
 /* ============================== util ============================== */
 const $ = id => document.getElementById(id);
-const K = { key:'forja.apikey', notif:'forja.notif', lastNotif:'forja.lastnotif',
-            msg:d=>'forja.msg.'+d, off:d=>'forja.off.'+d, streak:'forja.streak' };
 const pad = n => String(n).padStart(2,'0');
-function hojeStr(){ const d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
-function ontemStr(){ const d=new Date(); d.setDate(d.getDate()-1); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function isoDe(d){ return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+function hojeStr(){ return isoDe(new Date()); }
+function ontemStr(){ const d=new Date(); d.setDate(d.getDate()-1); return isoDe(d); }
 function diaN(){ const d=new Date(); return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/86400000); }
-
+function horaAgora(){ const d=new Date(); return pad(d.getHours())+':'+pad(d.getMinutes()); }
+function minutos(hhmm){ const [h,m]=hhmm.split(':').map(Number); return h*60+m; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML; }
+function vibrar(p){ try{ navigator.vibrate && navigator.vibrate(p); }catch(e){} }
 const DIAS = ['DOMINGO','SEGUNDA-FEIRA','TERÇA-FEIRA','QUARTA-FEIRA','QUINTA-FEIRA','SEXTA-FEIRA','SÁBADO'];
 const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+let toastT=null;
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2400); }
 
-/* ============================== ARTES DE BATALHA ============================== */
+/* ============================== banco de dados local ============================== */
+const KEY_DB='forja.v3', KEY_API='forja.apikey', KEY_NOTIF='forja.notif', KEY_LASTNOTIF='forja.lastnotif';
+const DB_PADRAO = { dias:{}, porques:[], credo:'', alvo:'04:00', passos:{respira:true,oracao:true,porque:true,corpo:true}, voz:true, som:true, off:{}, ia:{} };
+let db;
+function carregar(){
+  try{ db = Object.assign(JSON.parse(JSON.stringify(DB_PADRAO)), JSON.parse(localStorage.getItem(KEY_DB)||'{}')); }
+  catch(e){ db = JSON.parse(JSON.stringify(DB_PADRAO)); }
+  db.passos = Object.assign({}, DB_PADRAO.passos, db.passos||{});
+}
+function salvar(){ try{ localStorage.setItem(KEY_DB, JSON.stringify(db)); }catch(e){} }
+function dia(k){ k=k||hojeStr(); if(!db.dias[k]) db.dias[k]={}; return db.dias[k]; }
+
+/* ============================== conteúdo ============================== */
 const ARTES = {
 elmo:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="e0" cx=".5" cy=".38" r=".85"><stop offset="0" stop-color="#2a2115"/><stop offset=".6" stop-color="#120e08"/><stop offset="1" stop-color="#060504"/></radialGradient><linearGradient id="e1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset=".5" stop-color="#c08a34"/><stop offset="1" stop-color="#6e4a16"/></linearGradient><linearGradient id="e2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c92d2d"/><stop offset="1" stop-color="#5e1010"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#e0)"/><path d="M540 120 q-60 -10 -120 40 q120 -20 240 0 q-60 -50 -120 -40z" fill="url(#e2)"/><path d="M330 300 q0 -160 210 -160 q210 0 210 160 l0 90 q0 40 -20 70 l-40 60 l0 260 q0 30 -30 30 l-60 0 l0 -240 q0 -50 -60 -50 q-60 0 -60 50 l0 240 l-60 0 q-30 0 -30 -30 l0 -260 l-40 -60 q-20 -30 -20 -70 z" fill="url(#e1)"/><path d="M420 150 q-120 60 -120 240 l0 60 l40 60 l0 -120 q0 -60 30 -90 z" fill="#8a5c1c" opacity=".55"/><rect x="516" y="330" width="48" height="180" rx="10" fill="#0a0806"/><path d="M360 372 q60 -34 120 -10 l0 44 q-60 -20 -120 6 z" fill="#0a0806"/><path d="M720 372 q-60 -34 -120 -10 l0 44 q60 -20 120 6 z" fill="#0a0806"/><path d="M250 130 q290 -110 580 0 q-40 -80 -120 -96 q-160 -34 -340 0 q-80 16 -120 96z" fill="url(#e2)"/><rect x="0" y="1070" width="1080" height="280" fill="#050403"/><path d="M0 1070 q540 -60 1080 0 l0 30 q-540 -50 -1080 0 z" fill="#1c150c"/></svg>`,
 
@@ -280,22 +412,87 @@ punhos:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserve
 
 arqueiro:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="q0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0a07"/><stop offset=".5" stop-color="#4a2c10"/><stop offset=".75" stop-color="#b4732a"/><stop offset=".9" stop-color="#eab456"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#q0)"/><circle cx="330" cy="920" r="140" fill="#ffe2a0" opacity=".88"/><rect x="0" y="1010" width="1080" height="340" fill="#0d0a06"/><path d="M0 1010 q540 -36 1080 0 l0 22 q-540 -30 -1080 0z" fill="#201507"/><g fill="#0a0805"><circle cx="560" cy="560" r="40"/><path d="M540 610 q-50 20 -56 110 l-20 290 l54 0 l30 -240 l40 10 l16 230 l54 0 l-10 -300 q-6 -84 -58 -100 q-25 -10 -50 0z"/><path d="M600 620 l190 -36 l0 24 l-186 36 z"/><path d="M770 430 q70 150 0 310 l-24 -10 q60 -140 0 -290 z"/><path d="M770 434 l-16 292" stroke="#0a0805" stroke-width="6"/><path d="M470 596 l320 -20 l0 16 l-318 22 z"/></g></svg>`,
 
-armadura:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="r0" cx=".5" cy=".4" r=".85"><stop offset="0" stop-color="#232a38"/><stop offset=".55" stop-color="#101318"/><stop offset="1" stop-color="#060708"/></radialGradient><linearGradient id="r1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa6b8"/><stop offset=".5" stop-color="#5a6475"/><stop offset="1" stop-color="#242c38"/></linearGradient><linearGradient id="r2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#a06c1c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#r0)"/><g opacity=".4" stroke="#d3a049" stroke-width="2"><path d="M540 640 L200 300"/><path d="M540 640 L880 300"/><path d="M540 640 L140 700"/><path d="M540 640 L940 700"/></g><path d="M330 360 q100 -50 210 -50 q110 0 210 50 l30 210 q10 90 -40 170 q-60 100 -200 150 q-140 -50 -200 -150 q-50 -80 -40 -170 z" fill="url(#r1)"/><path d="M360 390 q90 -44 180 -44 l0 500 q-110 -46 -160 -130 q-40 -66 -32 -140 z" fill="#fff" opacity=".07"/><g fill="url(#r2)"><rect x="512" y="440" width="56" height="300" rx="12"/><rect x="420" y="520" width="240" height="56" rx="12"/></g><path d="M330 360 q100 -50 210 -50 q110 0 210 50" fill="none" stroke="#d3a049" stroke-width="10"/><rect x="0" y="1110" width="1080" height="240" fill="#050404"/></svg>`
-};
-const CHAVES_ARTES = Object.keys(ARTES);
+armadura:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="r0" cx=".5" cy=".4" r=".85"><stop offset="0" stop-color="#232a38"/><stop offset=".55" stop-color="#101318"/><stop offset="1" stop-color="#060708"/></radialGradient><linearGradient id="r1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa6b8"/><stop offset=".5" stop-color="#5a6475"/><stop offset="1" stop-color="#242c38"/></linearGradient><linearGradient id="r2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#a06c1c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#r0)"/><g opacity=".4" stroke="#d3a049" stroke-width="2"><path d="M540 640 L200 300"/><path d="M540 640 L880 300"/><path d="M540 640 L140 700"/><path d="M540 640 L940 700"/></g><path d="M330 360 q100 -50 210 -50 q110 0 210 50 l30 210 q10 90 -40 170 q-60 100 -200 150 q-140 -50 -200 -150 q-50 -80 -40 -170 z" fill="url(#r1)"/><path d="M360 390 q90 -44 180 -44 l0 500 q-110 -46 -160 -130 q-40 -66 -32 -140 z" fill="#fff" opacity=".07"/><g fill="url(#r2)"><rect x="512" y="440" width="56" height="300" rx="12"/><rect x="420" y="520" width="240" height="56" rx="12"/></g><path d="M330 360 q100 -50 210 -50 q110 0 210 50" fill="none" stroke="#d3a049" stroke-width="10"/><rect x="0" y="1110" width="1080" height="240" fill="#050404"/></svg>`,
 
-/* ============================== BANCO DE GUERRA — 42 mensagens ============================== */
-const BANCO = [
+alvorada:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="a0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07080d"/><stop offset=".35" stop-color="#1d1a24"/><stop offset=".58" stop-color="#6a3416"/><stop offset=".72" stop-color="#d9772a"/><stop offset=".8" stop-color="#ffc56a"/></linearGradient><radialGradient id="a1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff3d0"/><stop offset=".35" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#a0)"/><circle cx="540" cy="1000" r="420" fill="url(#a1)" opacity=".85"/><circle cx="540" cy="1010" r="120" fill="#fff1c8"/><g opacity=".35" stroke="#ffd98f" stroke-width="5"><path d="M540 1010 L120 520"/><path d="M540 1010 L330 420"/><path d="M540 1010 L540 380"/><path d="M540 1010 L750 420"/><path d="M540 1010 L960 520"/></g><path d="M0 1350 L0 960 L180 860 L330 930 L470 820 L560 900 L700 800 L860 900 L1080 830 L1080 1350Z" fill="#160d07"/><path d="M0 1350 L0 1050 L240 980 L420 1040 L600 970 L820 1050 L1080 990 L1080 1350Z" fill="#080604"/><g fill="#080604"><circle cx="560" cy="742" r="26"/><path d="M546 770 q-26 10 -28 70 l-6 76 l24 0 l8 -60 l16 0 l8 60 l24 0 l-6 -76 q-2 -60 -28 -70z"/><path d="M536 790 l-70 -96 l14 -10 l66 88z"/><path d="M584 790 l70 -96 l-14 -10 l-66 88z"/></g></svg>`,
+
+corredor:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="k0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0907"/><stop offset=".5" stop-color="#3c2410"/><stop offset=".74" stop-color="#b8702a"/><stop offset=".86" stop-color="#f2bd62"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#k0)"/><circle cx="800" cy="900" r="150" fill="#ffe2a2" opacity=".9"/><g stroke="#f7d28c" stroke-width="3" opacity=".35"><path d="M0 760 L1080 700"/><path d="M0 820 L1080 790"/></g><path d="M0 1350 L0 1000 Q300 930 560 960 Q820 990 1080 940 L1080 1350Z" fill="#0d0905"/><path d="M0 1000 Q300 930 560 960 Q820 990 1080 940 L1080 966 Q820 1016 560 986 Q300 956 0 1026Z" fill="#2a1a0a"/><g fill="#0a0704"><circle cx="470" cy="660" r="34"/><path d="M455 700 q-30 8 -40 50 l-18 110 q-4 22 18 24 q16 0 22 -18 l20 -80 l26 50 l-70 90 q-12 18 4 30 q16 10 30 -6 l84 -100 q12 -16 2 -34 l-30 -60 l14 -40 l40 34 q10 8 22 2 l64 -30 q16 -10 8 -26 q-8 -14 -26 -6 l-50 22 l-54 -48 q-26 -16 -66 26z"/><path d="M440 860 l-60 70 q-14 16 -36 8 l-50 -20 q-16 -8 -8 -24 q8 -14 24 -8 l40 16 l60 -70z"/><path d="M430 730 l-70 40 q-14 8 -22 -4 q-8 -14 6 -22 l78 -46z"/></g><g fill="#0a0704" opacity=".75"><rect x="160" y="980" width="200" height="6" rx="3"/><rect x="620" y="985" width="140" height="5" rx="3"/></g></svg>`,
+
+bigorna:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="b0" cx=".5" cy=".55" r=".75"><stop offset="0" stop-color="#5a2a0c"/><stop offset=".45" stop-color="#1c1008"/><stop offset="1" stop-color="#060404"/></radialGradient><radialGradient id="b1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2c4"/><stop offset=".3" stop-color="#ffb347"/><stop offset="1" stop-color="#ff6a1a" stop-opacity="0"/></radialGradient><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4f5a"/><stop offset="1" stop-color="#15171c"/></linearGradient><linearGradient id="b3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a1a"/><stop offset=".5" stop-color="#ffe08a"/><stop offset="1" stop-color="#ff7a1a"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#b0)"/><circle cx="560" cy="690" r="300" fill="url(#b1)" opacity=".75"/><g fill="#ffd27a"><circle cx="420" cy="520" r="6"/><circle cx="700" cy="470" r="5"/><circle cx="600" cy="400" r="4"/><circle cx="360" cy="430" r="3.5"/><circle cx="760" cy="560" r="4"/><circle cx="500" cy="340" r="3"/><circle cx="660" cy="300" r="2.6"/><circle cx="820" cy="420" r="3"/><circle cx="300" cy="580" r="3"/></g><g stroke="#ffcf73" stroke-width="4" stroke-linecap="round" opacity=".8"><path d="M560 680 L430 540"/><path d="M560 680 L700 520"/><path d="M560 680 L560 500"/><path d="M560 680 L380 640"/><path d="M560 680 L760 620"/></g><rect x="430" y="676" width="260" height="20" rx="8" fill="url(#b3)"/><path d="M300 700 L860 700 Q900 700 900 730 L780 760 L740 760 L700 860 L780 960 L340 960 L420 860 L380 760 L300 740 Q260 730 300 700Z" fill="url(#b2)"/><path d="M300 700 L860 700 Q900 700 900 730 L300 730Z" fill="#8a909c" opacity=".5"/><g fill="#0b0806"><rect x="640" y="380" width="30" height="300" rx="10" transform="rotate(35 655 530)"/><rect x="560" y="330" width="170" height="80" rx="14" transform="rotate(35 645 370)"/></g><rect x="0" y="1060" width="1080" height="290" fill="#050303"/></svg>`,
+
+espada:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="x0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060506"/><stop offset=".42" stop-color="#2a120c"/><stop offset=".66" stop-color="#8a2a12"/><stop offset=".78" stop-color="#e0702a"/><stop offset=".86" stop-color="#ffc26a"/></linearGradient><radialGradient id="x1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".95"/><stop offset=".4" stop-color="#ff9a3c" stop-opacity=".45"/><stop offset="1" stop-color="#ff6a1a" stop-opacity="0"/></radialGradient><linearGradient id="x2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2b2f38"/><stop offset=".5" stop-color="#c9ced8"/><stop offset="1" stop-color="#3a3f4a"/></linearGradient><linearGradient id="x3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#8a5a1c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#x0)"/><circle cx="540" cy="560" r="430" fill="url(#x1)"/><g stroke="#ffd59a" stroke-width="3" opacity=".28"><path d="M540 560 L140 140"/><path d="M540 560 L380 60"/><path d="M540 560 L700 60"/><path d="M540 560 L940 140"/><path d="M540 560 L1060 420"/><path d="M540 560 L20 420"/></g><g fill="#ffcf7a"><circle cx="300" cy="700" r="4"/><circle cx="820" cy="640" r="3.5"/><circle cx="420" cy="420" r="3"/><circle cx="700" cy="380" r="3"/><circle cx="260" cy="520" r="2.5"/><circle cx="860" cy="480" r="2.5"/></g><path d="M528 250 L552 250 L560 960 L540 1010 L520 960 Z" fill="url(#x2)"/><path d="M540 250 L540 1000" stroke="#eef1f6" stroke-width="3" opacity=".6"/><rect x="420" y="214" width="240" height="34" rx="12" fill="url(#x3)"/><rect x="524" y="96" width="32" height="124" rx="10" fill="#2a1a0c"/><g stroke="#8a5a1c" stroke-width="4"><path d="M524 120 L556 132"/><path d="M524 148 L556 160"/><path d="M524 176 L556 188"/></g><circle cx="540" cy="86" r="24" fill="url(#x3)"/><circle cx="540" cy="231" r="10" fill="#a01f1f"/><path d="M0 1350 L0 1010 L210 960 L360 1000 L470 970 L540 1000 L620 965 L760 1005 L900 955 L1080 1000 L1080 1350Z" fill="#0b0705"/><path d="M380 1004 L470 972 L540 1002 L620 968 L700 994 L620 1012 L540 1020 L460 1014Z" fill="#1d120a"/><rect x="0" y="1080" width="1080" height="270" fill="#050303"/></svg>`
+};
+/* ============================== PILARES das 42 mensagens originais (mesma ordem) ============================== */
+const PILARES_ORIG = ['DISCIPLINA','HONRA','DISCIPLINA','TRABALHO','FÉ','FAMÍLIA','CORAGEM','FÉ','DISCIPLINA','RESILIÊNCIA','HONRA','TRABALHO','CORAGEM','FÉ','FÉ','FAMÍLIA','FÉ','FÉ','RESILIÊNCIA','CORPO','DISCIPLINA','CORAGEM','FÉ','HONRA','TRABALHO','FÉ','FAMÍLIA','CORPO','FAMÍLIA','HONRA','FAMÍLIA','DISCIPLINA','HONRA','FÉ','FÉ','RESILIÊNCIA','RESILIÊNCIA','DISCIPLINA','FÉ','FAMÍLIA','DISCIPLINA','RESILIÊNCIA'];
+
+/* ============================== 31 mensagens novas ============================== */
+const BANCO_NOVO = [
+{p:'DISCIPLINA', t:'ATÉ QUANDO, <em>PREGUIÇOSO?</em>', a:'alvorada', m:'A pergunta tem três mil anos e ainda acerta em cheio. Cinco minutos a mais não descansam ninguém — só ensinam o corpo a mandar em você. Pé no chão antes de pensar. A cama não tem nada a oferecer que valha o homem que você está construindo.', v:'"Até quando, ó preguiçoso, ficarás deitado? Quando te levantarás do teu sono?"', r:'Provérbios 6, 9'},
+{p:'FÉ', t:'DESPERTA, TU QUE <em>DORMES</em>', a:'alvorada', m:'Tem homem que acorda todo dia e continua dormindo: no automático, sem propósito, empurrando a vida. Desperte de verdade. Abra os olhos para a missão, para a família que depende de você, para o Deus que te chamou pelo nome hoje cedo.', v:'"Desperta, tu que dormes, levanta-te dentre os mortos, e Cristo te iluminará."', r:'Efésios 5, 14'},
+{p:'FÉ', t:'ESTE É O <em>DIA</em>', a:'alvorada', m:'Não ontem, que já foi. Não amanhã, que talvez nem venha. Este dia — com o trânsito, o chefe, a conta e o cansaço — foi feito pelo Senhor e entregue nas suas mãos. Receba-o como soldado recebe a missão: com gratidão e com os dentes cerrados.', v:'"Este é o dia que o Senhor fez: exultemos e alegremo-nos nele."', r:'Salmo 118, 24'},
+{p:'RESILIÊNCIA', t:'NOVAS A CADA <em>MANHÃ</em>', a:'alvorada', m:'Ontem você falhou? A misericórdia de Deus não guarda rancor — ela vem nova a cada amanhecer, como munição reposta. Não arraste o erro de ontem para o campo de hoje. Confesse, aprenda e entre limpo na batalha.', v:'"As misericórdias do Senhor não têm fim… renovam-se cada manhã."', r:'Lamentações 3, 22-23'},
+{p:'FÉ', t:'DE MANHÃ, <em>A VÓS</em>', a:'alvorada', m:'O primeiro olhar do dia define quem manda nele. Se for o celular, o mundo manda. Se for Deus, você entra na guerra com ordens claras. Antes da notícia, antes da mensagem, antes do café: apresente-se ao seu Comandante.', v:'"De manhã ouvis a minha voz; de manhã me apresento a vós e espero."', r:'Salmo 5, 4'},
+{p:'CORPO', t:'CORRA PARA <em>VENCER</em>', a:'corredor', m:'Ninguém entra numa prova para dar uma voltinha. Paulo usou o atleta como exemplo porque conhecia o preço: treino no escuro, dor sem plateia, renúncia diária. A sua corrida é a vida inteira. Corra como quem quer a coroa — não como quem só quer terminar.', v:'"Correi de tal maneira que o alcanceis."', r:'1 Coríntios 9, 24'},
+{p:'CORPO', t:'COROA QUE NÃO <em>MURCHA</em>', a:'corredor', m:'O atleta se priva de tudo por uma medalha que enferruja na gaveta. E você, que luta por uma coroa eterna e por uma família de verdade, vai se privar de menos? Corte o excesso. Treine a vontade. Coma como guerreiro, durma como soldado.', v:'"Todo atleta se impõe todo tipo de disciplina; eles, para ganhar uma coroa corruptível; nós, uma incorruptível."', r:'1 Coríntios 9, 25'},
+{p:'CORPO', t:'TEMPLO, NÃO <em>DEPÓSITO</em>', a:'armadura', m:'Seu corpo não é lixeira de fast-food nem sofá de domingo inteiro. É templo — e é também a ferramenta com que você trabalha, protege e carrega seus filhos no colo. Cuide dele como se cuida de uma arma de serviço: limpo, afiado, pronto.', v:'"Não sabeis que o vosso corpo é templo do Espírito Santo?"', r:'1 Coríntios 6, 19'},
+{p:'RESILIÊNCIA', t:'ABATIDO, NÃO <em>DESTRUÍDO</em>', a:'bigorna', m:'Pressionado por todos os lados, sim. Esmagado, nunca. Esse é o resumo da vida de um homem de fé: apanha, sangra, cai de joelhos — e continua inteiro por dentro. A pancada mede a força do golpe. A sua resposta mede a sua.', v:'"Somos atribulados por todos os lados, mas não esmagados; perseguidos, mas não abandonados; abatidos, mas não destruídos."', r:'2 Coríntios 4, 8-9'},
+{p:'DISCIPLINA', t:'OLHOS NO <em>ALVO</em>', a:'arqueiro', m:'Quem corre olhando para trás tropeça. O passado — glória ou vergonha — não ganha a prova de hoje. Paulo esqueceu o que ficou e avançou. Defina o alvo, trave a mira e prossiga. Um passo depois do outro, até a linha de chegada.', v:'"Esquecendo-me do que fica para trás e avançando para o que está adiante, prossigo para o alvo."', r:'Filipenses 3, 13-14'},
+{p:'TRABALHO', t:'TRABALHE PARA O <em>REI</em>', a:'bigorna', m:'Seu chefe pode não ver. Seu cliente pode não agradecer. Não importa: você não trabalha só para eles. Cada planilha, cada atendimento, cada entrega pode ser oferecida ao Rei dos reis. Isso transforma rotina em missão e esforço em oração.', v:'"Tudo o que fizerdes, fazei-o de bom coração, como para o Senhor e não para os homens."', r:'Colossenses 3, 23'},
+{p:'TRABALHO', t:'APRENDA COM A <em>FORMIGA</em>', a:'bigorna', m:'Ninguém manda nela, ninguém fiscaliza, ninguém aplaude — e ela trabalha. Homem que só produz quando é cobrado ainda é menino. Seja o homem que faz o que precisa ser feito, na hora certa, sem plateia e sem desculpa.', v:'"Vai ter com a formiga, ó preguiçoso; considera os seus caminhos e sê sábio."', r:'Provérbios 6, 6'},
+{p:'CORAGEM', t:'ESPÍRITO DE <em>FORTALEZA</em>', a:'elmo', m:'O medo que te paralisa não veio de Deus. O que veio dele foi fortaleza, amor e domínio próprio — três armas que cabem no bolso de qualquer homem disposto. Hoje, quando a timidez sussurrar "deixa pra lá", responda com um passo à frente.', v:'"Deus não nos deu um espírito de timidez, mas de fortaleza, de amor e de sobriedade."', r:'2 Timóteo 1, 7'},
+{p:'DISCIPLINA', t:'MENTE <em>BLINDADA</em>', a:'armadura', m:'O mundo despeja lixo na sua cabeça o dia inteiro: medo, inveja, pornografia, desânimo. Se você não guarda o portão, vira depósito. Escolha o que entra. Renove a mente como quem limpa a arma: todo dia, com método.', v:'"Não vos conformeis com este mundo, mas transformai-vos pela renovação da vossa mente."', r:'Romanos 12, 2'},
+{p:'FÉ', t:'PRIMEIRO O <em>REINO</em>', a:'miguel', m:'A ordem importa. Quem coloca dinheiro, carreira e conforto em primeiro lugar perde os três — e ainda a alma. Quem coloca Deus primeiro recebe o resto como bônus de campanha. Organize suas prioridades como organiza uma operação.', v:'"Buscai primeiro o Reino de Deus e a sua justiça, e todas estas coisas vos serão dadas por acréscimo."', r:'Mateus 6, 33'},
+{p:'RESILIÊNCIA', t:'SÓ O DIA DE <em>HOJE</em>', a:'alvorada', m:'Ansiedade é tentar lutar amanhã com as forças de hoje. Não funciona. Deus dá ração diária — força para hoje, graça para hoje, pão para hoje. Vença as próximas 24 horas. Amanhã o Comandante distribui nova munição.', v:'"Não vos preocupeis com o dia de amanhã… A cada dia basta o seu cuidado."', r:'Mateus 6, 34'},
+{p:'FÉ', t:'MINHA FORÇA, MEU <em>ESCUDO</em>', a:'armadura', m:'Tem dia que a força acaba antes do expediente. Normal: você é homem, não máquina. Por isso o guerreiro inteligente luta com equipamento que vem do Alto. Quando a sua força falhar, use a dele. Ela não acaba.', v:'"O Senhor é a minha força e o meu escudo."', r:'Salmo 28, 7'},
+{p:'RESILIÊNCIA', t:'FORTE NA <em>FRAQUEZA</em>', a:'cavaleiro', m:'Você não precisa fingir que aguenta tudo. Admitir a fraqueza diante de Deus não é derrota — é o momento exato em que o poder dele entra em campo. O orgulhoso luta sozinho e quebra. O humilde luta acompanhado e vence.', v:'"Basta-te a minha graça, porque é na fraqueza que se revela totalmente a minha força."', r:'2 Coríntios 12, 9'},
+{p:'HONRA', t:'SEU NOME <em>VALE MAIS</em>', a:'estandarte', m:'Dinheiro se recupera. Reputação, quase nunca. Um atalho desonesto pode render hoje e cobrar de você e dos seus filhos por décadas. Proteja seu nome como protege sua casa: com cerca alta e vigilância diária.', v:'"Mais vale o bom nome do que muitas riquezas."', r:'Provérbios 22, 1'},
+{p:'RESILIÊNCIA', t:'ATÉ O <em>FIM</em>', a:'corredor', m:'Começar é fácil: todo mundo começa dieta, treino, oração, projeto. O prêmio é de quem termina. Quando a novidade passa e sobra só o esforço, é aí que o homem de verdade aparece. Não pare no meio da prova.', v:'"Aquele que perseverar até o fim será salvo."', r:'Mateus 24, 13'},
+{p:'DISCIPLINA', t:'A DOR DA <em>DISCIPLINA</em>', a:'bigorna', m:'Disciplina dói hoje. Arrependimento dói para sempre. Escolha a sua dor. O treino que você não quer fazer, a conversa difícil, o não que precisa dizer — tudo isso amarga agora e vira fruto de paz depois. O martelo dói no ferro. É assim que nasce a espada.', v:'"Toda disciplina, no momento, não parece motivo de alegria, mas de tristeza; depois, porém, produz fruto de paz e de justiça."', r:'Hebreus 12, 11'},
+{p:'FÉ', t:'TERMINE A <em>CARREIRA</em>', a:'corredor', m:'Paulo não estava preocupado em viver muito, mas em terminar bem. Que carreira é a sua? Que missão você recebeu? Coloque isso acima do conforto, do aplauso e até da própria vida. O homem que sabe por que corre não para quando dói.', v:'"Contanto que eu termine a minha carreira e o ministério que recebi do Senhor Jesus."', r:'Atos 20, 24'},
+{p:'FAMÍLIA', t:'EU E MINHA <em>CASA</em>', a:'estandarte', m:'Josué não esperou votação. Decidiu pela casa dele, como cabeça que era. O mundo vai oferecer outros deuses aos seus filhos: dinheiro, fama, prazer. Alguém precisa traçar a linha na porta de casa. Esse alguém é você.', v:'"Eu e a minha casa serviremos ao Senhor."', r:'Josué 24, 15'},
+{p:'FAMÍLIA', t:'AME ATÉ <em>SANGRAR</em>', a:'cavaleiro', m:'O padrão do amor de marido não é romance de novela — é a cruz. Cristo amou a Igreja até se entregar inteiro. Isso significa paciência quando você está cansado, serviço quando ninguém agradece, fidelidade quando ninguém vê.', v:'"Maridos, amai as vossas mulheres, como Cristo amou a Igreja e se entregou por ela."', r:'Efésios 5, 25'},
+{p:'FAMÍLIA', t:'FLECHAS NA <em>MÃO</em>', a:'arqueiro', m:'Filho não é peso: é flecha. E flecha não se lança sozinha — precisa de um braço firme que mire e dispare na direção certa. Seu exemplo é o arco. O que eles virem você fazer é para lá que vão voar.', v:'"Como flechas na mão do guerreiro, assim são os filhos da juventude."', r:'Salmo 127, 4'},
+{p:'FAMÍLIA', t:'O CAMINHO DA <em>CRIANÇA</em>', a:'estandarte', m:'Seus filhos esquecem metade do que você fala e lembram tudo o que você faz. Eles estão olhando quando você acorda cedo, quando reza, quando trata a mãe deles com respeito. Ensine o caminho andando nele na frente.', v:'"Educa a criança no caminho que deve andar; e até quando envelhecer não se desviará dele."', r:'Provérbios 22, 6'},
+{p:'FAMÍLIA', t:'DISCIPLINA SEM <em>IRA</em>', a:'espada', m:'Pai que grita perde autoridade a cada decibel. Corrija com firmeza, nunca com raiva. Seu filho precisa de limites e de um pai que não explode. Domine o leão antes de entrar em casa.', v:'"Pais, não irriteis vossos filhos, mas criai-os na disciplina e correção do Senhor."', r:'Efésios 6, 4'},
+{p:'HONRA', t:'PALAVRA <em>BRANDA</em>', a:'espada', m:'Responder no grito é fácil — qualquer um faz. Responder com calma quando o sangue ferve exige mais força do que levantar peso. Hoje, na fila, no trânsito, em casa: seja o homem que baixa a temperatura, não o que joga gasolina.', v:'"A resposta branda aplaca o furor, a palavra dura excita a ira."', r:'Provérbios 15, 1'},
+{p:'HONRA', t:'DAR A <em>VIDA</em>', a:'cavaleiro', m:'Ninguém te pediu para morrer por ninguém hoje. Mas pediram algo parecido: morrer para o seu egoísmo. Dar seu tempo, sua paciência, seu conforto pelos seus. Esse é o martírio diário do homem de família — e o maior amor que existe.', v:'"Ninguém tem maior amor do que aquele que dá a vida por seus amigos."', r:'João 15, 13'},
+{p:'TRABALHO', t:'ENTREGUE E <em>EXECUTE</em>', a:'bigorna', m:'Planeje como estrategista, trabalhe como soldado e entregue o resultado a Deus. Homem ansioso quer controlar tudo e não executa nada. Homem de fé faz a sua parte inteira e dorme tranquilo.', v:'"Confia ao Senhor as tuas obras, e os teus projetos se realizarão."', r:'Provérbios 16, 3'},
+{p:'CORAGEM', t:'CORAÇÃO <em>REVIGORADO</em>', a:'alvorada', m:'Hoje pode ser o dia em que a resposta chega, a porta abre, a dor passa. Ou não. Em qualquer caso, a ordem é a mesma: coração firme. Esperar no Senhor não é ficar parado — é marchar sem perder a esperança.', v:'"Sede fortes, e revigore-se o vosso coração, vós todos que esperais no Senhor."', r:'Salmo 31, 25'}
+];
+
+/* ============================== ORDENS DO DIA — ação concreta ============================== */
+const ORDENS = {
+  CORPO:['Banho gelado nos últimos 60 segundos do banho.','100 agachamentos ao longo do dia — anote cada série.','Treino antes do café. Sem negociar.','Escada em vez de elevador, todas as vezes, hoje.','Corra ou caminhe 5 km.','Nada de açúcar até o pôr do sol.','50 flexões antes do almoço, em quantas séries precisar.','Durma 30 minutos mais cedo hoje.'],
+  FÉ:['Reze um terço — no carro, no ônibus ou caminhando.','Cinco minutos de silêncio diante de Deus, celular longe.','Leia um capítulo dos Evangelhos.','Ofereça a Deus o pior momento do dia, no instante em que ele acontecer.','Reze o Angelus ao meio-dia.','Faça o exame de consciência à noite, sem pular.','Agradeça a Deus, em voz alta, por três coisas concretas.'],
+  FAMÍLIA:['Ligue para seu pai ou sua mãe só para saber como estão.','Diga à sua esposa uma coisa específica que você admira nela.','Quinze minutos inteiros com seus filhos, celular em outro cômodo.','Abençoe seus filhos antes de dormirem.','Resolva hoje aquela coisa da casa que está parada há semanas.','Jantar à mesa, sem telas.','Faça uma tarefa da casa que normalmente não é sua — sem anunciar.'],
+  DISCIPLINA:['Nenhuma reclamação até o meio-dia. Nenhuma.','Celular fora do quarto esta noite.','Faça primeiro a tarefa que você mais quer adiar.','Zero redes sociais até terminar a tarefa principal do dia.','Cama arrumada em dois minutos depois de levantar.','Leia dez páginas de um livro que te faça melhor.','Água no lugar de qualquer outra bebida até o almoço.'],
+  HONRA:['Entregue uma tarefa antes do prazo.','Cumpra uma promessa pequena que você tinha esquecido.','Elogie em público alguém da sua equipe.','Faça um serviço benfeito que ninguém vai ver.','Ajude alguém sem contar para ninguém.','Peça desculpas a quem você deve.','Chegue cinco minutos antes em todos os compromissos.']
+};
+const GRUPO_ORDEM = {CORPO:'CORPO','FÉ':'FÉ','FAMÍLIA':'FAMÍLIA',DISCIPLINA:'DISCIPLINA',HONRA:'HONRA',TRABALHO:'HONRA',CORAGEM:'DISCIPLINA','RESILIÊNCIA':'CORPO'};
+
+/* ============================== ORAÇÕES (tradicionais, domínio público) ============================== */
+const ORACOES = {
+  sinal:'Em nome do Pai, e do Filho, e do Espírito Santo. Amém.',
+  oferecimento:'Ó Jesus, pelo Coração Imaculado de Maria, eu vos ofereço as orações, obras, alegrias e sofrimentos deste dia, em reparação das nossas ofensas e por todas as intenções pelas quais continuamente vos imolais sobre o altar. Amém.',
+  miguel:'São Miguel Arcanjo, defendei-nos no combate; sede o nosso refúgio contra as maldades e ciladas do demônio. Ordene-lhe Deus, instantemente o pedimos; e vós, príncipe da milícia celeste, pela virtude divina, precipitai no inferno a Satanás e aos outros espíritos malignos, que andam pelo mundo para perder as almas. Amém.'
+};
+
+/* ============================== PATENTES (dias forjados) ============================== */
+const PATENTES = [[0,'Recruta'],[3,'Soldado'],[7,'Cabo'],[14,'3º Sargento'],[21,'2º Sargento'],[30,'1º Sargento'],[45,'Subtenente'],[60,'Aspirante a Oficial'],[80,'2º Tenente'],[100,'1º Tenente'],[130,'Capitão'],[170,'Major'],[220,'Tenente-Coronel'],[300,'Coronel']];
+
+const CREDO_PADRAO = 'Eu sou filho de Deus, homem de uma só palavra. Levanto antes do mundo. Não negocio com a preguiça. Protejo os meus, cumpro o que prometo e termino o que começo. Hoje eu luto.';
+
+const BANCO_ORIG = [
 {t:'ACORDE E <em>LUTE</em>', a:'miguel', m:'A primeira batalha do dia acontece antes do sol nascer: ficar na cama ou levantar. Todo o resto depende dessa vitória. O inimigo quer você mole, atrasado, se desculpando. Negue isso a ele. De pé, soldado.', v:'"Revesti-vos da armadura de Deus, para poderdes resistir às ciladas do demônio."', r:'Efésios 6, 11'},
 {t:'SEJA HOMEM. <em>SEJA FORTE.</em>', a:'elmo', m:'A ordem é antiga e não envelheceu. Fraqueza não é falta de músculo — é abandonar o posto quando aperta. Sua família precisa de um homem inteiro hoje. Segure a linha.', v:'"Vigiai, permanecei firmes na fé, sede homens, sede fortes."', r:'1 Coríntios 16, 13'},
 {t:'A VIDA É <em>MILÍCIA</em>', a:'armadura', m:'Você não foi colocado nesta terra para passear. Foi alistado. Cada dia é um turno de guarda: contra a preguiça, contra o vício, contra a covardia. Quem entende isso para de reclamar da batalha e começa a treinar para ela.', v:'"A vida do homem sobre a terra é uma milícia."', r:'Jó 7, 1'},
-{t:'MÃOS ADESTRADAS PARA A <em>GUERRA</em>', a:'punhos', m:'Calo na mão é medalha. Cansaço honesto é troféu. Deus não abençoa a mão fechada de quem não tenta — abençoa a mão ferida de quem luta todos os dias pelos seus.', v:'"Bendito seja o Senhor, meu rochedo, que adestra minhas mãos para o combate."', r:'Salmo 144, 1'},
+{t:'MÃOS ADESTRADAS PARA A <em>GUERRA</em>', a:'bigorna', m:'Calo na mão é medalha. Cansaço honesto é troféu. Deus não abençoa a mão fechada de quem não tenta — abençoa a mão ferida de quem luta todos os dias pelos seus.', v:'"Bendito seja o Senhor, meu rochedo, que adestra minhas mãos para o combate."', r:'Salmo 144, 1'},
 {t:'ATRAVESSE O <em>VALE</em>', a:'lobo', m:'Haverá noites escuras: conta que não fecha, doença, medo calado que homem não conta pra ninguém. Atravesse. O vale não é sua casa — é caminho. E você não caminha sozinho.', v:'"Ainda que eu atravesse o vale da sombra da morte, nenhum mal temerei, porque estais comigo."', r:'Salmo 23, 4'},
 {t:'LUTE PELOS <em>SEUS</em>', a:'estandarte', m:'Quando a vontade de desistir vier, olhe a foto na sua carteira. É por eles. Cada hora extra, cada tentação recusada, cada madrugada de pé — tudo é muro ao redor da sua casa.', v:'"Lutai pelos vossos irmãos, vossos filhos, vossas filhas, vossas mulheres e vossas casas!"', r:'Neemias 4, 14'},
 {t:'DAVI NÃO <em>ESPEROU</em>', a:'golias', m:'O gigante desafiava há quarenta dias e um exército inteiro tremia. Um pastor correu na direção dele. Coragem não é tamanho, é direção: é mover-se para frente quando todos recuam — em nome do Senhor.', v:'"Tu vens contra mim com espada e lança; eu vou contra ti em nome do Senhor dos exércitos."', r:'1 Samuel 17, 45'},
 {t:'COMBATA O <em>BOM COMBATE</em>', a:'cavaleiro', m:'No fim, só três coisas importarão: você lutou, você terminou, você guardou a fé. Nenhuma delas exige talento. Todas exigem que você não abandone. Hoje é mais um round — lute-o inteiro.', v:'"Combati o bom combate, terminei a minha corrida, guardei a fé."', r:'2 Timóteo 4, 7'},
-{t:'O LEÃO RUGE. <em>VIGIE.</em>', a:'leao', m:'O inimigo não descansa e não avisa. Ele vem na bebida a mais, no olhar comprido, no atalho desonesto. Sobriedade e vigilância não são frescura de santo — são tática de guerra.', v:'"Sede sóbrios e vigiai. O demônio, vosso adversário, anda ao redor como leão que ruge, buscando a quem devorar."', r:'1 Pedro 5, 8'},
-{t:'CAIU? <em>LEVANTA.</em>', a:'punhos', m:'O justo não é o que nunca cai. É o que levanta pela sétima vez com a mesma cara de quem levantou na primeira. Errou ontem? Confesse, conserte e marche. Autopiedade é luxo de desocupado.', v:'"O justo cai sete vezes, e sete vezes se levanta."', r:'Provérbios 24, 16'},
+{t:'O LEÃO RUGE. <em>VIGIE.</em>', a:'espada', m:'O inimigo não descansa e não avisa. Ele vem na bebida a mais, no olhar comprido, no atalho desonesto. Sobriedade e vigilância não são frescura de santo — são tática de guerra.', v:'"Sede sóbrios e vigiai. O demônio, vosso adversário, anda ao redor como leão que ruge, buscando a quem devorar."', r:'1 Pedro 5, 8'},
+{t:'CAIU? <em>LEVANTA.</em>', a:'bigorna', m:'O justo não é o que nunca cai. É o que levanta pela sétima vez com a mesma cara de quem levantou na primeira. Errou ontem? Confesse, conserte e marche. Autopiedade é luxo de desocupado.', v:'"O justo cai sete vezes, e sete vezes se levanta."', r:'Provérbios 24, 16'},
 {t:'FERRO AFIA <em>FERRO</em>', a:'elmo', m:'Homem fraco se cerca de bajulador. Homem forte se cerca de quem o confronta: o amigo que cobra, o padre que corrige, a esposa que fala a verdade. Procure aço, não algodão.', v:'"O ferro com o ferro se afia; assim o homem afia o semblante do seu amigo."', r:'Provérbios 27, 17'},
 {t:'SUOR É <em>ORAÇÃO</em>', a:'arqueiro', m:'Desde o Éden a regra não mudou: o pão vem pelo suor. Trabalho duro feito com fé não é castigo — é a oração mais sincera que um homem pode oferecer. Transforme seu turno de hoje em ofertório.', v:'"Comerás o teu pão com o suor do teu rosto."', r:'Gênesis 3, 19'},
 {t:'SÊ FIRME E <em>CORAJOSO</em>', a:'estandarte', m:'A ordem que Josué recebeu antes de atravessar o Jordão é a mesma que você recebe antes de atravessar esta semana. Não é sugestão. É comando. O medo pode vir junto — mas quem dita o passo é você.', v:'"Sê firme e corajoso. Não te atemorizes, porque o Senhor teu Deus está contigo em qualquer parte para onde fores."', r:'Josué 1, 9'},
@@ -304,21 +501,21 @@ const BANCO = [
 {t:'CASA SOBRE A <em>ROCHA</em>', a:'cavaleiro', m:'A tempestade vem para todos — para o preparado e para o desleixado. A diferença não está no vento; está no alicerce. Construa sua casa na rocha: oração diária, palavra cumprida, presença em casa.', v:'"Caiu a chuva, vieram as enchentes, sopraram os ventos contra aquela casa; ela não caiu, porque estava edificada sobre a rocha."', r:'Mateus 7, 25'},
 {t:'ELE JÁ <em>VENCEU</em>', a:'estandarte', m:'Ninguém te prometeu vida mansa — o próprio Cristo garantiu o contrário: no mundo tereis aflições. Mas a frase não termina aí. Você luta ao lado de um General que já venceu a guerra.', v:'"No mundo tereis aflições. Mas tende coragem: eu venci o mundo!"', r:'João 16, 33'},
 {t:'QUEM SERÁ <em>CONTRA NÓS?</em>', a:'miguel', m:'Faça as contas direito. De um lado: o chefe injusto, a conta atrasada, o cansaço, o mundo inteiro se for o caso. Do outro: Deus. A matemática do homem de fé só tem um resultado.', v:'"Se Deus é por nós, quem será contra nós?"', r:'Romanos 8, 31'},
-{t:'TUDO <em>POSSO</em>', a:'punhos', m:'Não é frase de camiseta — é declaração de guerra escrita por um homem preso, açoitado e naufragado três vezes. Paulo não desistiu. A força dele tinha fonte. A sua também tem.', v:'"Tudo posso naquele que me fortalece."', r:'Filipenses 4, 13'},
+{t:'TUDO <em>POSSO</em>', a:'bigorna', m:'Não é frase de camiseta — é declaração de guerra escrita por um homem preso, açoitado e naufragado três vezes. Paulo não desistiu. A força dele tinha fonte. A sua também tem.', v:'"Tudo posso naquele que me fortalece."', r:'Filipenses 4, 13'},
 {t:'ASAS DE <em>ÁGUIA</em>', a:'arqueiro', m:'O cansaço de hoje não é o seu fim. Homens que esperam no Senhor têm fôlego que a academia não explica: correm e não desfalecem, apanham e levantam, envelhecem e não azedam.', v:'"Os que esperam no Senhor renovam as suas forças; sobem com asas como águias, correm e não se cansam."', r:'Isaías 40, 31'},
-{t:'RESISTA E ELE <em>FOGE</em>', a:'leao', m:'A tentação parece gigante até encontrar a primeira resistência séria. Diga não uma vez, com vontade, e perceba: o inimigo é valentão de esquina — só avança sobre quem não reage.', v:'"Sede submissos a Deus; resisti ao demônio, e ele fugirá de vós."', r:'Tiago 4, 7'},
+{t:'RESISTA E ELE <em>FOGE</em>', a:'espada', m:'A tentação parece gigante até encontrar a primeira resistência séria. Diga não uma vez, com vontade, e perceba: o inimigo é valentão de esquina — só avança sobre quem não reage.', v:'"Sede submissos a Deus; resisti ao demônio, e ele fugirá de vós."', r:'Tiago 4, 7'},
 {t:'CINGI-VOS E SEDE <em>VALENTES</em>', a:'elmo', m:'Os Macabeus eram poucos contra um império — e escolheram lutar. Melhor cair de pé pelo que é sagrado do que viver ajoelhado diante do que é vil. Aperte o cinto. Hoje tem combate.', v:'"Cingi-vos e sede valentes, porque é melhor morrermos no combate do que ver a desgraça da nossa nação."', r:'1 Macabeus 3, 58-59'},
 {t:'ELE MARCHA <em>CONTIGO</em>', a:'estandarte', m:'Um exército não abandona os seus. E o Deus dos exércitos não abandona os dele. Você pode marchar cansado, ferido, com medo — mas nunca marchará sozinho. Firmeza no passo.', v:'"Sede fortes e corajosos; não temais, porque o Senhor teu Deus marcha contigo; não te deixará nem te abandonará."', r:'Deuteronômio 31, 6'},
 {t:'NÃO CANSE DO <em>BEM</em>', a:'cavaleiro', m:'Ser honesto num mundo esperto parece burrice — até a colheita chegar. Continue plantando: o exemplo pros filhos, o trabalho benfeito, a esmola escondida. A seu tempo, ceifará.', v:'"Não nos cansemos de fazer o bem, porque a seu tempo ceifaremos, se não desfalecermos."', r:'Gálatas 6, 9'},
-{t:'SEM LUTA, SEM <em>PÃO</em>', a:'punhos', m:'São Paulo não passava a mão na cabeça de vagabundo, e olha que ele era santo. Preguiça é deserção. O mundo deve respeito ao homem que produz — e nada ao que só reclama.', v:'"Quem não quer trabalhar, também não coma."', r:'2 Tessalonicenses 3, 10'},
+{t:'SEM LUTA, SEM <em>PÃO</em>', a:'bigorna', m:'São Paulo não passava a mão na cabeça de vagabundo, e olha que ele era santo. Preguiça é deserção. O mundo deve respeito ao homem que produz — e nada ao que só reclama.', v:'"Quem não quer trabalhar, também não coma."', r:'2 Tessalonicenses 3, 10'},
 {t:'SEM MEDO DA <em>NOITE</em>', a:'lobo', m:'O homem que reza de dia não treme de noite. Insônia de guerreiro é diferente de insônia de covarde: um vigia, o outro se rói. Entregue a Deus o que você não controla e durma como sentinela rendida.', v:'"Não temerás os terrores da noite, nem a seta que voa de dia."', r:'Salmo 91, 5'},
 {t:'GUARDIÃO DA <em>CASA</em>', a:'armadura', m:'Alarme, cerca e fechadura protegem pouco se o dono da casa vive longe de Deus. A primeira muralha do seu lar é a sua vida de oração. Reze com sua família — isso é defesa aérea.', v:'"Se o Senhor não guardar a cidade, em vão vigia a sentinela."', r:'Salmo 127, 1'},
 {t:'DISCIPLINA É <em>LIBERDADE</em>', a:'elmo', m:'O corpo é um cavalo forte: ou você doma, ou ele te leva pro barranco. Paulo, o apóstolo dos gentios, tratava o próprio corpo como recruta. Menos vontade, mais treino.', v:'"Castigo o meu corpo e o reduzo à servidão, para que não aconteça que, tendo pregado aos outros, eu mesmo venha a ser reprovado."', r:'1 Coríntios 9, 27'},
 {t:'O SILÊNCIO DE <em>SÃO JOSÉ</em>', a:'cavaleiro', m:'Nenhuma palavra dele foi registrada — só decisões. Acordou, obedeceu, protegeu, trabalhou. Guardou os dois maiores tesouros da história com um martelo na mão e a boca fechada. Seja desse batalhão.', v:'"José, despertando do sono, fez como o Anjo do Senhor lhe havia mandado."', r:'Mateus 1, 24'},
 {t:'HOMEM DE <em>PALAVRA</em>', a:'armadura', m:'Contrato de verdade não precisa de cartório quando o homem tem honra. Prometeu, cumpra. Não pode cumprir, não prometa. Sua palavra é sua lâmina: se entortar uma vez, nunca mais corta igual.', v:'"Seja o vosso falar: sim, sim; não, não. O que passa disso vem do Maligno."', r:'Mateus 5, 37'},
 {t:'PAI É <em>ESCUDO</em>', a:'estandarte', m:'Prover não é só dinheiro. É estar de pé entre sua família e o mal — a porcaria da internet, as más companhias, o desespero. Escudo apanha primeiro. É pra isso que ele existe.', v:'"Se alguém não tem cuidado dos seus e, especialmente, dos da própria casa, negou a fé e é pior que um infiel."', r:'1 Timóteo 5, 8'},
-{t:'A CARNE É FRACA. <em>VENÇA-A.</em>', a:'punhos', m:'Cristo avisou no Getsêmani, de madrugada, enquanto os fortes dormiam: vigiai e orai. A carne sempre vai pedir o caminho mole. O espírito manda. Quem obedece a quem — eis a única pergunta do dia.', v:'"Vigiai e orai, para que não entreis em tentação; o espírito está pronto, mas a carne é fraca."', r:'Mateus 26, 41'},
-{t:'FORÇA SOB <em>CONTROLE</em>', a:'leao', m:'Manso não é fraco. Manso é o leão que poderia rasgar e escolhe proteger. Grito é ruído de homem sem domínio. O forte de verdade fala baixo, decide firme e ninguém duvida.', v:'"Bem-aventurados os mansos, porque possuirão a terra."', r:'Mateus 5, 4'},
+{t:'A CARNE É FRACA. <em>VENÇA-A.</em>', a:'bigorna', m:'Cristo avisou no Getsêmani, de madrugada, enquanto os fortes dormiam: vigiai e orai. A carne sempre vai pedir o caminho mole. O espírito manda. Quem obedece a quem — eis a única pergunta do dia.', v:'"Vigiai e orai, para que não entreis em tentação; o espírito está pronto, mas a carne é fraca."', r:'Mateus 26, 41'},
+{t:'FORÇA SOB <em>CONTROLE</em>', a:'espada', m:'Manso não é fraco. Manso é o leão que poderia rasgar e escolhe proteger. Grito é ruído de homem sem domínio. O forte de verdade fala baixo, decide firme e ninguém duvida.', v:'"Bem-aventurados os mansos, porque possuirão a terra."', r:'Mateus 5, 4'},
 {t:'TOME SUA <em>CRUZ</em>', a:'cavaleiro', m:'Todo homem carrega peso. A diferença é como. Uns arrastam a cruz xingando; outros a carregam como estandarte. Cristo não pediu para você entender o peso — pediu para segui-lo com ele nos ombros.', v:'"Se alguém quer vir após mim, renuncie a si mesmo, tome a sua cruz e siga-me."', r:'Mateus 16, 24'},
 {t:'DE JOELHOS SÓ DIANTE DE <em>DEUS</em>', a:'miguel', m:'O homem que se ajoelha diante de Deus consegue ficar de pé diante de qualquer coisa: chefe, crise, medo. Quem não se curva ao Criador acaba de quatro diante de qualquer ídolo. Escolha seu Rei.', v:'"O Senhor está comigo, nada temerei. Que me poderá fazer o homem?"', r:'Salmo 118, 6'},
 {t:'O FOGO PROVA O <em>OURO</em>', a:'armadura', m:'A dificuldade que você está atravessando não é abandono — é fundição. O metal reclama do fogo, mas é o fogo que separa o ouro da escória. Aguente a temperatura. Está saindo lâmina disso.', v:'"A vossa fé, provada pelo fogo, é mais preciosa que o ouro perecível."', r:'1 Pedro 1, 7'},
@@ -327,293 +524,548 @@ const BANCO = [
 {t:'DEUS COMBATE POR <em>VOCÊ</em>', a:'miguel', m:'Tem batalha que se vence lutando — e tem batalha que se vence confiando. Faça a sua parte inteira: trabalhe, reze, proteja. E o que estiver acima das suas forças, entregue ao Senhor dos exércitos.', v:'"O Senhor combaterá por vós; ficai tranquilos."', r:'Êxodo 14, 14'},
 {t:'HERANÇA DE <em>HONRA</em>', a:'estandarte', m:'Seu bisneto vai carregar o seu sobrenome por aí. O que esse nome vai abrir para ele: portas ou vergonha? A herança que importa se constrói hoje, no escondido: caráter, fé, palavra cumprida.', v:'"O homem de bem deixa herança aos filhos de seus filhos."', r:'Provérbios 13, 22'},
 {t:'SENTINELA DA <em>MADRUGADA</em>', a:'lobo', m:'Quatro da manhã é hora de gente séria: padeiro, soldado, pai de família e santo. Enquanto a cidade dorme, o sentinela ora e afia o machado. A madrugada é sua trincheira — ocupe-a.', v:'"Minha alma espera o Senhor, mais do que a sentinela espera pela aurora."', r:'Salmo 130, 6'},
-{t:'ATÉ O ÚLTIMO <em>ROUND</em>', a:'punhos', m:'Não existe aposentadoria de caráter. A fidelidade que vale coroa é a que dura até o fim — no casamento, na fé, na palavra. Você não precisa ser brilhante. Precisa não largar o cinturão.', v:'"Sê fiel até a morte, e eu te darei a coroa da vida."', r:'Apocalipse 2, 10'},
+{t:'ATÉ O ÚLTIMO <em>ROUND</em>', a:'bigorna', m:'Não existe aposentadoria de caráter. A fidelidade que vale coroa é a que dura até o fim — no casamento, na fé, na palavra. Você não precisa ser brilhante. Precisa não largar o cinturão.', v:'"Sê fiel até a morte, e eu te darei a coroa da vida."', r:'Apocalipse 2, 10'},
 ];
+const BANCO = BANCO_ORIG.map((b,i)=>Object.assign({p:PILARES_ORIG[i]||'FÉ'}, b)).concat(BANCO_NOVO);
 
-/* ============================== seleção e streak ============================== */
+/* ============================== mensagem do dia ============================== */
 function mensagemDoDia(){
-  const off = parseInt(localStorage.getItem(K.off(hojeStr()))||'0',10);
-  const i = ((diaN()+off) % BANCO.length + BANCO.length) % BANCO.length;
+  const off = db.off[hojeStr()]||0;
+  // passo 29 (primo com 73) espalha pilares e artes ao longo dos dias
+  const i = (((diaN()*29)+off) % BANCO.length + BANCO.length) % BANCO.length;
   const b = BANCO[i];
-  return { titulo:b.t, mensagem:b.m, versiculo:b.v, referencia:b.r, svg:ARTES[b.a], origem:'banco' };
+  const grupo = ORDENS[GRUPO_ORDEM[b.p]||'DISCIPLINA'];
+  const ordem = grupo[(diaN()+off) % grupo.length];
+  return { titulo:b.t, mensagem:b.m, versiculo:b.v, referencia:b.r, svg:ARTES[b.a], pilar:b.p, ordem, origem:'banco' };
 }
+function mensagemAtual(){ return db.ia[hojeStr()] || mensagemDoDia(); }
+function textoPlano(html){ const d=document.createElement('div'); d.innerHTML=html; return d.textContent; }
 
-function atualizarStreak(){
-  let s;
-  try{ s = JSON.parse(localStorage.getItem(K.streak)) || {c:0,u:''}; }catch(e){ s={c:0,u:''}; }
+/* ============================== estatísticas ============================== */
+function stats(){
+  const forjados = Object.keys(db.dias).filter(k=>db.dias[k].forjado).sort();
+  const total = forjados.length;
+  const r = { total, seq:0, recorde:0, escudos:0, protegidos:new Set(), missoes:0, cumpridas:0, despertarMedio:null };
+  Object.values(db.dias).forEach(d=>{ if(d.missao && (d.cumprida===true||d.cumprida===false)){ r.missoes++; if(d.cumprida) r.cumpridas++; } });
+  if(!total) return r;
   const hoje = hojeStr();
-  if(s.u !== hoje){
-    s.c = (s.u === ontemStr()) ? s.c+1 : 1;
-    s.u = hoje;
-    localStorage.setItem(K.streak, JSON.stringify(s));
+  const d = new Date(forjados[0]+'T12:00:00');
+  let seq=0, escudos=0, rec=0;
+  while(isoDe(d) <= hoje){
+    const k = isoDe(d);
+    if(db.dias[k] && db.dias[k].forjado){ seq++; if(seq%7===0) escudos=Math.min(2, escudos+1); }
+    else if(k !== hoje){ if(escudos>0 && seq>0){ escudos--; r.protegidos.add(k); } else seq=0; }
+    rec = Math.max(rec, seq);
+    d.setDate(d.getDate()+1);
   }
-  $('chipStreak').textContent = '🔥 '+s.c+(s.c===1?' dia':' dias');
+  r.seq=seq; r.recorde=rec; r.escudos=escudos;
+  const ult = forjados.slice(-14).map(k=>db.dias[k].acordou).filter(Boolean).map(minutos);
+  if(ult.length){ const m=Math.round(ult.reduce((a,b)=>a+b,0)/ult.length); r.despertarMedio=pad(Math.floor(m/60))+':'+pad(m%60); }
+  return r;
+}
+function patente(total){
+  let i=0; PATENTES.forEach((p,k)=>{ if(total>=p[0]) i=k; });
+  const prox = PATENTES[i+1];
+  return { i, nome:PATENTES[i][1], prox: prox?prox[1]:null, falta: prox?prox[0]-total:0, pct: prox ? (total-PATENTES[i][0])/(prox[0]-PATENTES[i][0])*100 : 100 };
+}
+function insigniaSVG(i){
+  let s='<svg viewBox="0 0 64 64">';
+  if(i===0){ s+='<circle cx="32" cy="32" r="14" fill="none" stroke="#d3a049" stroke-width="4"/>'; }
+  else if(i<=6){ for(let k=0;k<i;k++){ const y=12+k*8; s+='<path d="M14 '+(y+8)+' L32 '+y+' L50 '+(y+8)+'" fill="none" stroke="#f0c46e" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>'; } }
+  else { const n=i-6; const per=n>4?4:n; for(let k=0;k<n;k++){ const row=Math.floor(k/per), col=k%per, cnt=Math.min(per,n-row*per); const x=32+(col-(cnt-1)/2)*13, y=(n>4?22:32)+row*18; s+='<path transform="translate('+x+' '+y+') scale(.55)" d="M0 -10 L2.9 -3.1 L10 -3.1 L4.3 1.2 L6.5 8.1 L0 3.9 L-6.5 8.1 L-4.3 1.2 L-10 -3.1 L-2.9 -3.1Z" fill="#f0c46e"/>'; } }
+  return s+'</svg>';
 }
 
-/* ============================== render ============================== */
-function sanitizarSvg(svg){
-  if(!svg || !/^\s*<svg[\s>]/i.test(svg)) return null;
-  return svg
-    .replace(/<script[\s\S]*?<\/script\s*>/gi,'')
-    .replace(/\son\w+\s*=\s*"[^"]*"/gi,'')
-    .replace(/\son\w+\s*=\s*'[^']*'/gi,'')
-    .replace(/href\s*=\s*"(?!#)[^"]*"/gi,'')
-    .replace(/<foreignObject[\s\S]*?<\/foreignObject\s*>/gi,'');
+/* ============================== som (sintetizado, sem arquivos) ============================== */
+let AC=null;
+function ac(){ if(!db.som) return null; try{ AC = AC || new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); }catch(e){ AC=null; } return AC; }
+function tom(f, t0, dur, tipo, vol, a){
+  const c=ac(); if(!c) return;
+  const o=c.createOscillator(), g=c.createGain(), lp=c.createBiquadFilter();
+  o.type=tipo||'sine'; o.frequency.value=f; lp.type='lowpass'; lp.frequency.value=2600;
+  const t=c.currentTime+t0; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol||.2,t+(a||.02)); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.connect(lp); lp.connect(g); g.connect(c.destination); o.start(t); o.stop(t+dur+.05);
 }
+function ruido(t0,dur,freq,vol){
+  const c=ac(); if(!c) return;
+  const n=c.sampleRate*dur, buf=c.createBuffer(1,n,c.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);
+  const s=c.createBufferSource(), bp=c.createBiquadFilter(), g=c.createGain();
+  s.buffer=buf; bp.type='bandpass'; bp.frequency.value=freq; bp.Q.value=1.2; g.gain.value=vol;
+  s.connect(bp); bp.connect(g); g.connect(c.destination); s.start(c.currentTime+t0);
+}
+const som = {
+  alvorada(){ // corneta: dó-mi-sol
+    [[523,0,.18],[659,.2,.18],[784,.4,.34],[659,.76,.16],[784,.94,.7]].forEach(([f,t,d])=>{ tom(f,t,d,'sawtooth',.09,.03); tom(f*2,t,d,'triangle',.03,.03); });
+  },
+  golpe(){ ruido(0,.12,3200,.9); tom(1760,0,1.1,'sine',.18,.004); tom(2640,0,.8,'sine',.09,.004); tom(70,0,.25,'sine',.5,.005); },
+  tambor(){ [0,.32,.64].forEach((t,i)=>{ tom(62-i*4,t,.35,'sine',.7,.005); ruido(t,.08,180,.5); }); },
+  tique(){ tom(880,0,.12,'sine',.06,.005); },
+  vitoria(){ [[392,0],[523,.15],[659,.3],[784,.45],[1047,.62]].forEach(([f,t])=>tom(f,t,.5,'triangle',.12,.02)); tom(1047,.62,1.4,'sawtooth',.05,.05); }
+};
 
-function render(msg){
-  const svg = sanitizarSvg(msg.svg) || ARTES.elmo;
-  $('arte').innerHTML = svg;
-  const s = $('arte').querySelector('svg');
-  if(s){ s.setAttribute('preserveAspectRatio','xMidYMid slice'); s.removeAttribute('width'); s.removeAttribute('height'); }
-  $('titulo').innerHTML = msg.titulo;             // títulos do banco usam <em> controlado
+/* ============================== voz ============================== */
+function falar(txt){
+  if(!('speechSynthesis' in window)) { toast('Voz indisponível neste aparelho'); return; }
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt.replace(/[“”"«»]/g,''));
+  u.lang='pt-BR'; u.rate=.98; u.pitch=.85;
+  const v=speechSynthesis.getVoices().find(v=>/pt[-_]BR/i.test(v.lang)); if(v) u.voice=v;
+  speechSynthesis.speak(u);
+}
+function calar(){ try{ speechSynthesis.cancel(); }catch(e){} }
+
+/* ============================== brasas (faíscas subindo) ============================== */
+function brasas(canvas, intens){
+  const ctx=canvas.getContext('2d'); let W,H,ps=[], vivo=true;
+  function tam(){ const r=canvas.getBoundingClientRect(); W=canvas.width=Math.max(1,r.width*devicePixelRatio); H=canvas.height=Math.max(1,r.height*devicePixelRatio); }
+  function nova(burst){ return { x: burst? W/2+(Math.random()-.5)*W*.3 : Math.random()*W, y: burst? H*.45 : H+10, vx:(Math.random()-.5)*(burst?7:.6)*devicePixelRatio, vy:-(burst?(3+Math.random()*7):(.4+Math.random()*1.3))*devicePixelRatio, r:(Math.random()*1.8+.6)*devicePixelRatio, v:1, d:burst?.012+Math.random()*.012:.0025+Math.random()*.004 }; }
+  tam(); addEventListener('resize',tam);
+  for(let i=0;i<intens;i++){ const p=nova(); p.y=Math.random()*H; ps.push(p); }
+  (function loop(){
+    if(!vivo) return;
+    if(canvas.offsetParent!==null || canvas.closest('.ritual.on')){
+      ctx.clearRect(0,0,W,H);
+      while(ps.length<intens) ps.push(nova(false));
+      ps.forEach(p=>{ p.x+=p.vx+Math.sin(p.y/60)*.3; p.y+=p.vy; p.vy*=.995; if(p.d>.01) p.vy+=.08*devicePixelRatio; p.v-=p.d;
+        const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*4); g.addColorStop(0,'rgba(255,214,140,'+Math.max(0,p.v)+')'); g.addColorStop(.4,'rgba(255,138,42,'+Math.max(0,p.v*.6)+')'); g.addColorStop(1,'rgba(255,90,20,0)');
+        ctx.fillStyle=g; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*4,0,7); ctx.fill(); });
+      ps=ps.filter(p=>p.v>0 && p.y>-20);
+    }
+    requestAnimationFrame(loop);
+  })();
+  return { explodir(n){ for(let i=0;i<(n||60);i++) ps.push(nova(true)); }, tam };
+}
+let fxHero, fxRitual;
+
+/* ============================== HOJE ============================== */
+function renderHoje(){
+  const msg = mensagemAtual(), d = db.dias[hojeStr()]||{}, st = stats(), pt = patente(st.total);
+  const s = sanitizarSvg(msg.svg) || ARTES.alvorada;
+  $('arte').innerHTML = s; const sv=$('arte').querySelector('svg'); if(sv){ sv.setAttribute('preserveAspectRatio','xMidYMid slice'); sv.removeAttribute('width'); sv.removeAttribute('height'); }
+  $('chipStreak').textContent = '🔥 '+st.seq;
+  $('chipEscudo').textContent = '🛡 '+st.escudos;
+  $('chipEscudo').style.display = st.escudos ? '' : 'none';
+
+  const h = new Date().getHours(), alvoM = minutos(db.alvo), agoraM = h*60+new Date().getMinutes();
+  let html = '<div class="patente-l"><i></i><span><b>'+esc(pt.nome)+'</b> · '+DIAS[new Date().getDay()].split('-')[0]+' '+pad(new Date().getDate())+' '+MESES[new Date().getMonth()]+'</span></div>';
+  if(!d.forjado){
+    let m, sub;
+    if(h>=20){ m='AMANHÃ COMEÇA <em>HOJE.</em>'; sub='A alvorada de amanhã se vence agora: celular longe, cama cedo. Mas ainda dá para forjar o dia de hoje.'; }
+    else if(agoraM <= alvoM+90){ m='DE PÉ, <em>SOLDADO.</em>'; sub= st.seq>0 ? 'São '+st.seq+' dias seguidos. Não quebre a corrente hoje.' : 'A primeira batalha do dia é sair da cama. Você já está vencendo.'; }
+    else { m='AINDA DÁ <em>TEMPO.</em>'; sub='O dia não está perdido enquanto você não desistir dele. Forje agora.'; }
+    html += '<div class="manchete">'+m+'</div><div class="sub">'+sub+'</div>';
+    html += '<button class="cta" id="btnRitual"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fbe6b8"><path d="M14 3l7 7-3 3-2-2-7.5 7.5a2.1 2.1 0 0 1-3-3L13 8l-2-2z"/></svg><span>Iniciar a forja<small>RITUAL DA ALVORADA · ~4 MIN</small></span></button>';
+  } else {
+    html += '<div class="manchete">FORJADO ÀS <em>'+esc(d.hora||d.acordou||'—')+'</em></div>';
+    html += '<div class="sub">'+(st.seq>1?st.seq+' dias seguidos. ':'')+'Agora saia e cumpra o que jurou.</div>';
+    if(d.missao) html += missaoCardHTML(d);
+  }
+  $('heroC').innerHTML = html;
+  const br=$('btnRitual'); if(br) br.onclick = abrirRitual;
+  ligarMissao();
+
+  // cartões: prestação de contas de ontem e exame da noite
+  let cards='';
+  const o = db.dias[ontemStr()];
+  if(o && o.missao && o.cumprida==null){
+    cards += '<div class="card"><div class="rotulo" style="margin:0 0 10px">Prestação de contas · ontem</div><div class="pergunta">“'+esc(o.missao)+'”</div><div class="dica" style="margin:0 0 4px">Você cumpriu o que jurou?</div><div class="missao-card" style="background:none;border:none;padding:0"><div class="res"><button class="sim" data-ontem="1">Cumpri</button><button data-ontem="0">Não cumpri</button></div></div></div>';
+  }
+  if(d.forjado && h>=18 && !d.exame){ cards += exameHTML(); }
+  $('cardsTopo').innerHTML = cards;
+  document.querySelectorAll('[data-ontem]').forEach(b=>b.onclick=()=>{ db.dias[ontemStr()].cumprida = b.dataset.ontem==='1'; salvar(); vibrar(20); toast(b.dataset.ontem==='1'?'Palavra cumprida. Honra.':'Registrado. Hoje você corrige.'); renderHoje(); });
+  ligarExame();
+
+  // palavra do dia
+  $('pilar').textContent = msg.pilar||'FÉ';
+  $('titulo').innerHTML = msg.titulo;
   $('mensagem').textContent = msg.mensagem;
   $('versiculo').textContent = msg.versiculo;
   $('referencia').textContent = msg.referencia;
-  const c = $('conteudo'); c.style.animation='none'; void c.offsetWidth; c.style.animation='';
+  $('ordem').textContent = msg.ordem || '';
+}
+function missaoCardHTML(d){
+  if(d.cumprida===true) return '<div class="missao-card feita"><div class="rot">Missão do dia</div><div class="txt">'+esc(d.missao)+'</div><div class="selo ok">✓ Cumprida</div></div>';
+  if(d.cumprida===false) return '<div class="missao-card"><div class="rot">Missão do dia</div><div class="txt">'+esc(d.missao)+'</div><div class="selo no">✗ Não cumprida — amanhã você corrige</div></div>';
+  return '<div class="missao-card" id="missaoCard"><div class="rot">Missão do dia · você jurou</div><div class="txt">'+esc(d.missao)+'</div><div class="res"><button class="sim" data-m="1">✓ Cumpri</button><button data-m="0">Não cumpri</button></div></div>';
+}
+function ligarMissao(){
+  document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{
+    dia().cumprida = b.dataset.m==='1'; salvar();
+    if(b.dataset.m==='1'){ som.golpe(); vibrar([40,30,80]); $('flash').classList.remove('go'); void $('flash').offsetWidth; $('flash').classList.add('go'); fxHero && fxHero.explodir(70); toast('Missão cumprida. Palavra de homem.'); }
+    else toast('Honestidade também é disciplina.');
+    renderHoje();
+  });
+}
+const EXAME = ['Fui fiel à minha palavra hoje?','Fui paciente e presente com a minha família?','Venci a preguiça e o celular?','Rezei e lembrei de Deus durante o dia?'];
+function exameHTML(){
+  return '<div class="card" id="exame"><div class="rotulo" style="margin:0 0 6px">Exame da noite</div><div class="dica" style="margin:0 0 6px">Dois minutos de honestidade antes de dormir.</div>'+
+    EXAME.map((q,i)=>'<div class="q"><span>'+q+'</span><div class="sn"><button data-q="'+i+'" data-v="1">SIM</button><button data-q="'+i+'" data-v="0">NÃO</button></div></div>').join('')+
+    '<textarea class="inp" id="licao" placeholder="A lição de hoje, em uma frase" style="min-height:60px;margin-top:10px"></textarea>'+
+    '<button class="btn-p" id="encerrar">Encerrar o dia</button>'+
+    '<div class="dica" id="dormir"></div></div>';
+}
+function ligarExame(){
+  const ex=$('exame'); if(!ex) return;
+  const resp={};
+  ex.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{ resp[b.dataset.q]=b.dataset.v==='1'; ex.querySelectorAll('[data-q="'+b.dataset.q+'"]').forEach(x=>x.className=''); b.className = b.dataset.v==='1'?'s':'n'; vibrar(8); });
+  const alvoM=minutos(db.alvo), deitar=((alvoM-7*60-30)%1440+1440)%1440;
+  $('dormir').textContent = 'Para levantar às '+db.alvo+' com 7h30 de sono, deite até as '+pad(Math.floor(deitar/60))+':'+pad(deitar%60)+'.';
+  $('encerrar').onclick=()=>{ const d=dia(); d.exame=EXAME.map((_,i)=>resp[i]===undefined?null:resp[i]); d.licao=$('licao').value.trim(); salvar(); som.tambor(); toast('Dia encerrado. Descanse, sentinela.'); renderHoje(); };
 }
 
-function status(html, erro){
-  const el = $('status');
-  el.innerHTML = html||''; el.className = html ? 'status on'+(erro?' erro':'') : 'status';
+/* ============================== PROGRESSO ============================== */
+function renderProgresso(){
+  const st=stats(), pt=patente(st.total);
+  let h='<div class="card"><div class="rank"><div class="insignia">'+insigniaSVG(pt.i)+'</div><div style="flex:1"><h2>'+esc(pt.nome)+'</h2><p>'+(pt.prox? 'Faltam <b style="color:var(--gold2)">'+pt.falta+'</b> dia'+(pt.falta>1?'s':'')+' forjado'+(pt.falta>1?'s':'')+' para '+esc(pt.prox) : 'Patente máxima. Lenda da forja.')+'</p></div></div><div class="barra"><i style="width:'+pt.pct+'%"></i></div></div>';
+  h+='<div class="grade">'+
+    '<div class="stat"><small>Sequência</small><b>🔥 '+st.seq+'</b><span>recorde: '+st.recorde+'</span></div>'+
+    '<div class="stat"><small>Dias forjados</small><b>'+st.total+'</b><span>'+st.escudos+' escudo'+(st.escudos!==1?'s':'')+' 🛡</span></div>'+
+    '<div class="stat"><small>Missões</small><b>'+(st.missoes?Math.round(st.cumpridas/st.missoes*100)+'%':'—')+'</b><span>'+st.cumpridas+' de '+st.missoes+' cumpridas</span></div>'+
+    '<div class="stat"><small>Despertar médio</small><b>'+(st.despertarMedio||'—')+'</b><span>alvo: '+esc(db.alvo)+'</span></div></div>';
+  // mapa 12 semanas
+  const hoje=new Date(); const fim=new Date(hoje); fim.setDate(fim.getDate()+(6-hoje.getDay()));
+  const ini=new Date(fim); ini.setDate(ini.getDate()-83);
+  let cols=''; const cur=new Date(ini);
+  for(let c=0;c<12;c++){ cols+='<div class="col">'; for(let r=0;r<7;r++){ const k=isoDe(cur); const dd=db.dias[k]; let cl='';
+      if(cur>hoje) cl='x'; else if(dd&&dd.forjado) cl = dd.cumprida===true?'m':'f'; else if(st.protegidos.has(k)) cl='e';
+      if(k===hojeStr()) cl+=' h'; cols+='<i class="'+cl+'" title="'+k+'"></i>'; cur.setDate(cur.getDate()+1);} cols+='</div>'; }
+  h+='<div class="rotulo">Últimas 12 semanas</div><div class="card"><div class="mapa">'+cols+'</div><div class="legenda"><span><i style="background:#8a5a1c"></i>Forjado</span><span><i style="background:#f0c46e"></i>Forjado + missão cumprida</span><span><i style="background:#3b5578"></i>Salvo por escudo</span></div><div class="dica">A cada 7 dias seguidos você ganha um escudo 🛡 (máx. 2). Se falhar um dia, o escudo protege a sequência. Ninguém é perfeito — mas ninguém aqui desiste.</div></div>';
+  // missões
+  const ms = Object.keys(db.dias).filter(k=>db.dias[k].missao).sort().reverse().slice(0,14);
+  h+='<div class="rotulo">Missões juradas</div><div class="card">';
+  h+= ms.length ? ms.map(k=>{ const d=db.dias[k]; const [,mm,dd]=k.split('-'); return '<div class="hist"><div class="d">'+dd+'/'+mm+'</div><div class="t">'+esc(d.missao)+(d.licao?'<div class="dica" style="margin-top:3px">“'+esc(d.licao)+'”</div>':'')+'</div><div class="r">'+(d.cumprida===true?'✅':d.cumprida===false?'❌':'⏳')+'</div></div>'; }).join('') : '<div class="dica" style="margin:0">Nenhuma missão ainda. Ela nasce no juramento do ritual.</div>';
+  h+='</div>';
+  $('progC').innerHTML=h;
 }
+
+/* ============================== ARSENAL ============================== */
+function renderArsenal(){
+  $('listaPorques').innerHTML = db.porques.map((p,i)=>'<div class="porque-item"><span>'+esc(p)+'</span><button data-rm="'+i+'" aria-label="Remover">×</button></div>').join('') || '<div class="dica" style="margin:0 0 10px">Nenhum ainda. Escreva o primeiro.</div>';
+  document.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ db.porques.splice(+b.dataset.rm,1); salvar(); renderArsenal(); });
+  $('credo').value = db.credo || CREDO_PADRAO;
+  $('alvo').value = db.alvo;
+  $('tNotif').checked = localStorage.getItem(KEY_NOTIF)==='1';
+  $('tVoz').checked = !!db.voz; $('tSom').checked = !!db.som;
+  document.querySelectorAll('[data-passo]').forEach(i=>{ i.checked = !!db.passos[i.dataset.passo]; });
+  $('inputKey').value = localStorage.getItem(KEY_API)||'';
+}
+function addPorque(){ const v=$('novoPorque').value.trim(); if(!v) return; if(db.porques.length>=6){ toast('Máximo de 6 — escolha os que importam'); return; } db.porques.push(v); $('novoPorque').value=''; salvar(); renderArsenal(); }
+
+/* ============================== RITUAL ============================== */
+let passos=[], pi=0, timers=[];
+function limparTimers(){ timers.forEach(t=>{clearTimeout(t);clearInterval(t);}); timers=[]; }
+function montarPassos(){
+  passos=[{id:'depe',n:'De pé'}];
+  if(db.passos.respira) passos.push({id:'respira',n:'Respirar'});
+  if(db.passos.oracao) passos.push({id:'oracao',n:'Oração'});
+  passos.push({id:'palavra',n:'Palavra'});
+  if(db.passos.porque) passos.push({id:'porque',n:'Meu porquê'});
+  passos.push({id:'juramento',n:'Juramento'});
+  if(db.passos.corpo) passos.push({id:'corpo',n:'Primeiro sangue'});
+}
+function abrirRitual(){
+  montarPassos(); pi=0;
+  $('ritual').classList.add('on'); document.body.style.overflow='hidden';
+  history.pushState({ritual:1},'','#ritual');
+  setTimeout(()=>fxRitual.tam(),30);
+  ac(); som.alvorada();
+  mostrar();
+}
+function fecharRitual(viaBack){
+  limparTimers(); calar();
+  $('ritual').classList.remove('on'); document.body.style.overflow='';
+  if(!viaBack && location.hash==='#ritual') history.back();
+  renderHoje();
+}
+function avancar(){ calar(); limparTimers(); pi++; if(pi>=passos.length) concluir(); else mostrar(); }
+function mostrar(){
+  const p=passos[pi];
+  $('segs').innerHTML = passos.map((x,i)=>'<i class="'+(i<pi?'done':i===pi?'cur':'')+'"></i>').join('');
+  $('rPasso').textContent = (pi+1)+'/'+passos.length+' · '+p.n;
+  $('rBody').innerHTML=''; $('rFoot').innerHTML='';
+  PASSOS[p.id]();
+  $('rBody').scrollTop=0;
+}
+function rodape(btns){
+  $('rFoot').innerHTML = btns.map((b,i)=>'<button class="'+(b.s?'btn-s':'btn-p')+'" id="rf'+i+'">'+b.t+'</button>').join('');
+  btns.forEach((b,i)=>$('rf'+i).onclick=b.f);
+}
+function golpeVisual(){
+  som.golpe(); vibrar([60,40,120]);
+  $('flash').classList.remove('go'); void $('flash').offsetWidth; $('flash').classList.add('go');
+  $('ritual').classList.remove('treme'); void $('ritual').offsetWidth; $('ritual').classList.add('treme');
+  fxRitual.explodir(90);
+}
+// botão "segure para..." — o corpo precisa se comprometer
+function holdBtn(el, ms, onDone, onStart){
+  const anel=el.querySelector('.prog'), C=2*Math.PI*46; anel.style.strokeDasharray=C; anel.style.strokeDashoffset=C;
+  let t0=0, raf=0, feito=false;
+  function loop(){ const p=Math.min(1,(performance.now()-t0)/ms); anel.style.strokeDashoffset=C*(1-p); if(p>=1){ feito=true; el.classList.remove('press'); el.classList.add('feito'); onDone(); } else raf=requestAnimationFrame(loop); }
+  el.addEventListener('pointerdown',e=>{ if(feito) return; e.preventDefault(); el.setPointerCapture&&el.setPointerCapture(e.pointerId); t0=performance.now(); el.classList.add('press'); vibrar(15); onStart&&onStart(); raf=requestAnimationFrame(loop); });
+  const solta=()=>{ if(feito) return; cancelAnimationFrame(raf); el.classList.remove('press'); anel.style.transition='stroke-dashoffset .3s'; anel.style.strokeDashoffset=C; setTimeout(()=>anel.style.transition='',300); };
+  el.addEventListener('pointerup',solta); el.addEventListener('pointercancel',solta); el.addEventListener('pointerleave',solta);
+}
+const ANEL='<svg class="anel" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" stroke="#2a231a"/><circle class="prog" cx="50" cy="50" r="46" stroke="#f0c46e" stroke-linecap="round"/></svg>';
+const MARTELO='<svg viewBox="0 0 24 24"><path d="M14 3l7 7-3 3-2-2-7.5 7.5a2.1 2.1 0 0 1-3-3L13 8l-2-2z"/></svg>';
+
+const PASSOS = {
+  depe(){
+    const d=db.dias[hojeStr()]||{};
+    $('rBody').innerHTML='<div class="ent" style="text-align:center;margin-top:auto"><div class="r-kicker">Primeira batalha</div><div class="relogio" id="relogio">'+horaAgora()+'</div><div class="r-p" style="margin-top:10px">'+saudacao()+'</div></div>'+
+      '<div class="hold" id="hold">'+ANEL+'<div class="nucleo">'+MARTELO+'<b>DE PÉ</b><small>SEGURE PARA FORJAR</small></div></div><div class="hint-c" id="holdHint">Pé no chão. Segure o botão até o martelo descer.</div><div style="margin-bottom:auto"></div>';
+    timers.push(setInterval(()=>{ const r=$('relogio'); if(r) r.textContent=horaAgora(); },5000));
+    holdBtn($('hold'),1300,()=>{
+      golpeVisual();
+      const dd=dia(); if(!dd.acordou && new Date().getHours()<12) dd.acordou=horaAgora(); salvar();
+      if(dd.acordou){ const dif = minutos(dd.acordou)-minutos(db.alvo);
+        $('holdHint').innerHTML = '<b style="color:var(--gold2)">'+dd.acordou+'</b> — '+(dif<=0? 'antes do alvo. Você venceu a cama.' : dif<=30 ? 'perto do alvo. A cama perdeu.' : 'a cama perdeu. Amanhã, mais cedo.'); }
+      else $('holdHint').innerHTML = 'Forjar fora da alvorada também conta. <b style="color:var(--gold2)">Amanhã, de madrugada.</b>';
+      timers.push(setTimeout(avancar,1500));
+    });
+    rodape([]);
+  },
+  respira(){
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Respiração de combate</div><div class="r-h">ACALME O <em>SANGUE</em></div><div class="r-p">A técnica das forças especiais para dominar o corpo antes da missão. Siga a esfera.</div></div>'+
+      '<div class="resp"><div class="aro"></div><div class="bola" id="bola"></div><div class="txt"><b id="fase">PRONTO</b><span id="cont"></span></div></div>'+
+      '<div class="agua" id="agua"><i>✓</i><span>💧 Bebi um copo d’água</span></div>';
+    $('agua').onclick=()=>{ $('agua').classList.toggle('ok'); vibrar(10); };
+    const fases=[['INSPIRA',1.9],['SEGURA',1.9],['SOLTA',1],['SEGURA',1]]; let ciclo=0, f=0, seg=4;
+    const bola=$('bola');
+    function fase(){
+      if(ciclo>=3){ $('fase').textContent='PRONTO'; $('cont').textContent=''; bola.style.transform='scale(1.4)'; som.tique(); timers.push(setTimeout(avancar,900)); return; }
+      const [nome,k]=fases[f]; $('fase').textContent=nome; seg=4; $('cont').textContent=seg; bola.style.transform='scale('+k+')'; som.tique(); vibrar(nome==='INSPIRA'?25:8);
+      const iv=setInterval(()=>{ seg--; if(seg>0) $('cont').textContent=seg; else { clearInterval(iv); f++; if(f>=4){ f=0; ciclo++; } fase(); } },1000); timers.push(iv);
+    }
+    timers.push(setTimeout(fase,700));
+    rodape([{t:'Pular',s:1,f:avancar}]);
+  },
+  oracao(){
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Apresente-se ao Comandante</div><div class="r-h">ORAÇÃO DA <em>MANHÃ</em></div>'+
+      '<div class="oracao"><h4>✠ SINAL DA CRUZ</h4>'+ORACOES.sinal+'</div><div class="oracao"><h4>OFERECIMENTO DO DIA</h4>'+ORACOES.oferecimento+'</div><div class="oracao"><h4>A SÃO MIGUEL ARCANJO</h4>'+ORACOES.miguel+'</div></div>';
+    rodape([{t:'🔊 Rezar junto',s:1,f:()=>falar(ORACOES.sinal+' '+ORACOES.oferecimento+' '+ORACOES.miguel)},{t:'Amém ›',f:avancar}]);
+  },
+  palavra(){
+    const m=mensagemAtual();
+    $('rBody').innerHTML='<div class="ent"><span class="pilar">'+esc(m.pilar||'FÉ')+'</span><div class="r-h" style="font-size:clamp(2.2rem,11vw,3.4rem)">'+m.titulo+'</div><div class="r-p">'+esc(m.mensagem)+'</div><div class="verso"><p>'+esc(m.versiculo)+'</p><small>'+esc(m.referencia)+'</small></div><div class="ordem"><span class="oi">⚔</span><div><b>ORDEM DO DIA</b><span>'+esc(m.ordem||'')+'</span></div></div></div>';
+    const leitura = textoPlano(m.titulo)+'. '+m.mensagem+' '+m.versiculo+' '+m.referencia+'. Ordem do dia: '+(m.ordem||'');
+    if(db.voz) timers.push(setTimeout(()=>falar(leitura),500));
+    rodape([{t:'🔊 Ouvir',s:1,f:()=>falar(leitura)},{t:'Recebido ›',f:avancar}]);
+  },
+  porque(){
+    if(!db.porques.length){
+      $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Antes de tudo</div><div class="r-h">POR QUEM VOCÊ <em>LEVANTA?</em></div><div class="r-p" style="margin-bottom:16px">Motivação passa. Propósito fica. Escreva até três razões pelas quais você não pode ficar na cama — nomes, sonhos, promessas.</div>'+
+        [0,1,2].map(i=>'<input class="inp" id="pq'+i+'" maxlength="60" style="margin-bottom:10px" placeholder="'+['Ex.: Minha família','Ex.: Ser exemplo para meus filhos','Ex.: Correr minha primeira maratona'][i]+'">').join('')+'</div>';
+      rodape([{t:'Depois',s:1,f:avancar},{t:'Gravar ›',f:()=>{ [0,1,2].forEach(i=>{ const v=$('pq'+i).value.trim(); if(v) db.porques.push(v); }); salvar(); if(db.porques.length) PASSOS.porque(); else avancar(); }}]);
+      return;
+    }
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Lembre-se</div><div class="r-h">É POR <em>ISSO.</em></div></div><div class="porques">'+db.porques.map((p,i)=>'<div style="animation-delay:'+(0.5+i*0.75)+'s">'+esc(p)+'</div>').join('')+'</div>';
+    db.porques.forEach((_,i)=>timers.push(setTimeout(()=>{ som.tique(); vibrar(12); },500+i*750)));
+    rodape([{t:'Eu sei por quem eu luto ›',f:avancar}]);
+  },
+  juramento(){
+    const m=mensagemAtual(), d=db.dias[hojeStr()]||{};
+    const sugest=[m.ordem].concat(Object.values(ORDENS).flat().filter(x=>x!==m.ordem).sort(()=>Math.random()-.5).slice(0,2)).filter(Boolean);
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Juramento</div><div class="r-h">QUEM VOCÊ <em>É</em></div><div class="credo">'+esc(db.credo||CREDO_PADRAO)+'</div>'+
+      '<div class="r-kicker" style="color:var(--gold)">A missão de hoje</div><input class="inp" id="missao" maxlength="120" placeholder="Uma coisa que, feita, faz o dia valer" value="'+esc(d.missao||'')+'" style="font-size:1.05rem;padding:14px"><div class="sug">'+sugest.map((s,i)=>'<button data-s="'+i+'">'+(i===0?'⚔ ':'')+esc(s)+'</button>').join('')+'</div></div>'+
+      '<div class="hold" id="jurar" style="width:min(40vw,160px);margin:20px auto 0">'+ANEL+'<div class="nucleo"><b style="font-size:1.25rem">EU JURO</b><small>SEGURE</small></div></div>';
+    document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{ $('missao').value=sugest[+b.dataset.s]; vibrar(8); });
+    holdBtn($('jurar'),1500,()=>{
+      const v=$('missao').value.trim() || m.ordem;
+      const dd=dia(); dd.missao=v; if(dd.cumprida===undefined) dd.cumprida=null; salvar();
+      som.tambor(); vibrar([80,60,80,60,140]); fxRitual.explodir(40);
+      if(db.voz) falar('Juramento feito. '+v);
+      timers.push(setTimeout(avancar,1600));
+    },()=>{ if(!$('missao').value.trim()) $('missao').value=m.ordem; });
+    rodape([]);
+  },
+  corpo(){
+    const alvo={a:20,f:10}; const c={a:0,f:0};
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Primeiro sangue</div><div class="r-h">ACORDE O <em>CORPO</em></div><div class="r-p">Sangue circulando, cabeça ligada. Toque no quadro a cada repetição.</div></div>'+
+      '<div class="reps"><div class="rep" id="repA"><b id="nA">0</b><small>AGACHAMENTOS</small><span>meta 20</span></div><div class="rep" id="repF"><b id="nF">0</b><small>FLEXÕES</small><span>meta 10</span></div></div>'+
+      '<a href="../treino/" style="display:block;text-align:center;margin-top:18px;color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em">Abrir meu treino completo ›</a>';
+    const up=(k,el,n)=>{ if(c[k]>=alvo[k]) return; c[k]++; $(n).textContent=c[k]; som.tique(); vibrar(c[k]===alvo[k]?[40,30,60]:10); if(c[k]===alvo[k]){ $(el).classList.add('ok'); fxRitual.explodir(25); } if(c.a>=alvo.a&&c.f>=alvo.f) timers.push(setTimeout(avancar,700)); };
+    $('repA').onclick=()=>up('a','repA','nA'); $('repF').onclick=()=>up('f','repF','nF');
+    rodape([{t:'Pular',s:1,f:avancar},{t:'Feito ›',f:avancar}]);
+  }
+};
+function saudacao(){
+  const st=stats(); const d=db.dias[hojeStr()]||{};
+  if(d.acordou) return 'Você já levantou hoje às '+d.acordou+'. Confirme e siga.';
+  if(st.seq>0) return st.seq+' dia'+(st.seq>1?'s':'')+' seguido'+(st.seq>1?'s':'')+'. O inimigo conta com a sua preguiça hoje. Decepcione-o.';
+  return 'A cama está quente e o mundo está escuro. É exatamente por isso que conta.';
+}
+function concluir(){
+  limparTimers();
+  const antes=patente(stats().total);
+  const d=dia(); const novo=!d.forjado; d.forjado=true; if(!d.hora) d.hora=horaAgora(); salvar();
+  const st=stats(), pt=patente(st.total);
+  $('segs').innerHTML = passos.map(()=>'<i class="done"></i>').join('');
+  $('rPasso').textContent='Concluído';
+  $('rBody').innerHTML='<div class="fim"><svg class="marte" viewBox="0 0 64 64"><path d="M32 6 L37 25 L56 30 L37 35 L32 58 L27 35 L8 30 L27 25 Z" fill="#f0c46e"/><circle cx="32" cy="30" r="5" fill="#c92d2d"/></svg><div class="forjado">FORJADO</div>'+
+    '<div class="numero" id="numSeq">0<small>DIA'+(st.seq!==1?'S':'')+' SEGUIDO'+(st.seq!==1?'S':'')+'</small></div>'+
+    (pt.i>antes.i && novo ? '<div class="promo">🎖 Promovido a '+esc(pt.nome)+'</div>' : '')+
+    '<div class="fim-linhas"><div><b>Patente</b><span>'+esc(pt.nome)+(pt.prox?' · faltam '+pt.falta+' para '+esc(pt.prox):'')+'</span></div><div><b>Despertar</b><span>'+(d.acordou? esc(d.acordou)+' (alvo '+esc(db.alvo)+')' : 'fora da alvorada — amanhã às '+esc(db.alvo))+'</span></div>'+(d.missao?'<div><b>Missão</b><span>'+esc(d.missao)+'</span></div>':'')+(st.escudos?'<div><b>Escudos</b><span>'+'🛡'.repeat(st.escudos)+' protegem sua sequência</span></div>':'')+'</div></div>';
+  rodape([{t:'Ao front ›',f:()=>fecharRitual(false)}]);
+  golpeVisual(); setTimeout(()=>som.vitoria(),350);
+  // contagem animada da sequência
+  let n=0; const alvoN=st.seq; const iv=setInterval(()=>{ n++; const el=$('numSeq'); if(!el){ clearInterval(iv); return; } el.firstChild.textContent=n; if(n>=alvoN) clearInterval(iv); }, Math.max(30, 600/Math.max(1,alvoN)));
+  timers.push(iv);
+  if(db.voz) setTimeout(()=>falar('Forjado. '+st.seq+(st.seq===1?' dia':' dias')+' seguidos. Agora vá e vença o dia.'),900);
+}
+
+/* ============================== render seguro de SVG ============================== */
+function sanitizarSvg(svg){
+  if(!svg || !/^\s*<svg[\s>]/i.test(svg)) return null;
+  return svg.replace(/<script[\s\S]*?<\/script\s*>/gi,'').replace(/\son\w+\s*=\s*"[^"]*"/gi,'').replace(/\son\w+\s*=\s*'[^']*'/gi,'').replace(/href\s*=\s*"(?!#)[^"]*"/gi,'').replace(/<foreignObject[\s\S]*?<\/foreignObject\s*>/gi,'');
+}
+function status(html, erro){ const el=$('status'); el.innerHTML=html||''; el.className = html ? 'status on'+(erro?' erro':'') : 'status'; }
 
 /* ============================== IA opcional ============================== */
-const SCHEMA = {
-  type:'object',
-  properties:{
-    titulo:{type:'string',description:'Título curto em CAIXA ALTA, máx 5 palavras, sem HTML'},
-    mensagem:{type:'string',description:'Mensagem de 40 a 60 palavras, tom guerreiro'},
-    versiculo:{type:'string',description:'Citação bíblica entre aspas, tradução católica'},
-    referencia:{type:'string',description:'Referência, ex: Josué 1, 9'},
-    svg:{type:'string',description:'Arte SVG completa começando com <svg'}
-  },
-  required:['titulo','mensagem','versiculo','referencia','svg'],
-  additionalProperties:false
-};
-
-const PROMPT_SISTEMA = `Você escreve mensagens diárias para homens católicos brasileiros — trabalhadores, pais de família, guerreiros do cotidiano. Tom: de guerra e honra, direto, viril, sem clichê de autoajuda, sem linguagem corporativa, sem emoji. Imagens permitidas: batalha espiritual, soldados, cavaleiros, São Miguel Arcanjo, São Jorge, Davi, Macabeus, forja, sentinela, escudo, lâmina. Versículos na tradução católica (Ave Maria), preferindo passagens de combate e coragem.
+const SCHEMA = { type:'object', properties:{
+  titulo:{type:'string',description:'Título curto em CAIXA ALTA, máx 5 palavras, sem HTML'},
+  pilar:{type:'string',enum:['FÉ','FAMÍLIA','DISCIPLINA','CORPO','HONRA','TRABALHO','CORAGEM','RESILIÊNCIA']},
+  mensagem:{type:'string',description:'Mensagem de 40 a 60 palavras, tom guerreiro'},
+  versiculo:{type:'string',description:'Citação bíblica entre aspas, tradução católica'},
+  referencia:{type:'string',description:'Referência, ex: Josué 1, 9'},
+  ordem:{type:'string',description:'Ordem do dia: uma ação concreta, curta e verificável para hoje'},
+  svg:{type:'string',description:'Arte SVG completa começando com <svg'} },
+  required:['titulo','pilar','mensagem','versiculo','referencia','ordem','svg'], additionalProperties:false };
+const PROMPT_SISTEMA = `Você escreve a mensagem da manhã para um homem católico brasileiro — trabalhador, pai de família, guerreiro do cotidiano — que quer saltar da cama com fogo no peito. Tom: guerra e honra, direto, viril, sem clichê de autoajuda, sem linguagem corporativa, sem emoji. Pilares: fé, família, disciplina, corpo (corrida, treino, resistência), honra e trabalho. Versículos na tradução católica, de combate e coragem. Termine com uma ORDEM DO DIA concreta e verificável.
 
 Você também cria a arte do dia: um SVG dramático estilo pôster de guerra.
 Regras do SVG:
 - comece exatamente com <svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
-- silhuetas fortes de guerreiros, elmos, espadas, leões, montanhas, estandartes
-- paleta: pretos e aços, dourado #d3a049 / #f0c46e, vermelho sangue #a01f1f / #c92d2d
+- silhuetas fortes: guerreiros, elmos, espadas, leões, montanhas, estandartes, corredores ao amanhecer, forja e bigorna
+- paleta: pretos e aços, dourado #d3a049 / #f0c46e, laranja de brasa #ff8a2a, vermelho sangue #a01f1f / #c92d2d
 - use gradientes; sem texto; sem imagens externas; sem scripts
 - terço inferior bem escuro (o texto do app fica ali)
 - máximo ~4000 caracteres`;
-
 async function forjarIA(){
-  const key = localStorage.getItem(K.key);
-  if(!key){ status('Para forjar com IA, adicione sua chave da API Anthropic em ⚙. O banco de 42 mensagens continua funcionando sem ela.'); return; }
-  const d = new Date();
-  $('btnGerar').disabled = true;
-  status('<span class="spin"></span>Forjando no fogo…');
+  const key = localStorage.getItem(KEY_API);
+  if(!key){ status('Para forjar com IA, adicione sua chave da API Anthropic no Arsenal. O banco de 73 mensagens funciona sem ela.'); return; }
+  const d=new Date(); $('btnGerar').disabled=true; status('<span class="spin"></span>Forjando no fogo…');
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{
-        'content-type':'application/json',
-        'x-api-key':key,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
-      },
-      body:JSON.stringify({
-        model:'claude-opus-4-8',
-        max_tokens:8000,
-        system:PROMPT_SISTEMA,
-        output_config:{format:{type:'json_schema',schema:SCHEMA}},
-        messages:[{role:'user',content:'Hoje é '+DIAS[d.getDay()]+', '+d.getDate()+' de '+MESES[d.getMonth()]+'. Forje a mensagem de guerra do dia e a arte correspondente. Inédita e cirúrgica.'}]
-      })
-    });
-    if(!res.ok){
-      const err = await res.json().catch(()=>({}));
-      throw new Error((err.error&&err.error.message)||('Erro HTTP '+res.status));
-    }
-    const dados = await res.json();
-    const texto = (dados.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
-    const msg = JSON.parse(texto);
-    msg.origem='ia';
-    msg.titulo = String(msg.titulo).replace(/</g,'&lt;').toUpperCase();
-    if(!sanitizarSvg(msg.svg)) msg.svg = ARTES.miguel;
-    localStorage.setItem(K.msg(hojeStr()), JSON.stringify(msg));
-    render(msg);
-    status('');
-  }catch(e){
-    status('Falha na forja por IA: <b>'+(e.message||e)+'</b>', true);
-  }finally{
-    $('btnGerar').disabled = false;
-  }
+    const res = await fetch('https://api.anthropic.com/v1/messages',{ method:'POST', headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({ model:'claude-opus-5-5', max_tokens:8000, system:PROMPT_SISTEMA, output_config:{format:{type:'json_schema',schema:SCHEMA}},
+        messages:[{role:'user',content:'Hoje é '+DIAS[d.getDay()]+', '+d.getDate()+' de '+MESES[d.getMonth()]+'. Forje a mensagem de guerra do dia, a ordem do dia e a arte. Inédita e cirúrgica.'}] }) });
+    if(!res.ok){ const err=await res.json().catch(()=>({})); throw new Error((err.error&&err.error.message)||('Erro HTTP '+res.status)); }
+    const dados=await res.json(); const texto=(dados.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+    const msg=JSON.parse(texto); msg.origem='ia'; msg.titulo=esc(String(msg.titulo)).toUpperCase();
+    if(!sanitizarSvg(msg.svg)) msg.svg=ARTES.miguel;
+    db.ia={}; db.ia[hojeStr()]=msg; salvar(); renderHoje(); status('');
+  }catch(e){ status('Falha na forja por IA: <b>'+esc(e.message||e)+'</b>', true); }
+  finally{ $('btnGerar').disabled=false; }
 }
 
 /* ============================== PNG / compartilhar ============================== */
-function mensagemAtual(){
-  const salva = localStorage.getItem(K.msg(hojeStr()));
-  if(salva){ try{ return JSON.parse(salva); }catch(e){} }
-  return mensagemDoDia();
-}
-function textoPlano(html){ const d=document.createElement('div'); d.innerHTML=html; return d.textContent; }
-
-function quebrarLinhas(ctx, texto, maxW){
-  const palavras = texto.split(/\s+/); const linhas=[]; let l='';
-  for(const p of palavras){
-    const t = l ? l+' '+p : p;
-    if(ctx.measureText(t).width > maxW && l){ linhas.push(l); l=p; } else l=t;
-  }
-  if(l) linhas.push(l);
-  return linhas;
-}
-
+function quebrarLinhas(ctx,texto,maxW){ const ps=texto.split(/\s+/), ls=[]; let l=''; for(const p of ps){ const t=l?l+' '+p:p; if(ctx.measureText(t).width>maxW && l){ ls.push(l); l=p; } else l=t; } if(l) ls.push(l); return ls; }
 async function gerarPng(){
-  const msg = mensagemAtual();
-  const svg = sanitizarSvg(msg.svg) || ARTES.elmo;
-  const url = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
-  const img = new Image();
+  const msg=mensagemAtual(); const svg=sanitizarSvg(msg.svg)||ARTES.alvorada;
+  const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'})); const img=new Image();
   await new Promise((ok,ko)=>{ img.onload=ok; img.onerror=ko; img.src=url; });
-  const W=1080,H=1350,c=document.createElement('canvas'); c.width=W; c.height=H;
-  const ctx=c.getContext('2d');
+  try{ await document.fonts.load('700 74px Oswald'); }catch(e){}
+  const W=1080,H=1350,c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
   ctx.drawImage(img,0,0,W,H); URL.revokeObjectURL(url);
-
-  const g=ctx.createLinearGradient(0,H*.3,0,H);
-  g.addColorStop(0,'rgba(7,6,5,0)'); g.addColorStop(.5,'rgba(7,6,5,.66)'); g.addColorStop(1,'rgba(7,6,5,.96)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-  const g2=ctx.createLinearGradient(0,0,0,H*.2);
-  g2.addColorStop(0,'rgba(7,6,5,.8)'); g2.addColorStop(1,'rgba(7,6,5,0)');
-  ctx.fillStyle=g2; ctx.fillRect(0,0,W,H*.2);
-
-  ctx.textBaseline='top';
-  ctx.font='900 26px Arial'; ctx.fillStyle='#9c8e74';
-  ctx.fillText('⚔  F O R J A   D I Á R I A', 70, 64);
-
-  const M=76, maxW=W-M*2;
-  ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=16;
-
-  const tit = textoPlano(msg.titulo).toUpperCase();
-  ctx.font='900 74px "Arial Black",Arial';
-  const titL=quebrarLinhas(ctx,tit,maxW);
-  ctx.font='38px Georgia';
-  const msgL=quebrarLinhas(ctx,msg.mensagem,maxW);
-  ctx.font='italic 34px Georgia';
-  const verL=quebrarLinhas(ctx,msg.versiculo,maxW-24);
-
-  const hTit=titL.length*80, hMsg=msgL.length*54, hVer=verL.length*46;
-  let y = H - 84 - 36 - hVer - 30 - hMsg - 26 - hTit;
-
-  ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M, y-24, 120, 8); ctx.shadowBlur=16;
-
-  ctx.font='900 74px "Arial Black",Arial'; ctx.fillStyle='#f7edd8';
-  for(const l of titL){ ctx.fillText(l,M,y); y+=80; } y+=18;
-  ctx.font='38px Georgia'; ctx.fillStyle='#e7dcc4';
-  for(const l of msgL){ ctx.fillText(l,M,y); y+=54; } y+=14;
-  ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M, y, 6, hVer+40); ctx.shadowBlur=16;
-  ctx.font='italic 34px Georgia'; ctx.fillStyle='#f0c46e';
-  for(const l of verL){ ctx.fillText(l,M+24,y+6); y+=46; } y+=14;
-  ctx.font='900 26px Arial'; ctx.fillStyle='#d3a049';
-  ctx.fillText(msg.referencia.toUpperCase(), M+24, y);
-
+  const g=ctx.createLinearGradient(0,H*.28,0,H); g.addColorStop(0,'rgba(7,6,5,0)'); g.addColorStop(.45,'rgba(7,6,5,.7)'); g.addColorStop(1,'rgba(7,6,5,.97)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  const g2=ctx.createLinearGradient(0,0,0,H*.2); g2.addColorStop(0,'rgba(7,6,5,.8)'); g2.addColorStop(1,'rgba(7,6,5,0)'); ctx.fillStyle=g2; ctx.fillRect(0,0,W,H*.2);
+  ctx.textBaseline='top'; ctx.font='600 28px Oswald, Arial'; ctx.fillStyle='#9c8e74'; ctx.fillText('⚔  F O R J A   D I Á R I A', 70, 64);
+  const M=76, maxW=W-M*2; ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=16;
+  const TF='700 86px Oswald, "Arial Black", Arial';
+  const tit=textoPlano(msg.titulo).toUpperCase(); ctx.font=TF; const titL=quebrarLinhas(ctx,tit,maxW);
+  ctx.font='36px Georgia'; const msgL=quebrarLinhas(ctx,msg.mensagem,maxW);
+  ctx.font='italic 33px Georgia'; const verL=quebrarLinhas(ctx,msg.versiculo,maxW-24);
+  const hTit=titL.length*90, hMsg=msgL.length*52, hVer=verL.length*45;
+  let y=H-84-36-hVer-30-hMsg-26-hTit;
+  ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M,y-26,120,8); ctx.shadowBlur=16;
+  ctx.font=TF; ctx.fillStyle='#f7edd8'; for(const l of titL){ ctx.fillText(l,M,y); y+=90; } y+=14;
+  ctx.font='36px Georgia'; ctx.fillStyle='#e7dcc4'; for(const l of msgL){ ctx.fillText(l,M,y); y+=52; } y+=14;
+  ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M,y,6,hVer+40); ctx.shadowBlur=16;
+  ctx.font='italic 33px Georgia'; ctx.fillStyle='#f0c46e'; for(const l of verL){ ctx.fillText(l,M+24,y+6); y+=45; } y+=14;
+  ctx.font='600 26px Oswald, Arial'; ctx.fillStyle='#d3a049'; ctx.fillText(msg.referencia.toUpperCase(),M+24,y);
   return new Promise(ok=>c.toBlob(ok,'image/png'));
 }
-
-async function baixar(){
-  try{
-    const blob = await gerarPng();
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob); a.download='forja-diaria-'+hojeStr()+'.png';
-    a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-  }catch(e){ status('Falha ao gerar a imagem: '+e, true); }
-}
-
+async function baixar(){ try{ const blob=await gerarPng(); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='forja-diaria-'+hojeStr()+'.png'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); }catch(e){ status('Falha ao gerar a imagem: '+esc(e), true); } }
 async function compartilhar(){
-  const m = mensagemAtual();
-  const texto = textoPlano(m.titulo).toUpperCase()+'\n\n'+m.mensagem+'\n\n'+m.versiculo+'\n— '+m.referencia+'\n\n⚔ Forja Diária';
-  try{
-    const blob = await gerarPng();
-    const file = new File([blob],'forja-diaria.png',{type:'image/png'});
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({files:[file], text:texto, title:'Forja Diária'}); return;
-    }
-    if(navigator.share){ await navigator.share({text:texto, title:'Forja Diária'}); return; }
-    await navigator.clipboard.writeText(texto);
-    status('Mensagem copiada. Cole onde quiser.');
-  }catch(e){ /* cancelado */ }
+  const m=mensagemAtual(); const texto=textoPlano(m.titulo).toUpperCase()+'\n\n'+m.mensagem+'\n\n'+m.versiculo+'\n— '+m.referencia+(m.ordem?'\n\n⚔ Ordem do dia: '+m.ordem:'')+'\n\n⚔ Forja Diária';
+  try{ const blob=await gerarPng(); const file=new File([blob],'forja-diaria.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file],text:texto,title:'Forja Diária'}); return; }
+    if(navigator.share){ await navigator.share({text:texto,title:'Forja Diária'}); return; }
+    await navigator.clipboard.writeText(texto); toast('Mensagem copiada');
+  }catch(e){}
 }
 
-/* ============================== notificações 4h ============================== */
+/* ============================== notificações (lembrete) ============================== */
+async function guardarAlvoNoSW(){ try{ const c=await caches.open('forja-cfg'); await c.put('./alvo', new Response(db.alvo)); }catch(e){} }
 async function configurarNotificacoes(ligar){
-  const dica = $('notifDica');
+  const dica=$('notifDica');
   if(!('Notification' in window)){ dica.textContent='Este navegador não suporta notificações.'; return false; }
-  if(!ligar){ localStorage.setItem(K.notif,'0'); dica.textContent=''; return false; }
-  const perm = await Notification.requestPermission();
-  if(perm!=='granted'){ dica.textContent='Permissão negada pelo navegador.'; return false; }
-  localStorage.setItem(K.notif,'1');
-  try{
-    const reg = await navigator.serviceWorker.ready;
-    if('periodicSync' in reg){
-      await reg.periodicSync.register('forja-diaria',{minInterval:12*60*60*1000});
-    }
-  }catch(e){}
-  dica.textContent='Ativado. Instale o app na tela inicial (menu do navegador → "Adicionar à tela inicial") para maior confiabilidade do toque das 4h.';
-  return true;
+  if(!ligar){ localStorage.setItem(KEY_NOTIF,'0'); return false; }
+  const perm=await Notification.requestPermission();
+  if(perm!=='granted'){ dica.textContent='Permissão negada. Libere as notificações do Forja nas configurações do Android.'; $('tNotif').checked=false; return false; }
+  localStorage.setItem(KEY_NOTIF,'1'); guardarAlvoNoSW();
+  try{ const reg=await navigator.serviceWorker.ready; if('periodicSync' in reg) await reg.periodicSync.register('forja-diaria',{minInterval:12*60*60*1000}); }catch(e){}
+  toast('Toque de alvorada ativado'); return true;
 }
-
 async function talvezNotificar(){
-  if(localStorage.getItem(K.notif)!=='1') return;
-  const agora=new Date();
-  if(agora.getHours()<4) return;
-  const hoje=hojeStr();
-  if(localStorage.getItem(K.lastNotif)===hoje) return;
-  localStorage.setItem(K.lastNotif,hoje);
-  try{
-    const reg=await navigator.serviceWorker.ready;
-    const m=mensagemAtual();
-    reg.showNotification('⚔ 4H. DE PÉ, SOLDADO.',{
-      body:textoPlano(m.titulo).toUpperCase()+' — '+m.referencia,
-      icon:'icon.svg', badge:'icon.svg', tag:'forja-diaria'
-    });
+  if(localStorage.getItem(KEY_NOTIF)!=='1') return;
+  const agora=new Date(); if(agora.getHours()*60+agora.getMinutes() < minutos(db.alvo)) return;
+  const hoje=hojeStr(); if(localStorage.getItem(KEY_LASTNOTIF)===hoje || (db.dias[hoje]&&db.dias[hoje].forjado)) return;
+  localStorage.setItem(KEY_LASTNOTIF,hoje);
+  try{ const reg=await navigator.serviceWorker.ready; const m=mensagemAtual();
+    reg.showNotification('⚔ '+db.alvo+'. DE PÉ, SOLDADO.',{ body:textoPlano(m.titulo).toUpperCase()+' — a forja está acesa.', icon:'icon-192.png', badge:'icon-192.png', tag:'forja-diaria', vibrate:[200,100,200,100,400] });
   }catch(e){}
 }
-
-function agendarProxima4h(){
-  const agora=new Date(); const alvo=new Date(agora);
-  alvo.setHours(4,0,5,0);
-  if(alvo<=agora) alvo.setDate(alvo.getDate()+1);
-  setTimeout(()=>{ talvezNotificar(); render(mensagemDoDia()); agendarProxima4h(); }, alvo-agora);
+function agendarProxima(){
+  const agora=new Date(), alvo=new Date(agora); const [hh,mm]=db.alvo.split(':').map(Number);
+  alvo.setHours(hh,mm,5,0); if(alvo<=agora) alvo.setDate(alvo.getDate()+1);
+  setTimeout(()=>{ talvezNotificar(); renderHoje(); agendarProxima(); }, Math.min(alvo-agora, 2147000000));
 }
+
+/* ============================== backup ============================== */
+function exportar(){ const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='forja-historico-'+hojeStr()+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); toast('Histórico exportado'); }
+function importar(f){ const r=new FileReader(); r.onload=e=>{ try{ const d=JSON.parse(e.target.result); if(!d.dias) throw 0; if(!confirm('Substituir o histórico atual pelo arquivo?')) return; localStorage.setItem(KEY_DB, JSON.stringify(d)); carregar(); renderArsenal(); renderHoje(); toast('Histórico restaurado'); }catch(err){ toast('Arquivo inválido'); } }; r.readAsText(f); }
+
+/* ============================== navegação ============================== */
+let pgAtual='hoje';
+function irPara(pg){
+  pgAtual=pg;
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on', p.id==='pg-'+pg));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on', b.dataset.pg===pg));
+  if(pg==='hoje'){ renderHoje(); setTimeout(()=>fxHero.tam(),30); }
+  if(pg==='progresso') renderProgresso();
+  if(pg==='arsenal') renderArsenal();
+  window.scrollTo(0,0);
+}
+addEventListener('popstate',()=>{ if($('ritual').classList.contains('on')) fecharRitual(true); });
 
 /* ============================== init ============================== */
 function init(){
-  const d=new Date();
-  $('dataHoje').textContent = DIAS[d.getDay()]+' · '+pad(d.getDate())+' '+MESES[d.getMonth()]+' '+d.getFullYear();
-
-  atualizarStreak();
-  render(mensagemAtual());
-
-  $('btnOutra').onclick = ()=>{
-    const k=K.off(hojeStr());
-    localStorage.setItem(k, String((parseInt(localStorage.getItem(k)||'0',10)+1)));
-    localStorage.removeItem(K.msg(hojeStr()));   // volta ao banco se estava em msg de IA
-    render(mensagemDoDia()); status('');
-  };
-  $('btnGerar').onclick = forjarIA;
-  $('btnBaixar').onclick = baixar;
-  $('btnCompartilhar').onclick = compartilhar;
-
-  $('btnConfig').onclick = ()=>{
-    $('inputKey').value = localStorage.getItem(K.key)||'';
-    $('toggleNotif').checked = localStorage.getItem(K.notif)==='1';
-    $('modalConfig').showModal();
-  };
-  $('btnSalvar').onclick = async ()=>{
-    const v=$('inputKey').value.trim();
-    if(v) localStorage.setItem(K.key,v); else localStorage.removeItem(K.key);
-    await configurarNotificacoes($('toggleNotif').checked);
-    $('modalConfig').close();
-  };
-  $('toggleNotif').onchange = e=>configurarNotificacoes(e.target.checked);
-
-  if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
-  talvezNotificar();
-  agendarProxima4h();
+  carregar();
+  fxHero = brasas($('brasasHero'), 26);
+  fxRitual = brasas($('brasasRitual'), 34);
+  document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>irPara(b.dataset.pg));
+  $('rFechar').onclick=()=>fecharRitual(false);
+  $('btnOuvir').onclick=()=>{ const m=mensagemAtual(); falar(textoPlano(m.titulo)+'. '+m.mensagem+' '+m.versiculo+' '+m.referencia+'. Ordem do dia: '+(m.ordem||'')); };
+  $('btnOutra').onclick=()=>{ const k=hojeStr(); db.off[k]=(db.off[k]||0)+1; delete db.ia[k]; salvar(); renderHoje(); status(''); $('cardMsg').scrollIntoView({behavior:'smooth',block:'start'}); };
+  $('btnGerar').onclick=forjarIA; $('btnBaixar').onclick=baixar; $('btnCompartilhar').onclick=compartilhar;
+  $('addPorque').onclick=addPorque; $('novoPorque').addEventListener('keydown',e=>{ if(e.key==='Enter') addPorque(); });
+  $('credo').addEventListener('change',()=>{ db.credo=$('credo').value.trim(); salvar(); toast('Credo gravado'); });
+  $('credoPadrao').onclick=()=>{ db.credo=''; salvar(); renderArsenal(); toast('Credo padrão restaurado'); };
+  $('alvo').addEventListener('change',()=>{ if($('alvo').value){ db.alvo=$('alvo').value; salvar(); guardarAlvoNoSW(); toast('Alvorada às '+db.alvo); } });
+  $('tNotif').onchange=e=>configurarNotificacoes(e.target.checked);
+  $('tVoz').onchange=e=>{ db.voz=e.target.checked; salvar(); };
+  $('tSom').onchange=e=>{ db.som=e.target.checked; salvar(); if(db.som){ ac(); som.golpe(); } };
+  document.querySelectorAll('[data-passo]').forEach(i=>i.onchange=()=>{ db.passos[i.dataset.passo]=i.checked; salvar(); });
+  $('salvarKey').onclick=()=>{ const v=$('inputKey').value.trim(); if(v) localStorage.setItem(KEY_API,v); else localStorage.removeItem(KEY_API); toast(v?'Chave salva':'Chave removida'); };
+  $('exportar').onclick=exportar; $('importar').onclick=()=>$('arqImport').click(); $('arqImport').onchange=e=>{ if(e.target.files[0]) importar(e.target.files[0]); };
+  if('speechSynthesis' in window) speechSynthesis.getVoices();
+  try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+  if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+  irPara('hoje');
+  talvezNotificar(); agendarProxima();
+  // abrir direto no ritual: atalho do ícone ou link com #forjar
+  if(location.hash==='#forjar' && !(db.dias[hojeStr()]||{}).forjado){ history.replaceState(null,'',location.pathname); setTimeout(abrirRitual,300); }
 }
 init();
 </script>
