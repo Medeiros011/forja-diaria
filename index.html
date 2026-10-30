@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#070605; --steel:#14110d; --steel2:#1e1a14; --steel3:#29231a;
@@ -240,6 +240,139 @@ dialog{background:var(--steel);color:var(--text);border:1px solid var(--border);
 dialog::backdrop{background:rgba(0,0,0,.8)}
 .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:200;background:#1e1a14;border:1px solid var(--gold);color:var(--gold2);padding:12px 18px;border-radius:999px;font-weight:700;font-size:.85rem;transition:.3s;pointer-events:none;white-space:nowrap}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* =====================================================================
+   TEMA GUERREIRO 3.1 — cores, tipografia romana e movimento cinematográfico
+   ===================================================================== */
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+:root{
+  --blood:#b3121a; --blood2:#e0242c; --bronze:#cd7f32; --gold:#f5c04a; --gold2:#ffd98a; --ember:#ff6a00;
+  --text:#f3eadb; --muted:#b6a488; --faint:#7d6c56; --border:rgba(245,192,74,.15);
+  --acc:#f5c04a;
+  --title:'Cinzel','Trajan Pro',Georgia,serif;
+  --label:'Oswald','Arial Narrow',sans-serif;
+}
+html{background:#050303}
+body{background:radial-gradient(130% 70% at 50% -10%,#2c0a08 0%,#0d0606 45%,#050303 100%) fixed;color:var(--text)}
+
+/* ---------- herói cinematográfico ---------- */
+.hero{isolation:isolate}
+.arte{animation:kenburns 26s ease-in-out infinite alternate;transform-origin:50% 38%;will-change:transform}
+@keyframes kenburns{0%{transform:scale(1.03) translate(0,0)}100%{transform:scale(1.2) translate(-2.5%,-2%)}}
+.raios{position:absolute;inset:-40%;z-index:1;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 42%,rgba(255,210,140,.13) 0deg 3deg,transparent 3deg 13deg);-webkit-mask:radial-gradient(circle at 50% 42%,#000 0%,transparent 46%);mask:radial-gradient(circle at 50% 42%,#000 0%,transparent 46%);mix-blend-mode:screen;animation:gira 90s linear infinite}
+.nevoa{position:absolute;left:-60%;right:-60%;bottom:4%;height:46%;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 25% 60%,rgba(255,140,90,.16),transparent 55%),radial-gradient(ellipse at 70% 45%,rgba(180,40,30,.18),transparent 55%),radial-gradient(ellipse at 50% 80%,rgba(255,200,140,.08),transparent 60%);filter:blur(24px);animation:nevoa 20s ease-in-out infinite alternate}
+@keyframes nevoa{from{transform:translateX(-10%)}to{transform:translateX(14%)}}
+.relampago{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:radial-gradient(circle at 72% 18%,rgba(225,235,255,.55),rgba(160,180,255,.12) 40%,transparent 70%)}
+.relampago.go{animation:relampago 1s ease-out}
+@keyframes relampago{0%{opacity:0}6%{opacity:1}12%{opacity:.15}20%{opacity:.8}100%{opacity:0}}
+.veu{background:linear-gradient(180deg,rgba(5,3,3,.88) 0%,rgba(5,3,3,0) 20%),linear-gradient(180deg,rgba(5,3,3,0) 28%,rgba(5,3,3,.7) 60%,rgba(5,3,3,.98) 100%)}
+.hero::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(90% 38% at 50% 100%,color-mix(in srgb,var(--acc) 26%,transparent),transparent 70%)}
+.marca b{font-family:var(--title);font-weight:900;letter-spacing:.22em}
+.chip{background:linear-gradient(160deg,rgba(40,14,10,.8),rgba(10,6,5,.8));border:1px solid rgba(245,192,74,.28);color:var(--gold2);box-shadow:0 0 18px rgba(255,106,0,.12)}
+.patente-l{font-family:var(--label);font-weight:600;font-size:.74rem}
+.patente-l i{background:linear-gradient(90deg,transparent,var(--acc));height:2px}
+.patente-l b{color:var(--acc)}
+.manchete{font-family:var(--title);font-weight:900;font-size:clamp(2.2rem,11vw,3.7rem);line-height:1.02;letter-spacing:.015em;text-shadow:0 4px 24px rgba(0,0,0,.9),0 0 50px color-mix(in srgb,var(--acc) 22%,transparent)}
+.sub{font-size:1.06rem}
+
+/* ---------- tipografia cinética ---------- */
+.kin .w{display:inline-block;opacity:0;transform:scale(1.9) translateY(-8px);filter:blur(10px);animation:slamw .62s cubic-bezier(.2,1.35,.4,1) forwards;animation-delay:calc(var(--i)*115ms + var(--d0,0ms))}
+@keyframes slamw{to{opacity:1;transform:none;filter:blur(0)}}
+.manchete em,.r-h em,.titulo em{color:var(--acc)}
+.kin em .w,.ouro{background:linear-gradient(100deg,#f0a83a 0%,#ffd98a 20%,#fff8e4 30%,#ffe2a0 40%,#f5c04a 60%,#ffd98a 80%,#f0a83a 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.kin em .w{animation:slamw .62s cubic-bezier(.2,1.35,.4,1) forwards,brilho 4.5s linear infinite;animation-delay:calc(var(--i)*115ms + var(--d0,0ms)),0s}
+@keyframes brilho{from{background-position:120% 0}to{background-position:-120% 0}}
+
+/* ---------- botão principal em lava ---------- */
+.cta{border:none;font-family:var(--title);font-weight:900;letter-spacing:.1em;background:linear-gradient(110deg,#4a0306,#b3121a 28%,#ff4a1a 50%,#b3121a 72%,#4a0306);background-size:260% 100%;animation:lava 5s ease-in-out infinite;box-shadow:0 12px 44px rgba(224,36,44,.45),0 0 0 1px rgba(255,180,120,.25) inset}
+@keyframes lava{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.cta::before{content:'';position:absolute;inset:0;border-radius:16px;padding:2px;background:conic-gradient(from var(--ang),transparent 0 55%,#ffd98a 72%,#ff6a00 84%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:angulo 2.4s linear infinite;pointer-events:none}
+@keyframes angulo{to{--ang:360deg}}
+.cta svg{filter:drop-shadow(0 0 8px rgba(255,220,150,.8));animation:martela 1.6s ease-in-out infinite;transform-origin:70% 30%}
+@keyframes martela{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-28deg)}80%{transform:rotate(6deg)}}
+.cta small{font-family:var(--label);letter-spacing:.2em}
+
+/* ---------- cartões ---------- */
+.card{position:relative;overflow:hidden;background:linear-gradient(165deg,rgba(48,16,12,.86),rgba(14,8,7,.94) 55%);border:1px solid rgba(245,192,74,.14);box-shadow:0 14px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,220,150,.07)}
+.card::before{content:'';position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.75}
+.missao-card{background:linear-gradient(160deg,rgba(48,16,12,.88),rgba(12,7,6,.9));border:1px solid rgba(245,192,74,.25);border-left:4px solid var(--acc);box-shadow:0 10px 40px rgba(0,0,0,.5),0 0 30px color-mix(in srgb,var(--acc) 14%,transparent)}
+.missao-card .txt{font-family:var(--title);font-weight:700;font-size:1.15rem}
+.missao-card .res .sim{background:linear-gradient(160deg,#c8862a,#6a3c08);border-color:#ffd98a;color:#fff3d0}
+.rotulo{font-family:var(--label);color:var(--muted)}
+.rotulo::before{content:'';width:7px;height:7px;transform:rotate(45deg);background:var(--acc);box-shadow:0 0 10px var(--acc);flex:none}
+.rotulo::after{background:linear-gradient(90deg,rgba(245,192,74,.35),transparent)}
+.pilar{background:linear-gradient(90deg,var(--acc),#fff0c8);color:#1a0806;font-family:var(--label);font-size:.66rem;box-shadow:0 0 16px color-mix(in srgb,var(--acc) 40%,transparent)}
+.titulo{font-family:var(--title);font-weight:900;font-size:clamp(1.6rem,7.6vw,2.3rem);line-height:1.05}
+.verso{border-left:3px solid var(--blood2)}
+.verso p{color:var(--gold2)}
+.ordem{background:linear-gradient(120deg,rgba(179,18,26,.22),rgba(255,106,0,.08));border:1px solid rgba(255,90,60,.4);border-style:solid}
+.btn{background:linear-gradient(170deg,rgba(40,16,12,.9),rgba(14,8,7,.9));border:1px solid rgba(245,192,74,.16);transition:transform .15s,border-color .2s,box-shadow .2s}
+.btn svg{stroke:var(--acc)}
+.btn:active{box-shadow:0 0 18px color-mix(in srgb,var(--acc) 40%,transparent)}
+.rev{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .7s ease,transform .8s cubic-bezier(.2,.9,.25,1)}
+.rev.vis{opacity:1;transform:none}
+.stat b,.rank h2,.cabec h1,.fim .numero{font-family:var(--title);font-weight:900}
+.rank h2{color:var(--gold2);font-size:1.4rem}
+.insignia{background:radial-gradient(circle at 50% 30%,#5a2a10,#140806);border-color:#c8862a;box-shadow:0 0 30px rgba(245,192,74,.2);animation:respira 3s ease-in-out infinite}
+@keyframes respira{50%{box-shadow:0 0 44px rgba(245,192,74,.4)}}
+.barra i{background:linear-gradient(90deg,var(--blood2),var(--ember),var(--gold2));background-size:200% 100%;animation:lava 3s ease-in-out infinite}
+.mapa i.m{background:linear-gradient(135deg,#ffe2a0,#f5c04a)}
+.mapa i.f{background:#a8461a}
+.cabec h1{font-size:2.1rem}
+.cabec h1.kin{display:block}
+
+/* ---------- navegação ---------- */
+.nav{background:linear-gradient(180deg,rgba(18,8,6,.92),rgba(6,3,3,.97));border-top:1px solid rgba(245,192,74,.18)}
+.nav button{position:relative;font-family:var(--label);font-weight:600;letter-spacing:.2em}
+.nav button.on{color:var(--gold2)}
+.nav button.on::before{content:'';position:absolute;top:0;left:32%;right:32%;height:3px;border-radius:0 0 4px 4px;background:linear-gradient(90deg,var(--ember),var(--gold2));box-shadow:0 0 14px var(--ember)}
+.nav button.on svg{filter:drop-shadow(0 0 7px rgba(255,170,80,.8));animation:pulsoIc 2s ease-in-out infinite}
+@keyframes pulsoIc{50%{transform:scale(1.12)}}
+
+/* ---------- ritual ---------- */
+.r-arte{position:absolute;inset:-6%;z-index:0;filter:blur(2px) brightness(.34) saturate(1.25);animation:kenburns 30s ease-in-out infinite alternate;pointer-events:none}
+.r-arte svg{width:100%;height:100%;display:block}
+.r-glow{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(70% 45% at 50% 62%,color-mix(in srgb,var(--acc) 22%,transparent),transparent 70%),linear-gradient(180deg,rgba(5,3,3,.75),rgba(5,3,3,.2) 30%,rgba(5,3,3,.85))}
+.ritual .brasas{z-index:1}
+.r-body>.ent{animation:entra2 .7s cubic-bezier(.2,.9,.25,1) both}
+@keyframes entra2{from{opacity:0;transform:scale(1.07);filter:blur(10px)}to{opacity:1;transform:none;filter:blur(0)}}
+.r-kicker{font-family:var(--label);font-weight:600;color:var(--blood2);text-shadow:0 0 14px rgba(224,36,44,.5)}
+.r-h{font-family:var(--title);font-weight:900;font-size:clamp(2.1rem,10.5vw,3.3rem);line-height:1.02;text-shadow:0 4px 24px rgba(0,0,0,.8)}
+.relogio{font-family:var(--title);font-weight:900;background:linear-gradient(180deg,#fff6da,#f5c04a 55%,#a8661c);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 30px rgba(255,106,0,.35))}
+.segs i.cur{background:linear-gradient(90deg,var(--ember),var(--gold2));box-shadow:0 0 10px var(--ember)}
+.segs i.done{background:var(--gold)}
+.hold::before{content:'';position:absolute;inset:-7%;border-radius:50%;background:conic-gradient(from var(--ang),transparent 0 35%,rgba(255,106,0,.9) 60%,#ffd98a 70%,transparent 82%);filter:blur(7px);animation:angulo 2.4s linear infinite;opacity:.75}
+.hold.press::before{animation-duration:.55s;opacity:1;inset:-12%}
+.hold .nucleo{background:radial-gradient(circle at 50% 28%,#ff6a3a,#b3121a 45%,#3a0406 88%);border:2px solid #ff7a5a;box-shadow:0 0 60px rgba(224,36,44,.55),inset 0 -14px 34px rgba(0,0,0,.45),inset 0 8px 20px rgba(255,200,150,.25)}
+.hold .nucleo b{font-family:var(--title);font-weight:900}
+.hold.feito .nucleo{background:radial-gradient(circle at 50% 28%,#fff3d0,#f5c04a 45%,#8a5216 88%);border-color:#fff0c0}
+.hold.feito::before{background:conic-gradient(from var(--ang),#ffd98a,#ff6a00,#ffd98a,#ff6a00,#ffd98a);opacity:.9}
+.onda{position:fixed;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:5px solid #ffd98a;box-shadow:0 0 30px #ff6a00,inset 0 0 20px #ff6a00;z-index:160;pointer-events:none;animation:onda .85s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes onda{from{transform:scale(.3);opacity:1}to{transform:scale(16);opacity:0}}
+.resp .bola{background:conic-gradient(from var(--ang),#ffd98a,#ff6a00,#b3121a,#ff6a00,#ffd98a);animation:angulo 6s linear infinite;box-shadow:0 0 70px rgba(255,106,0,.6),inset 0 0 40px rgba(0,0,0,.35)}
+.resp .bola::after{content:'';position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle at 45% 35%,#fff3d0,#ffb04a 55%,transparent 75%);opacity:.75}
+.resp .aro{border:2px solid rgba(245,192,74,.25);animation:anel 4s ease-out infinite}
+@keyframes anel{from{transform:scale(.55);opacity:.9}to{transform:scale(1.15);opacity:0}}
+.resp .txt b{font-family:var(--title);font-weight:900;color:#2a0e04}
+.porques div{font-family:var(--title);font-weight:900;text-shadow:0 0 30px color-mix(in srgb,var(--acc) 35%,transparent)}
+.porques div::before{content:'⚔ ';color:var(--acc);font-size:.6em;vertical-align:.2em}
+.credo{color:var(--gold2);border-left-color:var(--acc)}
+.rep{background:linear-gradient(165deg,rgba(48,16,12,.86),rgba(14,8,7,.94))}
+.rep b{font-family:var(--title);font-weight:900}
+.rep.pop{animation:popr .25s ease-out}
+@keyframes popr{40%{transform:scale(1.07);border-color:var(--ember)}}
+.fim .forjado{animation:none;background:none;color:inherit;font-family:var(--title);font-weight:900;letter-spacing:.03em;font-size:clamp(2.2rem,11.5vw,4rem);white-space:nowrap}
+.fim .forjado span{display:inline-block;background:linear-gradient(180deg,#fff6da,#f5c04a 50%,#a8661c);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;animation:slamw .5s cubic-bezier(.2,1.7,.4,1) forwards;animation-delay:calc(var(--i)*80ms + 150ms);filter:drop-shadow(0 0 20px rgba(255,140,40,.5))}
+.fim .marte{animation:estrela 1s cubic-bezier(.2,1.4,.4,1) both;filter:drop-shadow(0 0 30px rgba(255,170,60,.8))}
+@keyframes estrela{from{transform:rotate(-180deg) scale(0)}to{transform:none}}
+.promo{font-family:var(--title);font-weight:900}
+.btn-p{font-family:var(--title);font-weight:900;background:linear-gradient(110deg,#5a0508,#b3121a 40%,#e0342a 60%,#5a0508);background-size:220% 100%;animation:lava 6s ease-in-out infinite;border:1px solid rgba(255,140,100,.45);box-shadow:0 8px 30px rgba(224,36,44,.35)}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important}}
+
+.r-body{overflow-x:hidden}
+.fim{width:100%}
+.ritual,.hero{overflow:clip}
+
 </style>
 </head>
 <body>
@@ -248,6 +381,9 @@ dialog::backdrop{background:rgba(0,0,0,.8)}
 <main class="page on" id="pg-hoje">
   <section class="hero">
     <div class="arte" id="arte"></div>
+    <div class="raios"></div>
+    <div class="nevoa"></div>
+    <div class="relampago" id="relampago"></div>
     <canvas class="brasas" id="brasasHero"></canvas>
     <div class="veu"></div>
     <div class="topo">
@@ -328,7 +464,7 @@ dialog::backdrop{background:rgba(0,0,0,.8)}
     <div class="rotulo">Forja por IA</div>
     <div class="card">
       <input type="password" class="inp" id="inputKey" placeholder="sk-ant-..." autocomplete="off" style="font-family:monospace">
-      <div class="dica">Opcional. Usada só pelo botão “IA”, que cria uma mensagem e uma arte inéditas. O banco de 73 mensagens funciona sem internet e sem chave.</div>
+      <div class="dica">Opcional. Usada só pelo botão “IA”, que cria uma mensagem e uma arte inéditas. O banco de 83 mensagens funciona sem internet e sem chave.</div>
       <button class="btn-s" id="salvarKey">Salvar chave</button>
     </div>
 
@@ -339,7 +475,7 @@ dialog::backdrop{background:rgba(0,0,0,.8)}
       <input type="file" id="arqImport" accept=".json" style="display:none">
       <button class="btn-s" id="importar">Importar histórico</button>
     </div>
-    <div style="text-align:center;color:var(--faint);font-size:.72rem;padding:18px 0 8px;letter-spacing:.14em">FORJA DIÁRIA 3.0 · DE PÉ, SOLDADO</div>
+    <div style="text-align:center;color:var(--faint);font-size:.72rem;padding:18px 0 8px;letter-spacing:.14em">FORJA DIÁRIA 3.1 · DE PÉ, SOLDADO</div>
   </div>
 </main>
 
@@ -351,6 +487,8 @@ dialog::backdrop{background:rgba(0,0,0,.8)}
 
 <!-- ================= RITUAL ================= -->
 <div class="ritual" id="ritual">
+  <div class="r-arte" id="rArte"></div>
+  <div class="r-glow"></div>
   <canvas class="brasas" id="brasasRitual"></canvas>
   <div class="r-top">
     <div class="segs" id="segs"></div>
@@ -420,7 +558,19 @@ corredor:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preser
 
 bigorna:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="b0" cx=".5" cy=".55" r=".75"><stop offset="0" stop-color="#5a2a0c"/><stop offset=".45" stop-color="#1c1008"/><stop offset="1" stop-color="#060404"/></radialGradient><radialGradient id="b1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2c4"/><stop offset=".3" stop-color="#ffb347"/><stop offset="1" stop-color="#ff6a1a" stop-opacity="0"/></radialGradient><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4f5a"/><stop offset="1" stop-color="#15171c"/></linearGradient><linearGradient id="b3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff7a1a"/><stop offset=".5" stop-color="#ffe08a"/><stop offset="1" stop-color="#ff7a1a"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#b0)"/><circle cx="560" cy="690" r="300" fill="url(#b1)" opacity=".75"/><g fill="#ffd27a"><circle cx="420" cy="520" r="6"/><circle cx="700" cy="470" r="5"/><circle cx="600" cy="400" r="4"/><circle cx="360" cy="430" r="3.5"/><circle cx="760" cy="560" r="4"/><circle cx="500" cy="340" r="3"/><circle cx="660" cy="300" r="2.6"/><circle cx="820" cy="420" r="3"/><circle cx="300" cy="580" r="3"/></g><g stroke="#ffcf73" stroke-width="4" stroke-linecap="round" opacity=".8"><path d="M560 680 L430 540"/><path d="M560 680 L700 520"/><path d="M560 680 L560 500"/><path d="M560 680 L380 640"/><path d="M560 680 L760 620"/></g><rect x="430" y="676" width="260" height="20" rx="8" fill="url(#b3)"/><path d="M300 700 L860 700 Q900 700 900 730 L780 760 L740 760 L700 860 L780 960 L340 960 L420 860 L380 760 L300 740 Q260 730 300 700Z" fill="url(#b2)"/><path d="M300 700 L860 700 Q900 700 900 730 L300 730Z" fill="#8a909c" opacity=".5"/><g fill="#0b0806"><rect x="640" y="380" width="30" height="300" rx="10" transform="rotate(35 655 530)"/><rect x="560" y="330" width="170" height="80" rx="14" transform="rotate(35 645 370)"/></g><rect x="0" y="1060" width="1080" height="290" fill="#050303"/></svg>`,
 
-espada:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="x0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060506"/><stop offset=".42" stop-color="#2a120c"/><stop offset=".66" stop-color="#8a2a12"/><stop offset=".78" stop-color="#e0702a"/><stop offset=".86" stop-color="#ffc26a"/></linearGradient><radialGradient id="x1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".95"/><stop offset=".4" stop-color="#ff9a3c" stop-opacity=".45"/><stop offset="1" stop-color="#ff6a1a" stop-opacity="0"/></radialGradient><linearGradient id="x2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2b2f38"/><stop offset=".5" stop-color="#c9ced8"/><stop offset="1" stop-color="#3a3f4a"/></linearGradient><linearGradient id="x3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#8a5a1c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#x0)"/><circle cx="540" cy="560" r="430" fill="url(#x1)"/><g stroke="#ffd59a" stroke-width="3" opacity=".28"><path d="M540 560 L140 140"/><path d="M540 560 L380 60"/><path d="M540 560 L700 60"/><path d="M540 560 L940 140"/><path d="M540 560 L1060 420"/><path d="M540 560 L20 420"/></g><g fill="#ffcf7a"><circle cx="300" cy="700" r="4"/><circle cx="820" cy="640" r="3.5"/><circle cx="420" cy="420" r="3"/><circle cx="700" cy="380" r="3"/><circle cx="260" cy="520" r="2.5"/><circle cx="860" cy="480" r="2.5"/></g><path d="M528 250 L552 250 L560 960 L540 1010 L520 960 Z" fill="url(#x2)"/><path d="M540 250 L540 1000" stroke="#eef1f6" stroke-width="3" opacity=".6"/><rect x="420" y="214" width="240" height="34" rx="12" fill="url(#x3)"/><rect x="524" y="96" width="32" height="124" rx="10" fill="#2a1a0c"/><g stroke="#8a5a1c" stroke-width="4"><path d="M524 120 L556 132"/><path d="M524 148 L556 160"/><path d="M524 176 L556 188"/></g><circle cx="540" cy="86" r="24" fill="url(#x3)"/><circle cx="540" cy="231" r="10" fill="#a01f1f"/><path d="M0 1350 L0 1010 L210 960 L360 1000 L470 970 L540 1000 L620 965 L760 1005 L900 955 L1080 1000 L1080 1350Z" fill="#0b0705"/><path d="M380 1004 L470 972 L540 1002 L620 968 L700 994 L620 1012 L540 1020 L460 1014Z" fill="#1d120a"/><rect x="0" y="1080" width="1080" height="270" fill="#050303"/></svg>`
+espada:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="x0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#060506"/><stop offset=".42" stop-color="#2a120c"/><stop offset=".66" stop-color="#8a2a12"/><stop offset=".78" stop-color="#e0702a"/><stop offset=".86" stop-color="#ffc26a"/></linearGradient><radialGradient id="x1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffe7b0" stop-opacity=".95"/><stop offset=".4" stop-color="#ff9a3c" stop-opacity=".45"/><stop offset="1" stop-color="#ff6a1a" stop-opacity="0"/></radialGradient><linearGradient id="x2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2b2f38"/><stop offset=".5" stop-color="#c9ced8"/><stop offset="1" stop-color="#3a3f4a"/></linearGradient><linearGradient id="x3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0c46e"/><stop offset="1" stop-color="#8a5a1c"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#x0)"/><circle cx="540" cy="560" r="430" fill="url(#x1)"/><g stroke="#ffd59a" stroke-width="3" opacity=".28"><path d="M540 560 L140 140"/><path d="M540 560 L380 60"/><path d="M540 560 L700 60"/><path d="M540 560 L940 140"/><path d="M540 560 L1060 420"/><path d="M540 560 L20 420"/></g><g fill="#ffcf7a"><circle cx="300" cy="700" r="4"/><circle cx="820" cy="640" r="3.5"/><circle cx="420" cy="420" r="3"/><circle cx="700" cy="380" r="3"/><circle cx="260" cy="520" r="2.5"/><circle cx="860" cy="480" r="2.5"/></g><path d="M528 250 L552 250 L560 960 L540 1010 L520 960 Z" fill="url(#x2)"/><path d="M540 250 L540 1000" stroke="#eef1f6" stroke-width="3" opacity=".6"/><rect x="420" y="214" width="240" height="34" rx="12" fill="url(#x3)"/><rect x="524" y="96" width="32" height="124" rx="10" fill="#2a1a0c"/><g stroke="#8a5a1c" stroke-width="4"><path d="M524 120 L556 132"/><path d="M524 148 L556 160"/><path d="M524 176 L556 188"/></g><circle cx="540" cy="86" r="24" fill="url(#x3)"/><circle cx="540" cy="231" r="10" fill="#a01f1f"/><path d="M0 1350 L0 1010 L210 960 L360 1000 L470 970 L540 1000 L620 965 L760 1005 L900 955 L1080 1000 L1080 1350Z" fill="#0b0705"/><path d="M380 1004 L470 972 L540 1002 L620 968 L700 994 L620 1012 L540 1020 L460 1014Z" fill="#1d120a"/><rect x="0" y="1080" width="1080" height="270" fill="#050303"/></svg>`,
+
+espartano:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="sp0" cx=".5" cy=".42" r=".75"><stop offset="0" stop-color="#7a1010"/><stop offset=".45" stop-color="#2a0606"/><stop offset="1" stop-color="#050203"/></radialGradient><linearGradient id="sp1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe2a0"/><stop offset=".3" stop-color="#d79a3c"/><stop offset=".65" stop-color="#8a5216"/><stop offset="1" stop-color="#3a1f06"/></linearGradient><linearGradient id="sp2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff3b2e"/><stop offset=".6" stop-color="#b3121a"/><stop offset="1" stop-color="#5a0508"/></linearGradient><linearGradient id="sp3" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#sp0)"/><g stroke="#ff9a4a" stroke-width="3" opacity=".22"><path d="M540 620 L80 120"/><path d="M540 620 L300 20"/><path d="M540 620 L780 20"/><path d="M540 620 L1000 120"/><path d="M540 620 L1080 520"/><path d="M540 620 L0 520"/></g><g stroke="#1a0a04" stroke-width="16" stroke-linecap="round"><path d="M170 1140 L900 230"/><path d="M910 1140 L180 230"/></g><path d="M900 230 l-30 -10 l58 -70 l-6 90z M180 230 l30 -10 l-58 -70 l6 90z" fill="#1a0a04"/><path d="M540 395 C450 330 330 300 205 330 C250 255 330 205 420 196 C470 192 510 200 540 214 C570 200 610 192 660 196 C750 205 830 255 875 330 C750 300 630 330 540 395Z" fill="url(#sp2)"/><g stroke="#5a0508" stroke-width="3" opacity=".6" fill="none"><path d="M540 380 C470 320 380 290 260 300"/><path d="M540 380 C610 320 700 290 820 300"/><path d="M540 360 C480 290 410 250 330 248"/><path d="M540 360 C600 290 670 250 750 248"/></g><path d="M540 382 C392 382 318 488 318 640 L318 800 C318 905 352 990 418 1052 L486 1062 L500 900 C504 862 520 846 540 846 C560 846 576 862 580 900 L594 1062 L662 1052 C728 990 762 905 762 800 L762 640 C762 488 688 382 540 382Z" fill="url(#sp1)"/><path d="M360 520 C380 440 450 404 520 398 C450 430 404 480 392 560 L376 820 C372 870 384 930 410 980 C360 930 346 860 348 790Z" fill="#fff3d0" opacity=".28"/><path d="M522 612 L522 662 C470 690 410 678 382 640 C400 600 455 590 522 612Z" fill="#0a0503"/><path d="M558 612 L558 662 C610 690 670 678 698 640 C680 600 625 590 558 612Z" fill="#0a0503"/><path d="M522 706 L522 860 C516 920 506 990 496 1060 L584 1060 C574 990 564 920 558 860 L558 706 C546 698 534 698 522 706Z" fill="#0a0503"/><g fill="none" stroke="#4a2a08" stroke-width="5" opacity=".7"><path d="M370 600 C420 572 480 566 540 586 C600 566 660 572 710 600"/><path d="M348 760 C360 860 380 940 420 1010"/><path d="M732 760 C720 860 700 940 660 1010"/></g><rect x="300" y="380" width="480" height="700" fill="url(#sp3)" opacity=".18" transform="rotate(18 540 730)"/><rect x="0" y="1110" width="1080" height="240" fill="#040202"/><path d="M0 1110 Q540 1060 1080 1110 L1080 1130 Q540 1084 0 1130Z" fill="#2a0a06"/></svg>`,
+
+falange:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="fa0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#090304"/><stop offset=".4" stop-color="#3d0a0a"/><stop offset=".62" stop-color="#b3221a"/><stop offset=".74" stop-color="#ff7a2a"/><stop offset=".82" stop-color="#ffc76a"/></linearGradient><radialGradient id="fa1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff0c4"/><stop offset=".5" stop-color="#ffb04a" stop-opacity=".6"/><stop offset="1" stop-color="#ff6a1a" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#fa0)"/><circle cx="540" cy="760" r="360" fill="url(#fa1)"/><circle cx="540" cy="760" r="150" fill="#ffe7b0"/><g stroke="#0a0504" stroke-width="10" stroke-linecap="round"><path d="M150 1060 L250 380"/><path d="M345 1060 L440 360"/><path d="M540 1060 L630 340"/><path d="M735 1060 L825 360"/><path d="M930 1060 L1020 380"/></g><g fill="#0a0504"><path d="M250 380 l-14 6 l26 -70 l6 72z"/><path d="M440 360 l-14 6 l26 -70 l6 72z"/><path d="M630 340 l-14 6 l26 -70 l6 72z"/><path d="M825 360 l-14 6 l26 -70 l6 72z"/><path d="M1020 380 l-14 6 l26 -70 l6 72z"/></g><g id="hop"><g fill="#0a0504"><path d="M100 760 C100 720 125 696 155 696 C185 696 210 720 210 760 L210 800 L100 800Z"/><path d="M95 712 C110 650 200 650 215 712 C190 690 120 690 95 712Z"/><rect x="104" y="1000" width="34" height="90" rx="10"/><rect x="164" y="1000" width="34" height="90" rx="10"/></g><circle cx="152" cy="900" r="112" fill="#0d0605"/><circle cx="152" cy="900" r="112" fill="none" stroke="#8a5216" stroke-width="9"/><circle cx="152" cy="900" r="96" fill="none" stroke="#3a1f06" stroke-width="3"/><path d="M152 830 L104 968 M152 830 L200 968" stroke="#b3121a" stroke-width="16" stroke-linecap="round"/></g><use href="#hop" x="195"/><use href="#hop" x="390"/><use href="#hop" x="585"/><use href="#hop" x="780"/><rect x="0" y="1080" width="1080" height="270" fill="#050202"/><path d="M0 1080 Q540 1040 1080 1080 L1080 1100 Q540 1062 0 1100Z" fill="#3a0e08"/></svg>`,
+
+gladiador:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="gl0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140904"/><stop offset=".45" stop-color="#6a3410"/><stop offset=".72" stop-color="#e09a44"/><stop offset=".86" stop-color="#ffd890"/></linearGradient><linearGradient id="gl1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8a25a"/><stop offset="1" stop-color="#7a4818"/></linearGradient><radialGradient id="gl2" cx=".5" cy=".3" r=".6"><stop offset="0" stop-color="#fff2c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff2c8" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#gl0)"/><g fill="#3a1c08" opacity=".85"><path d="M0 330 L1080 330 L1080 820 L0 820Z"/></g><g fill="#c98a44" opacity=".55"><rect x="20" y="370" width="110" height="170" rx="55"/><rect x="170" y="370" width="110" height="170" rx="55"/><rect x="320" y="370" width="110" height="170" rx="55"/><rect x="470" y="370" width="110" height="170" rx="55"/><rect x="620" y="370" width="110" height="170" rx="55"/><rect x="770" y="370" width="110" height="170" rx="55"/><rect x="920" y="370" width="110" height="170" rx="55"/><rect x="20" y="590" width="110" height="200" rx="55"/><rect x="170" y="590" width="110" height="200" rx="55"/><rect x="320" y="590" width="110" height="200" rx="55"/><rect x="470" y="590" width="110" height="200" rx="55"/><rect x="620" y="590" width="110" height="200" rx="55"/><rect x="770" y="590" width="110" height="200" rx="55"/><rect x="920" y="590" width="110" height="200" rx="55"/></g><rect x="0" y="300" width="1080" height="30" fill="#2a1406"/><rect x="0" y="555" width="1080" height="22" fill="#2a1406"/><ellipse cx="540" cy="420" rx="620" ry="420" fill="url(#gl2)"/><g stroke="#fff0c8" stroke-width="40" opacity=".08"><path d="M700 0 L420 1100"/><path d="M880 0 L640 1100"/></g><path d="M0 1350 L0 960 Q540 900 1080 960 L1080 1350Z" fill="url(#gl1)"/><path d="M0 960 Q540 900 1080 960 L1080 1000 Q540 950 0 1000Z" fill="#5a3010" opacity=".6"/><g fill="#0b0604"><path d="M520 470 C520 430 548 410 576 412 C606 414 628 438 626 474 L640 486 L620 492 L616 520 L534 520 L528 492 L506 486Z"/><path d="M566 412 C580 370 610 356 640 370 C620 380 600 396 590 418Z"/><path d="M536 520 L616 520 L648 560 L680 640 L652 652 L630 600 L626 720 L650 820 L640 960 L600 960 L604 830 L578 740 L560 830 L568 960 L528 960 L520 820 L534 720 L520 610 L486 650 L470 620 L500 560Z"/><path d="M666 640 L708 610 L860 430 L874 442 L726 626 L684 666Z"/><path d="M868 424 L900 392 L886 436Z"/><path d="M372 540 L500 560 L508 840 L380 820 Z"/></g><path d="M388 560 L490 576 L496 824 L394 806Z" fill="#8a1a14" opacity=".85"/><circle cx="442" cy="690" r="22" fill="#d8a25a"/><rect x="0" y="1160" width="1080" height="190" fill="#140904"/></svg>`,
+
+aquiles:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="aq0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c0405"/><stop offset=".4" stop-color="#5a160c"/><stop offset=".64" stop-color="#e2581a"/><stop offset=".76" stop-color="#ffb04a"/><stop offset=".84" stop-color="#ffe2a0"/></linearGradient><radialGradient id="aq1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff1c4" stop-opacity=".95"/><stop offset=".5" stop-color="#ff9a3a" stop-opacity=".45"/><stop offset="1" stop-color="#ff5a1a" stop-opacity="0"/></radialGradient><linearGradient id="aq2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe0a0"/><stop offset=".5" stop-color="#c8862a"/><stop offset="1" stop-color="#5a3008"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#aq0)"/><circle cx="600" cy="760" r="430" fill="url(#aq1)"/><g fill="#3a1208" opacity=".9"><path d="M0 1010 L0 820 L70 820 L70 760 L130 760 L130 820 L230 820 L230 740 L280 700 L330 740 L330 820 L800 820 L800 750 L850 710 L900 750 L900 820 L1000 820 L1000 770 L1050 770 L1050 820 L1080 820 L1080 1010Z"/></g><g fill="#ffcf6a" opacity=".6"><path d="M268 700 C250 650 280 620 280 580 C300 620 320 650 300 700Z"/><path d="M838 710 C820 660 850 630 850 590 C870 630 890 660 870 710Z"/></g><g fill="#2a0c06" opacity=".55"><path d="M270 700 C230 580 310 520 280 420 C350 500 310 580 340 680Z"/><path d="M840 710 C800 590 880 530 850 430 C920 510 880 590 910 690Z"/></g><path d="M0 1350 L0 1010 Q540 960 1080 1010 L1080 1350Z" fill="#0d0504"/><g fill="#080303"><path d="M552 584 C586 572 618 580 630 610 L652 706 L632 776 L568 786 L546 704Z"/><path d="M606 766 L650 766 L728 856 L792 996 L760 1008 L700 880 L626 806Z"/><path d="M566 776 L608 786 L548 886 L438 1006 L410 996 L518 876Z"/><path d="M548 538 C548 492 628 486 632 538 L632 566 L548 566Z"/><circle cx="590" cy="548" r="38"/></g><path d="M552 522 C566 446 672 438 704 500 C672 486 630 482 604 504 C590 492 568 500 552 522Z" fill="#c4141c"/><path d="M566 606 L482 548 L506 456" fill="none" stroke="#080303" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/><path d="M240 520 L990 378" stroke="#080303" stroke-width="10" stroke-linecap="round"/><path d="M1046 368 L984 366 L992 392Z" fill="#080303"/><circle cx="664" cy="694" r="126" fill="#0d0605"/><circle cx="664" cy="694" r="126" fill="none" stroke="url(#aq2)" stroke-width="12"/><circle cx="664" cy="694" r="92" fill="none" stroke="#6a3a0c" stroke-width="4"/><circle cx="664" cy="694" r="44" fill="none" stroke="url(#aq2)" stroke-width="7"/><circle cx="664" cy="694" r="14" fill="#e0a44a"/><rect x="0" y="1120" width="1080" height="230" fill="#060303"/></svg>`,
+
+hercules:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="he0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#04050b"/><stop offset=".45" stop-color="#1a1834"/><stop offset=".72" stop-color="#4a2446"/><stop offset=".86" stop-color="#d0643a"/><stop offset=".93" stop-color="#ffb060"/></linearGradient><radialGradient id="he1" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#dfe9ff" stop-opacity=".95"/><stop offset=".4" stop-color="#8aa6ff" stop-opacity=".35"/><stop offset="1" stop-color="#6a8cff" stop-opacity="0"/></radialGradient><linearGradient id="he2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e120a"/><stop offset=".5" stop-color="#5a3a20"/><stop offset="1" stop-color="#1e120a"/></linearGradient><radialGradient id="he3" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffb060" stop-opacity=".55"/><stop offset="1" stop-color="#ff6a2a" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="1350" fill="url(#he0)"/><g fill="#26213e" opacity=".85"><ellipse cx="180" cy="190" rx="420" ry="120"/><ellipse cx="880" cy="250" rx="440" ry="140"/><ellipse cx="540" cy="90" rx="560" ry="120"/></g><circle cx="300" cy="300" r="260" fill="url(#he1)" opacity=".8"/><path d="M250 40 L320 230 L262 236 L352 430 L290 436 L420 690 L318 452 L374 446 L286 252 L340 246Z" fill="#eef3ff"/><path d="M250 40 L320 230 L262 236 L352 430 L290 436 L420 690" fill="none" stroke="#a9c2ff" stroke-width="12" opacity=".35"/><ellipse cx="540" cy="1060" rx="520" ry="160" fill="url(#he3)"/><path d="M0 1350 L0 1080 L180 1040 L330 1070 L430 1020 L650 1020 L760 1066 L900 1036 L1080 1070 L1080 1350Z" fill="#07060a"/><path d="M380 1060 L430 1020 L650 1020 L700 1060Z" fill="#141018"/><g id="hb"><path d="M540 418 L568 420 C600 440 640 455 680 470 C730 480 760 510 764 560 C772 610 780 650 772 700 C768 740 762 770 752 800 L724 806 C726 770 728 740 724 704 C716 660 712 620 704 590 C690 640 660 690 626 730 C640 760 650 790 640 820 L636 900 C650 960 640 1000 628 1030 L566 1030 C568 990 560 950 552 880 L540 840 L528 880 C520 950 512 990 514 1030 L452 1030 C440 1000 430 960 444 900 L440 820 C430 790 440 760 454 730 C420 690 390 640 376 590 C368 620 364 660 356 704 C352 740 354 770 356 806 L328 800 C318 770 312 740 308 700 C300 650 308 610 316 560 C320 510 350 480 400 470 C440 455 480 440 512 420Z"/><path d="M484 352 C478 290 510 262 540 262 C570 262 602 290 596 352 L604 392 C600 420 580 434 540 436 C500 434 480 420 476 392Z"/><path d="M482 340 L452 372 L468 380 L424 420 L446 426 L396 470 L470 452 L500 420Z"/><path d="M598 340 L628 372 L612 380 L656 420 L634 426 L684 470 L610 452 L580 420Z"/><path d="M500 290 L486 262 L512 276Z M580 290 L594 262 L568 276Z"/></g><use href="#hb" fill="#06050a"/><use href="#hb" fill="none" stroke="#9fb6ff" stroke-width="3" opacity=".45"/><g fill="none" stroke="#1e1a30" stroke-width="4" opacity=".9"><path d="M470 520 C500 545 525 548 540 540 C555 548 580 545 610 520"/><path d="M540 560 L540 720"/><path d="M505 610 L575 610 M508 655 L572 655 M512 698 L568 698"/></g><path d="M724 790 L756 788 L808 1040 C790 1066 754 1066 738 1046Z" fill="url(#he2)"/><g fill="#06050a"><circle cx="772" cy="900" r="9"/><circle cx="790" cy="960" r="9"/><circle cx="760" cy="1000" r="8"/><circle cx="782" cy="1020" r="8"/></g><rect x="0" y="1140" width="1080" height="210" fill="#040306"/></svg>`,
+
+templario:`<svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="tp0" cx=".5" cy=".36" r=".8"><stop offset="0" stop-color="#3a2a1a"/><stop offset=".5" stop-color="#140c08"/><stop offset="1" stop-color="#050304"/></radialGradient><linearGradient id="tp1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9b8"/><stop offset="1" stop-color="#c8862a"/></linearGradient><linearGradient id="tp2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a3f4a"/><stop offset=".45" stop-color="#d4d9e2"/><stop offset="1" stop-color="#2a2e36"/></linearGradient><linearGradient id="tp3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3eadb"/><stop offset="1" stop-color="#a89878"/></linearGradient></defs><rect width="1080" height="1350" fill="url(#tp0)"/><g opacity=".42"><path d="M400 150 L680 150 L680 430 L400 430Z" fill="url(#tp1)"/><path d="M400 150 C400 60 680 60 680 150Z" fill="url(#tp1)"/><g stroke="#140c08" stroke-width="9"><path d="M540 80 L540 430"/><path d="M400 280 L680 280"/><path d="M470 110 L470 430"/><path d="M610 110 L610 430"/></g></g><circle cx="540" cy="600" r="150" fill="#ffe0a0" opacity=".12"/><g opacity=".25" stroke="#ffe0a0" stroke-width="30"><path d="M540 400 L300 1100"/><path d="M540 400 L780 1100"/></g><g fill="#0b0806"><path d="M470 520 L610 520 L612 640 C612 660 600 670 540 670 C480 670 468 660 468 640Z"/><path d="M470 640 L610 640 L700 700 L740 900 L700 920 L670 800 L668 1000 L700 1120 L620 1120 L560 1000 L520 1000 L460 1120 L380 1120 L412 1000 L410 800 L380 920 L340 900 L380 700Z"/></g><rect x="470" y="574" width="140" height="10" fill="#c8862a"/><rect x="535" y="560" width="10" height="70" fill="#c8862a"/><path d="M300 700 L470 700 L470 860 C470 940 420 990 385 1010 C350 990 300 940 300 860Z" fill="url(#tp3)"/><path d="M372 712 L398 712 L398 790 L460 790 L460 816 L398 816 L398 990 L372 990 L372 816 L310 816 L310 790 L372 790Z" fill="#b3121a"/><path d="M748 640 L766 640 L772 1080 L757 1110 L742 1080Z" fill="url(#tp2)"/><rect x="706" y="610" width="102" height="22" rx="8" fill="#c8862a"/><rect x="748" y="540" width="18" height="74" rx="6" fill="#2a1a0c"/><circle cx="757" cy="532" r="15" fill="#c8862a"/><rect x="0" y="1120" width="1080" height="230" fill="#050303"/></svg>`
 };
 /* ============================== PILARES das 42 mensagens originais (mesma ordem) ============================== */
 const PILARES_ORIG = ['DISCIPLINA','HONRA','DISCIPLINA','TRABALHO','FÉ','FAMÍLIA','CORAGEM','FÉ','DISCIPLINA','RESILIÊNCIA','HONRA','TRABALHO','CORAGEM','FÉ','FÉ','FAMÍLIA','FÉ','FÉ','RESILIÊNCIA','CORPO','DISCIPLINA','CORAGEM','FÉ','HONRA','TRABALHO','FÉ','FAMÍLIA','CORPO','FAMÍLIA','HONRA','FAMÍLIA','DISCIPLINA','HONRA','FÉ','FÉ','RESILIÊNCIA','RESILIÊNCIA','DISCIPLINA','FÉ','FAMÍLIA','DISCIPLINA','RESILIÊNCIA'];
@@ -526,7 +676,27 @@ const BANCO_ORIG = [
 {t:'SENTINELA DA <em>MADRUGADA</em>', a:'lobo', m:'Quatro da manhã é hora de gente séria: padeiro, soldado, pai de família e santo. Enquanto a cidade dorme, o sentinela ora e afia o machado. A madrugada é sua trincheira — ocupe-a.', v:'"Minha alma espera o Senhor, mais do que a sentinela espera pela aurora."', r:'Salmo 130, 6'},
 {t:'ATÉ O ÚLTIMO <em>ROUND</em>', a:'bigorna', m:'Não existe aposentadoria de caráter. A fidelidade que vale coroa é a que dura até o fim — no casamento, na fé, na palavra. Você não precisa ser brilhante. Precisa não largar o cinturão.', v:'"Sê fiel até a morte, e eu te darei a coroa da vida."', r:'Apocalipse 2, 10'},
 ];
-const BANCO = BANCO_ORIG.map((b,i)=>Object.assign({p:PILARES_ORIG[i]||'FÉ'}, b)).concat(BANCO_NOVO);
+
+/* ============================== LENDAS — guerreiros da história e do mito ============================== */
+const BANCO_LENDAS = [
+{p:'CORAGEM', l:'ESPARTA', t:'COM O ESCUDO <em>OU SOBRE ELE</em>', a:'espartano', m:'As mães espartanas entregavam o escudo ao filho com uma ordem: volte com ele ou sobre ele. Largar o escudo para correr mais leve era a maior vergonha. Seu escudo hoje é sua palavra, sua fé e sua família. Não o largue para fugir de nada.', v:'"Embraçai sempre o escudo da fé, com o qual podereis apagar todos os dardos inflamados do Maligno."', r:'Efésios 6, 16'},
+{p:'CORAGEM', l:'TERMÓPILAS', t:'VENHA <em>PEGAR</em>', a:'falange', m:'O império mandou Leônidas entregar as armas. Trezentos contra uma multidão — e a resposta coube em duas palavras: venha pegar. Quando o vício, o medo ou a preguiça exigirem que você se renda hoje, responda como espartano.', v:'"Ainda que um exército acampe contra mim, o meu coração não temerá."', r:'Salmo 27, 3'},
+{p:'RESILIÊNCIA', l:'TERMÓPILAS', t:'LUTAREMOS <em>À SOMBRA</em>', a:'falange', m:'Disseram ao espartano que as flechas inimigas cobririam o sol. Ele respondeu: melhor, lutaremos à sombra. A dificuldade que tapa o seu céu hoje não é motivo para recuar — é só a sombra onde você vai lutar.', v:'"Cairão mil ao teu lado e dez mil à tua direita, mas tu não serás atingido."', r:'Salmo 91, 7'},
+{p:'DISCIPLINA', l:'TROIA', t:'O CALCANHAR DE <em>AQUILES</em>', a:'aquiles', m:'O maior guerreiro de Troia era invencível — menos num ponto. E foi por ali que caiu. Todo homem tem o seu calcanhar: a bebida, a raiva, o celular, a luxúria. O forte não é quem não tem fraqueza. É quem conhece a sua e a protege todo dia.', v:'"Aquele que julga estar de pé tome cuidado para não cair."', r:'1 Coríntios 10, 12'},
+{p:'TRABALHO', l:'HÉRCULES', t:'OS DOZE <em>TRABALHOS</em>', a:'hercules', m:'Hércules não virou lenda num dia. Foram doze trabalhos, um depois do outro, cada um pior que o anterior. Os seus estão aí: a conta, o turno, o treino, os filhos. Não peça um fardo mais leve. Peça costas mais fortes — e comece o trabalho de hoje.', v:'"Suporta comigo os sofrimentos, como bom soldado de Cristo Jesus."', r:'2 Timóteo 2, 3'},
+{p:'CORAGEM', l:'ROMA', t:'A ARENA É <em>HOJE</em>', a:'gladiador', m:'O gladiador entrava na areia sabendo que podia não sair — e entrava de cabeça erguida. A sua arena é o dia de hoje. Não há multidão gritando seu nome. Mas há um Rei assistindo das arquibancadas do céu. Lute como quem é visto por Ele.', v:'"Tornamo-nos espetáculo para o mundo, para os anjos e para os homens."', r:'1 Coríntios 4, 9'},
+{p:'CORPO', l:'ESPARTA', t:'A <em>AGOGÊ</em>', a:'espartano', m:'Aos sete anos o menino espartano começava a agogê: frio, fome, marcha, disciplina. Esparta não fabricava conforto — fabricava homens. O conforto é o inimigo que sorri. Escolha hoje uma coisa difícil de propósito, e faça antes que a vontade apareça.', v:'"O atleta não é coroado se não tiver lutado segundo as regras."', r:'2 Timóteo 2, 5'},
+{p:'HONRA', l:'CRUZADAS', t:'CAVALEIRO DE <em>CRISTO</em>', a:'templario', m:'O cavaleiro jurava diante do altar: proteger o fraco, nunca mentir, não fugir do combate, curvar-se só diante de Deus. As armaduras enferrujaram, o juramento não. Ainda há viúvas, crianças e fracos esperando um homem que cumpra esse voto.', v:'"Praticar a justiça, amar a misericórdia e caminhar humildemente com o teu Deus."', r:'Miqueias 6, 8'},
+{p:'CORAGEM', l:'ESPARTA', t:'ONDE <em>ESTÃO?</em>', a:'falange', m:'Conta-se que um rei espartano dizia: espartanos não perguntam quantos são os inimigos, mas onde estão. Pare de contar os problemas. Encontre o primeiro, marche até ele e resolva. Depois o próximo. Exército nenhum resiste a um homem que não recua.', v:'"Não temas, porque são mais numerosos os que estão conosco do que os que estão com eles."', r:'2 Reis 6, 16'},
+{p:'FÉ', l:'SANSÃO', t:'SÓ MAIS ESTA <em>VEZ</em>', a:'hercules', m:'Sansão foi o Hércules da Bíblia — e perdeu tudo pela vaidade. Cego, acorrentado, humilhado, fez a oração mais curta e mais forte da Escritura. Não importa quão fundo você caiu: a força volta para quem clama de verdade.', v:'"Senhor Deus, lembra-te de mim e fortalece-me só mais esta vez."', r:'Juízes 16, 28'}
+];
+/* artes guerreiras para mensagens antigas (pelo título) */
+const REMAP_ARTE = {'SEJA HOMEM. SEJA FORTE.':'espartano','FERRO AFIA FERRO':'gladiador','DISCIPLINA É LIBERDADE':'gladiador','CINGI-VOS E SEDE VALENTES':'falange','DOMINE-SE PRIMEIRO':'templario','MÃOS ADESTRADAS PARA A GUERRA':'hercules','TUDO POSSO':'hercules','CAIU? LEVANTA.':'aquiles','ATÉ O ÚLTIMO ROUND':'gladiador','A VIDA É MILÍCIA':'falange','HOMEM DE PALAVRA':'templario','ABATIDO, NÃO DESTRUÍDO':'aquiles','SÊ FIRME E CORAJOSO':'falange','ESPÍRITO DE FORTALEZA':'espartano','PAI É ESCUDO':'espartano','COMBATA O BOM COMBATE':'templario'};
+const ACENTO = {'FÉ':'#f5c04a','FAMÍLIA':'#ff9a3c','DISCIPLINA':'#ff3b3b','CORPO':'#ff6a00','HONRA':'#e0a050','CORAGEM':'#ff4a2a','RESILIÊNCIA':'#ffc24a','TRABALHO':'#ff8a3a'};
+
+function tituloPlano(t){ return t.replace(/<[^>]+>/g,'').trim(); }
+const BANCO = BANCO_ORIG.map((b,i)=>Object.assign({p:PILARES_ORIG[i]||'FÉ'}, b)).concat(BANCO_NOVO, BANCO_LENDAS)
+  .map(b=>{ const r=REMAP_ARTE[tituloPlano(b.t)]; const a = r || (b.a==='elmo'?'espartano':b.a); return Object.assign({}, b, {a}); });
 
 /* ============================== mensagem do dia ============================== */
 function mensagemDoDia(){
@@ -536,7 +706,7 @@ function mensagemDoDia(){
   const b = BANCO[i];
   const grupo = ORDENS[GRUPO_ORDEM[b.p]||'DISCIPLINA'];
   const ordem = grupo[(diaN()+off) % grupo.length];
-  return { titulo:b.t, mensagem:b.m, versiculo:b.v, referencia:b.r, svg:ARTES[b.a], pilar:b.p, ordem, origem:'banco' };
+  return { titulo:b.t, mensagem:b.m, versiculo:b.v, referencia:b.r, svg:ARTES[b.a], pilar:b.p, lenda:b.l||'', ordem, origem:'banco' };
 }
 function mensagemAtual(){ return db.ia[hojeStr()] || mensagemDoDia(); }
 function textoPlano(html){ const d=document.createElement('div'); d.innerHTML=html; return d.textContent; }
@@ -638,9 +808,23 @@ function brasas(canvas, intens){
 }
 let fxHero, fxRitual;
 
+/* ============================== movimento: texto cinético, acento por pilar, revelação ============================== */
+function kinetic(el, d0){
+  if(!el) return; let i=0;
+  const wrap=node=>{ const f=document.createDocumentFragment(); node.textContent.split(/(\s+)/).forEach(t=>{ if(!t) return; if(/^\s+$/.test(t)) f.appendChild(document.createTextNode(' ')); else { const s=document.createElement('span'); s.className='w'; s.style.setProperty('--i',i++); s.textContent=t; f.appendChild(s); } }); return f; };
+  [...el.childNodes].forEach(n=>{ if(n.nodeType===3) el.replaceChild(wrap(n),n); else if(n.nodeType===1) [...n.childNodes].forEach(c=>{ if(c.nodeType===3) n.replaceChild(wrap(c),c); }); });
+  el.classList.add('kin'); if(d0) el.style.setProperty('--d0', d0+'ms');
+}
+function acento(p){ document.documentElement.style.setProperty('--acc', ACENTO[p]||'#f5c04a'); }
+const revObs = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('vis'); revObs.unobserve(e.target); } }),{threshold:.12}) : null;
+function revelar(raiz){ (raiz||document).querySelectorAll('.card,.stat,.rotulo').forEach(el=>{ if(el.classList.contains('vis')) return; if(!revObs){ el.classList.add('vis'); return; } el.classList.add('rev'); revObs.observe(el); }); }
+function relampago(){ const r=$('relampago'); if(!r) return; r.classList.remove('go'); void r.offsetWidth; r.classList.add('go'); }
+function onda(el){ const o=document.createElement('div'); o.className='onda'; const b=el?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0,height:0}; o.style.left=(b.left+b.width/2)+'px'; o.style.top=(b.top+b.height/2)+'px'; document.body.appendChild(o); setTimeout(()=>o.remove(),900); }
+
 /* ============================== HOJE ============================== */
 function renderHoje(){
   const msg = mensagemAtual(), d = db.dias[hojeStr()]||{}, st = stats(), pt = patente(st.total);
+  acento(msg.pilar);
   const s = sanitizarSvg(msg.svg) || ARTES.alvorada;
   $('arte').innerHTML = s; const sv=$('arte').querySelector('svg'); if(sv){ sv.setAttribute('preserveAspectRatio','xMidYMid slice'); sv.removeAttribute('width'); sv.removeAttribute('height'); }
   $('chipStreak').textContent = '🔥 '+st.seq;
@@ -662,6 +846,7 @@ function renderHoje(){
     if(d.missao) html += missaoCardHTML(d);
   }
   $('heroC').innerHTML = html;
+  kinetic($('heroC').querySelector('.manchete'), 150);
   const br=$('btnRitual'); if(br) br.onclick = abrirRitual;
   ligarMissao();
 
@@ -677,12 +862,13 @@ function renderHoje(){
   ligarExame();
 
   // palavra do dia
-  $('pilar').textContent = msg.pilar||'FÉ';
-  $('titulo').innerHTML = msg.titulo;
+  $('pilar').textContent = (msg.lenda? msg.lenda+' · ' : '') + (msg.pilar||'FÉ');
+  $('titulo').innerHTML = msg.titulo; $('titulo').classList.remove('kin'); kinetic($('titulo'));
   $('mensagem').textContent = msg.mensagem;
   $('versiculo').textContent = msg.versiculo;
   $('referencia').textContent = msg.referencia;
   $('ordem').textContent = msg.ordem || '';
+  revelar($('pg-hoje'));
 }
 function missaoCardHTML(d){
   if(d.cumprida===true) return '<div class="missao-card feita"><div class="rot">Missão do dia</div><div class="txt">'+esc(d.missao)+'</div><div class="selo ok">✓ Cumprida</div></div>';
@@ -737,6 +923,7 @@ function renderProgresso(){
   h+= ms.length ? ms.map(k=>{ const d=db.dias[k]; const [,mm,dd]=k.split('-'); return '<div class="hist"><div class="d">'+dd+'/'+mm+'</div><div class="t">'+esc(d.missao)+(d.licao?'<div class="dica" style="margin-top:3px">“'+esc(d.licao)+'”</div>':'')+'</div><div class="r">'+(d.cumprida===true?'✅':d.cumprida===false?'❌':'⏳')+'</div></div>'; }).join('') : '<div class="dica" style="margin:0">Nenhuma missão ainda. Ela nasce no juramento do ritual.</div>';
   h+='</div>';
   $('progC').innerHTML=h;
+  revelar($('pg-progresso'));
 }
 
 /* ============================== ARSENAL ============================== */
@@ -769,6 +956,8 @@ function abrirRitual(){
   $('ritual').classList.add('on'); document.body.style.overflow='hidden';
   history.pushState({ritual:1},'','#ritual');
   setTimeout(()=>fxRitual.tam(),30);
+  const mr=mensagemAtual(); $('rArte').innerHTML = sanitizarSvg(mr.svg)||ARTES.alvorada; const rs=$('rArte').querySelector('svg'); if(rs){ rs.setAttribute('preserveAspectRatio','xMidYMid slice'); rs.removeAttribute('width'); rs.removeAttribute('height'); }
+  acento(mr.pilar);
   ac(); som.alvorada();
   mostrar();
 }
@@ -785,14 +974,15 @@ function mostrar(){
   $('rPasso').textContent = (pi+1)+'/'+passos.length+' · '+p.n;
   $('rBody').innerHTML=''; $('rFoot').innerHTML='';
   PASSOS[p.id]();
+  $('rBody').querySelectorAll('.r-h').forEach(h=>kinetic(h,250));
   $('rBody').scrollTop=0;
 }
 function rodape(btns){
   $('rFoot').innerHTML = btns.map((b,i)=>'<button class="'+(b.s?'btn-s':'btn-p')+'" id="rf'+i+'">'+b.t+'</button>').join('');
   btns.forEach((b,i)=>$('rf'+i).onclick=b.f);
 }
-function golpeVisual(){
-  som.golpe(); vibrar([60,40,120]);
+function golpeVisual(el){
+  som.golpe(); vibrar([60,40,120]); onda(el);
   $('flash').classList.remove('go'); void $('flash').offsetWidth; $('flash').classList.add('go');
   $('ritual').classList.remove('treme'); void $('ritual').offsetWidth; $('ritual').classList.add('treme');
   fxRitual.explodir(90);
@@ -816,7 +1006,7 @@ const PASSOS = {
       '<div class="hold" id="hold">'+ANEL+'<div class="nucleo">'+MARTELO+'<b>DE PÉ</b><small>SEGURE PARA FORJAR</small></div></div><div class="hint-c" id="holdHint">Pé no chão. Segure o botão até o martelo descer.</div><div style="margin-bottom:auto"></div>';
     timers.push(setInterval(()=>{ const r=$('relogio'); if(r) r.textContent=horaAgora(); },5000));
     holdBtn($('hold'),1300,()=>{
-      golpeVisual();
+      golpeVisual($('hold'));
       const dd=dia(); if(!dd.acordou && new Date().getHours()<12) dd.acordou=horaAgora(); salvar();
       if(dd.acordou){ const dif = minutos(dd.acordou)-minutos(db.alvo);
         $('holdHint').innerHTML = '<b style="color:var(--gold2)">'+dd.acordou+'</b> — '+(dif<=0? 'antes do alvo. Você venceu a cama.' : dif<=30 ? 'perto do alvo. A cama perdeu.' : 'a cama perdeu. Amanhã, mais cedo.'); }
@@ -847,7 +1037,7 @@ const PASSOS = {
   },
   palavra(){
     const m=mensagemAtual();
-    $('rBody').innerHTML='<div class="ent"><span class="pilar">'+esc(m.pilar||'FÉ')+'</span><div class="r-h" style="font-size:clamp(2.2rem,11vw,3.4rem)">'+m.titulo+'</div><div class="r-p">'+esc(m.mensagem)+'</div><div class="verso"><p>'+esc(m.versiculo)+'</p><small>'+esc(m.referencia)+'</small></div><div class="ordem"><span class="oi">⚔</span><div><b>ORDEM DO DIA</b><span>'+esc(m.ordem||'')+'</span></div></div></div>';
+    $('rBody').innerHTML='<div class="ent"><span class="pilar">'+esc((m.lenda?m.lenda+' · ':'')+(m.pilar||'FÉ'))+'</span><div class="r-h" style="font-size:clamp(2.2rem,11vw,3.4rem)">'+m.titulo+'</div><div class="r-p">'+esc(m.mensagem)+'</div><div class="verso"><p>'+esc(m.versiculo)+'</p><small>'+esc(m.referencia)+'</small></div><div class="ordem"><span class="oi">⚔</span><div><b>ORDEM DO DIA</b><span>'+esc(m.ordem||'')+'</span></div></div></div>';
     const leitura = textoPlano(m.titulo)+'. '+m.mensagem+' '+m.versiculo+' '+m.referencia+'. Ordem do dia: '+(m.ordem||'');
     if(db.voz) timers.push(setTimeout(()=>falar(leitura),500));
     rodape([{t:'🔊 Ouvir',s:1,f:()=>falar(leitura)},{t:'Recebido ›',f:avancar}]);
@@ -873,7 +1063,7 @@ const PASSOS = {
     holdBtn($('jurar'),1500,()=>{
       const v=$('missao').value.trim() || m.ordem;
       const dd=dia(); dd.missao=v; if(dd.cumprida===undefined) dd.cumprida=null; salvar();
-      som.tambor(); vibrar([80,60,80,60,140]); fxRitual.explodir(40);
+      som.tambor(); vibrar([80,60,80,60,140]); fxRitual.explodir(40); onda($('jurar'));
       if(db.voz) falar('Juramento feito. '+v);
       timers.push(setTimeout(avancar,1600));
     },()=>{ if(!$('missao').value.trim()) $('missao').value=m.ordem; });
@@ -884,7 +1074,7 @@ const PASSOS = {
     $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Primeiro sangue</div><div class="r-h">ACORDE O <em>CORPO</em></div><div class="r-p">Sangue circulando, cabeça ligada. Toque no quadro a cada repetição.</div></div>'+
       '<div class="reps"><div class="rep" id="repA"><b id="nA">0</b><small>AGACHAMENTOS</small><span>meta 20</span></div><div class="rep" id="repF"><b id="nF">0</b><small>FLEXÕES</small><span>meta 10</span></div></div>'+
       '<a href="../treino/" style="display:block;text-align:center;margin-top:18px;color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em">Abrir meu treino completo ›</a>';
-    const up=(k,el,n)=>{ if(c[k]>=alvo[k]) return; c[k]++; $(n).textContent=c[k]; som.tique(); vibrar(c[k]===alvo[k]?[40,30,60]:10); if(c[k]===alvo[k]){ $(el).classList.add('ok'); fxRitual.explodir(25); } if(c.a>=alvo.a&&c.f>=alvo.f) timers.push(setTimeout(avancar,700)); };
+    const up=(k,el,n)=>{ if(c[k]>=alvo[k]) return; c[k]++; $(n).textContent=c[k]; som.tique(); $(el).classList.remove('pop'); void $(el).offsetWidth; $(el).classList.add('pop'); vibrar(c[k]===alvo[k]?[40,30,60]:10); if(c[k]===alvo[k]){ $(el).classList.add('ok'); fxRitual.explodir(25); } if(c.a>=alvo.a&&c.f>=alvo.f) timers.push(setTimeout(avancar,700)); };
     $('repA').onclick=()=>up('a','repA','nA'); $('repF').onclick=()=>up('f','repF','nF');
     rodape([{t:'Pular',s:1,f:avancar},{t:'Feito ›',f:avancar}]);
   }
@@ -902,12 +1092,12 @@ function concluir(){
   const st=stats(), pt=patente(st.total);
   $('segs').innerHTML = passos.map(()=>'<i class="done"></i>').join('');
   $('rPasso').textContent='Concluído';
-  $('rBody').innerHTML='<div class="fim"><svg class="marte" viewBox="0 0 64 64"><path d="M32 6 L37 25 L56 30 L37 35 L32 58 L27 35 L8 30 L27 25 Z" fill="#f0c46e"/><circle cx="32" cy="30" r="5" fill="#c92d2d"/></svg><div class="forjado">FORJADO</div>'+
+  $('rBody').innerHTML='<div class="fim"><svg class="marte" viewBox="0 0 64 64"><path d="M32 6 L37 25 L56 30 L37 35 L32 58 L27 35 L8 30 L27 25 Z" fill="#f0c46e"/><circle cx="32" cy="30" r="5" fill="#c92d2d"/></svg><div class="forjado">'+'FORJADO'.split('').map((c,i)=>'<span style="--i:'+i+'">'+c+'</span>').join('')+'</div>'+
     '<div class="numero" id="numSeq">0<small>DIA'+(st.seq!==1?'S':'')+' SEGUIDO'+(st.seq!==1?'S':'')+'</small></div>'+
     (pt.i>antes.i && novo ? '<div class="promo">🎖 Promovido a '+esc(pt.nome)+'</div>' : '')+
     '<div class="fim-linhas"><div><b>Patente</b><span>'+esc(pt.nome)+(pt.prox?' · faltam '+pt.falta+' para '+esc(pt.prox):'')+'</span></div><div><b>Despertar</b><span>'+(d.acordou? esc(d.acordou)+' (alvo '+esc(db.alvo)+')' : 'fora da alvorada — amanhã às '+esc(db.alvo))+'</span></div>'+(d.missao?'<div><b>Missão</b><span>'+esc(d.missao)+'</span></div>':'')+(st.escudos?'<div><b>Escudos</b><span>'+'🛡'.repeat(st.escudos)+' protegem sua sequência</span></div>':'')+'</div></div>';
   rodape([{t:'Ao front ›',f:()=>fecharRitual(false)}]);
-  golpeVisual(); setTimeout(()=>som.vitoria(),350);
+  golpeVisual(); setTimeout(()=>{ som.vitoria(); fxRitual.explodir(80); onda(); },700);
   // contagem animada da sequência
   let n=0; const alvoN=st.seq; const iv=setInterval(()=>{ n++; const el=$('numSeq'); if(!el){ clearInterval(iv); return; } el.firstChild.textContent=n; if(n>=alvoN) clearInterval(iv); }, Math.max(30, 600/Math.max(1,alvoN)));
   timers.push(iv);
@@ -943,7 +1133,7 @@ Regras do SVG:
 - máximo ~4000 caracteres`;
 async function forjarIA(){
   const key = localStorage.getItem(KEY_API);
-  if(!key){ status('Para forjar com IA, adicione sua chave da API Anthropic no Arsenal. O banco de 73 mensagens funciona sem ela.'); return; }
+  if(!key){ status('Para forjar com IA, adicione sua chave da API Anthropic no Arsenal. O banco de 83 mensagens funciona sem ela.'); return; }
   const d=new Date(); $('btnGerar').disabled=true; status('<span class="spin"></span>Forjando no fogo…');
   try{
     const res = await fetch('https://api.anthropic.com/v1/messages',{ method:'POST', headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
@@ -964,21 +1154,21 @@ async function gerarPng(){
   const msg=mensagemAtual(); const svg=sanitizarSvg(msg.svg)||ARTES.alvorada;
   const url=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'})); const img=new Image();
   await new Promise((ok,ko)=>{ img.onload=ok; img.onerror=ko; img.src=url; });
-  try{ await document.fonts.load('700 74px Oswald'); }catch(e){}
+  try{ await document.fonts.load('900 70px Cinzel'); await document.fonts.load('600 26px Oswald'); }catch(e){}
   const W=1080,H=1350,c=document.createElement('canvas'); c.width=W; c.height=H; const ctx=c.getContext('2d');
   ctx.drawImage(img,0,0,W,H); URL.revokeObjectURL(url);
   const g=ctx.createLinearGradient(0,H*.28,0,H); g.addColorStop(0,'rgba(7,6,5,0)'); g.addColorStop(.45,'rgba(7,6,5,.7)'); g.addColorStop(1,'rgba(7,6,5,.97)'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
   const g2=ctx.createLinearGradient(0,0,0,H*.2); g2.addColorStop(0,'rgba(7,6,5,.8)'); g2.addColorStop(1,'rgba(7,6,5,0)'); ctx.fillStyle=g2; ctx.fillRect(0,0,W,H*.2);
   ctx.textBaseline='top'; ctx.font='600 28px Oswald, Arial'; ctx.fillStyle='#9c8e74'; ctx.fillText('⚔  F O R J A   D I Á R I A', 70, 64);
   const M=76, maxW=W-M*2; ctx.shadowColor='rgba(0,0,0,.9)'; ctx.shadowBlur=16;
-  const TF='700 86px Oswald, "Arial Black", Arial';
+  const TF='900 70px Cinzel, Georgia, serif';
   const tit=textoPlano(msg.titulo).toUpperCase(); ctx.font=TF; const titL=quebrarLinhas(ctx,tit,maxW);
   ctx.font='36px Georgia'; const msgL=quebrarLinhas(ctx,msg.mensagem,maxW);
   ctx.font='italic 33px Georgia'; const verL=quebrarLinhas(ctx,msg.versiculo,maxW-24);
-  const hTit=titL.length*90, hMsg=msgL.length*52, hVer=verL.length*45;
+  const hTit=titL.length*84, hMsg=msgL.length*52, hVer=verL.length*45;
   let y=H-84-36-hVer-30-hMsg-26-hTit;
   ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M,y-26,120,8); ctx.shadowBlur=16;
-  ctx.font=TF; ctx.fillStyle='#f7edd8'; for(const l of titL){ ctx.fillText(l,M,y); y+=90; } y+=14;
+  ctx.font=TF; ctx.fillStyle='#ffd98a'; for(const l of titL){ ctx.fillText(l,M,y); y+=84; } y+=14;
   ctx.font='36px Georgia'; ctx.fillStyle='#e7dcc4'; for(const l of msgL){ ctx.fillText(l,M,y); y+=52; } y+=14;
   ctx.shadowBlur=0; ctx.fillStyle='#c92d2d'; ctx.fillRect(M,y,6,hVer+40); ctx.shadowBlur=16;
   ctx.font='italic 33px Georgia'; ctx.fillStyle='#f0c46e'; for(const l of verL){ ctx.fillText(l,M+24,y+6); y+=45; } y+=14;
@@ -1033,8 +1223,8 @@ function irPara(pg){
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on', p.id==='pg-'+pg));
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on', b.dataset.pg===pg));
   if(pg==='hoje'){ renderHoje(); setTimeout(()=>fxHero.tam(),30); }
-  if(pg==='progresso') renderProgresso();
-  if(pg==='arsenal') renderArsenal();
+  if(pg==='progresso'){ renderProgresso(); const h1=$('pg-progresso').querySelector('h1'); h1.textContent='Progresso'; h1.classList.remove('kin'); kinetic(h1); }
+  if(pg==='arsenal'){ renderArsenal(); const h1=$('pg-arsenal').querySelector('h1'); h1.textContent='Arsenal'; h1.classList.remove('kin'); kinetic(h1); revelar($('pg-arsenal')); }
   window.scrollTo(0,0);
 }
 addEventListener('popstate',()=>{ if($('ritual').classList.contains('on')) fecharRitual(true); });
@@ -1063,6 +1253,7 @@ function init(){
   try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
   if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
   irPara('hoje');
+  (function trovao(){ setTimeout(()=>{ if(pgAtual==='hoje' && !document.hidden) relampago(); trovao(); }, 8000+Math.random()*9000); })();
   talvezNotificar(); agendarProxima();
   // abrir direto no ritual: atalho do ícone ou link com #forjar
   if(location.hash==='#forjar' && !(db.dias[hojeStr()]||{}).forjado){ history.replaceState(null,'',location.pathname); setTimeout(abrirRitual,300); }

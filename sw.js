@@ -2,7 +2,7 @@
    - abre sem internet (app, ícones e fonte guardados)
    - página principal: rede primeiro, então cada versão nova chega sozinha
    - lembrete da alvorada via periodicSync (quando o Android permitir) */
-const CACHE = 'forja-v3';
+const CACHE = 'forja-v3-1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
