@@ -3,7 +3,7 @@
   "short_name": "Forja",
   "description": "Ritual da alvorada para homens de fé, família e disciplina: de pé, oração, palavra, juramento e missão do dia.",
   "lang": "pt-BR",
-  "start_url": "./?app=forja3",
+  "start_url": "./?app=forja4",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
@@ -41,12 +41,12 @@
       "purpose": "any"
     }
   ],
-  "id": "./?app=forja3",
+  "id": "./?app=forja4",
   "shortcuts": [
     {
       "name": "Iniciar a forja",
       "short_name": "Forjar",
-      "url": "./?app=forja3#forjar",
+      "url": "./?app=forja4#forjar",
       "icons": [
         {
           "src": "icon-forja-192.png",
