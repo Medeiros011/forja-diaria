@@ -2,8 +2,8 @@
    - abre sem internet (app, ícones e fonte guardados)
    - página principal: rede primeiro, então cada versão nova chega sozinha
    - lembrete da alvorada via periodicSync (quando o Android permitir) */
-const CACHE = 'forja-v4-0';
-const SHELL = ['./', './index.html', './forja-app.webmanifest', './icon-elmo.svg', './icon-elmo-192.png', './icon-elmo-512.png', './icon-elmo-maskable-512.png'];
+const CACHE = 'forja-v4-1';
+const SHELL = ['./', './index.html', './forja-app.webmanifest', './icon-forja.svg', './icon-forja-192.png', './icon-forja-512.png', './icon-forja-maskable-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -64,7 +64,7 @@ async function notificarSeForHora() {
   await cfg.put('./ultima-notificacao', new Response(hoje));
   await self.registration.showNotification('⚔ ' + alvo + '. DE PÉ, SOLDADO.', {
     body: 'A forja está acesa. Seu ritual da alvorada espera.',
-    icon: 'icon-elmo-192.png', badge: 'icon-elmo-192.png', tag: 'forja-diaria',
+    icon: 'icon-forja-192.png', badge: 'icon-forja-192.png', tag: 'forja-diaria',
     vibrate: [200, 100, 200, 100, 400], data: { url: './#forjar' }
   });
 }
