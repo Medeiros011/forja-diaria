@@ -539,6 +539,20 @@ dialog{background:var(--steel);border-radius:var(--r)}
 .fim-linhas div{border-color:var(--linha)}
 .fim-linhas div b{color:var(--gold)}
 
+/* ---------- 4.1: motivação do dia, circuito diário ---------- */
+.motiv{text-align:center;padding:22px 20px}
+.motiv .mq{font-family:var(--title);font-weight:700;font-size:clamp(1.25rem,5.6vw,1.6rem);line-height:1.3;color:var(--prata2)}
+.motiv .mq::before,.motiv .mq::after{color:var(--gold);font-family:Georgia,serif}
+.motiv .mq::before{content:'“'}.motiv .mq::after{content:'”'}
+.motiv .ms{margin-top:12px;font-family:var(--label);font-size:.68rem;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+.motiv .ms b{color:var(--gold);font-weight:500}
+.reps.tres{grid-template-columns:repeat(3,1fr);gap:8px}
+.reps.tres .rep{padding:16px 4px}
+.reps.tres .rep b{font-size:2.3rem}
+.reps.tres .rep small{font-size:.56rem;letter-spacing:.12em;line-height:1.3;min-height:2.6em;display:flex;align-items:center;justify-content:center}
+.rep.tempo b{color:var(--gold2)}
+.rep span{font-size:.68rem}
+
 /* ===== ABERTURA 4.0 (clean) ===== */
 .fsplash{position:fixed;inset:0;z-index:1000;background:radial-gradient(70% 50% at 50% 34%,#1f2329 0%,#101215 55%,#0b0c0f 100%);display:flex;flex-direction:column;align-items:center;overflow:hidden;cursor:pointer;-webkit-user-select:none;user-select:none}
 .fsplash.out{animation:f4Out .6s cubic-bezier(.65,0,.35,1) forwards;pointer-events:none}
@@ -648,6 +662,8 @@ dialog{background:var(--steel);border-radius:var(--r)}
 
   <div class="secao">
     <div id="cardsTopo"></div>
+    <div class="rotulo">Motivação do dia</div>
+    <div class="card motiv" id="cardMotiv"></div>
     <div class="rotulo">Palavra do dia</div>
     <div class="card" id="cardMsg">
       <span class="pilar" id="pilar"></span>
@@ -701,9 +717,9 @@ dialog{background:var(--steel);border-radius:var(--r)}
     <div class="rotulo">Ritual</div>
     <div class="card">
       <div class="linha"><div><b>Respiração de combate</b><span>48 s de respiração em caixa + água</span></div><label class="switch"><input type="checkbox" data-passo="respira"><span></span></label></div>
-      <div class="linha"><div><b>Oração da manhã</b><span>Oferecimento do dia e São Miguel</span></div><label class="switch"><input type="checkbox" data-passo="oracao"><span></span></label></div>
+      <div class="linha"><div><b>Oração da manhã</b><span>Gratidão: uma oração nova a cada dia</span></div><label class="switch"><input type="checkbox" data-passo="oracao"><span></span></label></div>
       <div class="linha"><div><b>Meu porquê</b><span>Lembrar por quem você luta</span></div><label class="switch"><input type="checkbox" data-passo="porque"><span></span></label></div>
-      <div class="linha"><div><b>Primeiro sangue</b><span>20 agachamentos + 10 flexões</span></div><label class="switch"><input type="checkbox" data-passo="corpo"><span></span></label></div>
+      <div class="linha"><div><b>Primeiro sangue</b><span>Circuito curto, diferente a cada dia</span></div><label class="switch"><input type="checkbox" data-passo="corpo"><span></span></label></div>
       <div class="linha"><div><b>Ler a palavra em voz alta</b><span>Voz automática no ritual</span></div><label class="switch"><input type="checkbox" id="tVoz"><span></span></label></div>
       <div class="linha"><div><b>Sons de batalha</b><span>Corneta, martelo e tambor</span></div><label class="switch"><input type="checkbox" id="tSom"><span></span></label></div>
     </div>
@@ -722,7 +738,7 @@ dialog{background:var(--steel);border-radius:var(--r)}
       <input type="file" id="arqImport" accept=".json" style="display:none">
       <button class="btn-s" id="importar">Importar histórico</button>
     </div>
-    <div style="text-align:center;color:var(--faint);font-size:.72rem;padding:18px 0 8px;letter-spacing:.14em">FORJA 4.0 · DE PÉ, SOLDADO</div>
+    <div style="text-align:center;color:var(--faint);font-size:.72rem;padding:18px 0 8px;letter-spacing:.14em">FORJA 4.1 · DE PÉ, SOLDADO</div>
   </div>
 </main>
 
@@ -941,6 +957,128 @@ const BANCO_LENDAS = [
 const REMAP_ARTE = {'SEJA HOMEM. SEJA FORTE.':'espartano','FERRO AFIA FERRO':'gladiador','DISCIPLINA É LIBERDADE':'gladiador','CINGI-VOS E SEDE VALENTES':'falange','DOMINE-SE PRIMEIRO':'templario','MÃOS ADESTRADAS PARA A GUERRA':'hercules','TUDO POSSO':'hercules','CAIU? LEVANTA.':'aquiles','ATÉ O ÚLTIMO ROUND':'gladiador','A VIDA É MILÍCIA':'falange','HOMEM DE PALAVRA':'templario','ABATIDO, NÃO DESTRUÍDO':'aquiles','SÊ FIRME E CORAJOSO':'falange','ESPÍRITO DE FORTALEZA':'espartano','PAI É ESCUDO':'espartano','COMBATA O BOM COMBATE':'templario'};
 const ACENTO = {'FÉ':'#f5c04a','FAMÍLIA':'#ff9a3c','DISCIPLINA':'#ff3b3b','CORPO':'#ff6a00','HONRA':'#e0a050','CORAGEM':'#ff4a2a','RESILIÊNCIA':'#ffc24a','TRABALHO':'#ff8a3a'};
 
+/* ============================== FORJA 4.1 — conteúdo diário ============================== */
+/* Orações de gratidão (textos originais), uma por dia */
+const GRATIDAO = [
+  {t:'Pelo dom da vida', o:'Senhor, antes de qualquer pedido, eu te agradeço. Obrigado por mais um dia, pelo ar que entra no meu peito e pelo coração que bate sem que eu peça. Nada disso é merecido; tudo é graça. Que eu não desperdice este dia que tu me entregas. Amém.'},
+  {t:'Pela minha família', o:'Pai, obrigado pela família que me deste. Pelos que dormem nesta casa, pelos risos, pelas conversas e até pelas falhas que nos ensinam a perdoar. Guarda cada um deles hoje e faz de mim um homem que protege, sustenta e dá exemplo. Amém.'},
+  {t:'Pelo pão de cada dia', o:'Senhor, obrigado pelo alimento que não falta à minha mesa e pelo trabalho que o coloca ali. Lembra-me dos que hoje acordam sem ter o que comer e torna-me generoso. Que eu nunca trate como pouco o que tu me dás todos os dias. Amém.'},
+  {t:'Pela missão de servir', o:'Senhor, obrigado pela missão de servir e proteger. Pela farda, pelos companheiros e pela chance de fazer o bem a quem nem conheço. Dá-me coragem sem arrogância, firmeza com justiça e volta-me para casa em paz ao fim do dia. Amém.'},
+  {t:'Pela saúde do corpo', o:'Pai, obrigado por este corpo que levanta, caminha, corre e trabalha. Pelas pernas, pelos braços, pelos olhos que veem o amanhecer. Ensina-me a cuidar dele com disciplina, porque ele é templo do teu Espírito e ferramenta da minha missão. Amém.'},
+  {t:'Pelas dificuldades que me forjam', o:'Senhor, hoje eu te agradeço também pelo que pesa. As lutas, os atrasos e as portas fechadas estão me forjando como o fogo forja o aço. Não me livres de toda batalha; dá-me força para vencê-las e humildade para aprender com elas. Amém.'},
+  {t:'Pela noite de descanso', o:'Pai, obrigado pelo sono desta noite e por me guardares enquanto eu dormia. Recebo este novo dia como um presente que ainda não foi aberto. Que eu o use bem, com o coração limpo e a mente desperta. Amém.'},
+  {t:'Pela fé que recebi', o:'Senhor, obrigado pelo dom da fé, que eu não conquistei, mas recebi. Pelos que me ensinaram a rezar, pela Igreja e pelos sacramentos. Aumenta a minha fé onde ela está fraca e faz que minhas obras falem dela mais do que minhas palavras. Amém.'},
+  {t:'Por Nossa Senhora', o:'Senhor, obrigado por nos teres dado tua Mãe como nossa Mãe. Maria, que disseste sim sem conhecer todo o caminho, ensina-me a confiar. Coloco este dia sob o teu manto e agradeço por tua intercessão silenciosa em tantas batalhas da minha vida. Amém.'},
+  {t:'Pelo anjo da guarda', o:'Pai, obrigado pelo anjo que puseste ao meu lado. Quantos perigos ele afastou sem que eu soubesse. Que hoje ele me guarde no trânsito, no serviço e em cada decisão, e me inspire a escolher sempre o caminho certo. Amém.'},
+  {t:'Pelos meus pais', o:'Senhor, obrigado pelos meus pais e por tudo o que me deram, inclusive o que só entendi depois de adulto. Abençoa-os onde estiverem. Que eu honre o nome que recebi e passe adiante o melhor do que aprendi com eles. Amém.'},
+  {t:'Pelo perdão', o:'Pai, obrigado por não me tratares segundo os meus erros. Tu me levantas todas as vezes que eu caio. Hoje quero agradecer perdoando também: tira do meu coração qualquer rancor e faz de mim um homem leve e justo. Amém.'},
+  {t:'Pelos meus filhos', o:'Senhor, obrigado pelos filhos que me confiaste. Eles são o maior presente e a maior responsabilidade da minha vida. Guarda a inocência deles, dá-me paciência e presença, e que eles vejam em mim um pai em quem possam confiar. Amém.'},
+  {t:'Pela mulher ao meu lado', o:'Pai, obrigado pela mulher que caminha comigo. Pela parceria, pelo cuidado e pela paciência nos dias difíceis. Ensina-me a amá-la com atos, a ouvi-la com atenção e a construir com ela um lar firme na rocha. Amém.'},
+  {t:'Pelo trabalho', o:'Senhor, obrigado pelo trabalho que sustenta a minha casa e me dá propósito. Que eu o faça bem-feito, com honestidade, mesmo quando ninguém estiver olhando. Abençoa os que trabalham comigo e os que dependem do meu serviço. Amém.'},
+  {t:'Pelos amigos leais', o:'Pai, obrigado pelos amigos verdadeiros, poucos e fiéis. Pelos que me corrigem, me apoiam e permanecem. Que eu seja para eles o amigo que eu gostaria de ter, presente na alegria e firme na dificuldade. Amém.'},
+  {t:'Pelas pequenas vitórias', o:'Senhor, obrigado pelas vitórias que ninguém vê: a cama vencida, a palavra cumprida, a tentação recusada. São elas que constroem o homem. Que eu continue fiel no pouco, para que tu me confies o muito. Amém.'},
+  {t:'Pela criação', o:'Pai, obrigado pelo céu desta manhã, pela luz que nasce, pela chuva e pelo sol. Tudo o que fizeste é bom. Que eu contemple a tua obra com olhos atentos e cuide do mundo que me deste como quem cuida de um presente. Amém.'},
+  {t:'Pela liberdade', o:'Senhor, obrigado pela liberdade de escolher o bem. Hoje eu escolho levantar, servir, amar e cumprir. Livra-me das correntes que eu mesmo crio, os vícios, a preguiça e o medo, e faz de mim um homem verdadeiramente livre. Amém.'},
+  {t:'Pelos que já partiram', o:'Pai, obrigado pelas pessoas que passaram pela minha vida e já estão contigo. Pelo amor que deixaram e pelas lições que ficaram. Concede-lhes o descanso eterno e dá-me a graça de viver de um jeito que honre a memória delas. Amém.'},
+  {t:'Pela disciplina', o:'Senhor, obrigado por cada dia em que consegui ser disciplinado e também pelos dias em que falhei e recomecei. A disciplina é um caminho que tu me ensinas aos poucos. Dá-me constância hoje, especialmente no que é pequeno. Amém.'},
+  {t:'Pela casa', o:'Pai, obrigado pelo teto sobre a minha cabeça, pela porta que se fecha à noite e pela cama onde descanso. Que esta casa seja lugar de paz, de oração e de respeito. Entra nela, Senhor, e permanece conosco. Amém.'},
+  {t:'Pelos mestres', o:'Senhor, obrigado por todos que me ensinaram: professores, comandantes, chefes e até desconhecidos. Cada um deixou uma ferramenta em minhas mãos. Que eu seja humilde para continuar aprendendo e generoso para ensinar. Amém.'},
+  {t:'Pelo recomeço', o:'Pai, obrigado porque cada manhã é um recomeço. O que ficou para trás não me define. Hoje começo de novo, com o coração limpo e os olhos para frente. Firma os meus passos e não me deixes voltar aos erros de ontem. Amém.'},
+  {t:'Pelos irmãos de farda', o:'Senhor, obrigado pelos companheiros que estão comigo no serviço. Protege cada um deles, suas famílias e suas casas. Que entre nós haja lealdade, respeito e coragem, e que todos voltem para casa hoje. Amém.'},
+  {t:'Pela paz', o:'Pai, obrigado pela paz que existe hoje no meu lar e no meu coração, mesmo em meio às preocupações. Faz de mim instrumento da tua paz: onde houver conflito, que eu leve calma; onde houver dúvida, que eu leve firmeza. Amém.'},
+  {t:'Pela cruz de cada dia', o:'Senhor, obrigado pela cruz que me cabe. Ela não é maior do que as minhas forças com a tua graça. Ensina-me a carregá-la sem reclamar, unido a ti, sabendo que nenhum sacrifício oferecido com amor é perdido. Amém.'},
+  {t:'Pela esperança', o:'Pai, obrigado pela esperança que não morre. Mesmo quando o caminho é escuro, sei que tu estás à frente. Que eu leve essa esperança aos que encontrar hoje, com uma palavra boa, um gesto de ajuda ou simplesmente a minha presença. Amém.'},
+  {t:'Pelo silêncio da madrugada', o:'Senhor, obrigado por este silêncio antes do mundo acordar. Aqui, longe do barulho, eu te encontro e me encontro. Que eu guarde um pouco desta calma para as horas agitadas do dia e volte a ela sempre que precisar. Amém.'},
+  {t:'Pela Eucaristia', o:'Senhor Jesus, obrigado por permaneceres conosco na Eucaristia. Tu te fizeste alimento para que eu tivesse força na caminhada. Desperta em mim a fome de ti e prepara o meu coração para te receber dignamente. Amém.'},
+  {t:'Por tudo', o:'Pai, hoje eu simplesmente te agradeço por tudo: pelo que tenho, pelo que perdi e pelo que ainda virá. Tu sabes o que é melhor para mim. Entrego este dia nas tuas mãos e sigo em frente com o coração agradecido. Amém.'}
+];
+const GLORIA = 'Glória ao Pai, ao Filho e ao Espírito Santo. Como era no princípio, agora e sempre. Amém.';
+function gratidaoDoDia(){ return GRATIDAO[((diaN()*7)%GRATIDAO.length+GRATIDAO.length)%GRATIDAO.length]; }
+
+/* Primeiro sangue: um circuito diferente por dia (sem equipamento, 3 a 5 min) */
+const CIRCUITOS = [
+  {n:'Base do soldado', x:[{e:'Agachamentos',m:20},{e:'Flexões',m:10}], d:'Desça até a coxa ficar paralela ao chão. Peito no chão na flexão.'},
+  {n:'Linha de frente', x:[{e:'Afundos alternados',m:20},{e:'Prancha',s:40}], d:'Joelho de trás quase toca o chão. Na prancha, abdômen travado e quadril alinhado.'},
+  {n:'Toque de alvorada', x:[{e:'Polichinelos',m:30},{e:'Flexões',m:12},{e:'Agachamentos',m:15}], d:'Ritmo constante, sem pausa entre os exercícios.'},
+  {n:'Muralha', x:[{e:'Agachamento na parede',s:40},{e:'Flexões',m:12}], d:'Costas na parede, joelhos a 90°. Respire fundo e segure.'},
+  {n:'Fogo rápido', x:[{e:'Burpees',m:8},{e:'Agachamentos',m:20}], d:'Burpee controlado: mão no chão, pés para trás, peito embaixo, salto curto.'},
+  {n:'Escalada', x:[{e:'Escaladores',m:30},{e:'Flexões',m:10},{e:'Prancha',s:30}], d:'Escalador: joelho no peito, alternando. Cada perna conta uma.'},
+  {n:'Pernas de corredor', x:[{e:'Ponte de glúteo',m:20},{e:'Afundos reversos',m:16},{e:'Panturrilha em pé',m:25}], d:'Aperte o glúteo no topo da ponte por um segundo.'},
+  {n:'Escudo', x:[{e:'Prancha',s:45},{e:'Super-homem',m:15},{e:'Flexões',m:10}], d:'Super-homem: deitado de bruços, eleve braços e pernas juntos e segure um segundo.'},
+  {n:'Legionário', x:[{e:'Agachamento sumô',m:20},{e:'Flexão fechada',m:8}], d:'Sumô: pés bem afastados e pontas para fora. Flexão com mãos próximas, cotovelos colados.'},
+  {n:'Marcha forçada', x:[{e:'Corrida parada',s:40},{e:'Agachamentos',m:15},{e:'Flexões',m:10}], d:'Corrida no lugar com joelho alto e braços ativos.'},
+  {n:'Ferro e aço', x:[{e:'Flexões',m:15},{e:'Prancha lateral (cada lado)',s:40},{e:'Agachamentos',m:20}], d:'Prancha lateral: 20 s de cada lado, quadril alto.'},
+  {n:'Hoplita', x:[{e:'Afundos alternados',m:20},{e:'Escaladores',m:20}], d:'Tronco ereto no afundo, como quem segura um escudo.'},
+  {n:'Espartano', x:[{e:'Agachamentos com salto',m:10},{e:'Flexões',m:12},{e:'Prancha',s:30}], d:'Aterrisse macio no salto, com os joelhos levemente flexionados.'},
+  {n:'Centurião', x:[{e:'Polichinelos',m:40},{e:'Ponte de glúteo',m:20},{e:'Flexões',m:10}], d:'Comece leve e termine forte.'}
+];
+function circuitoDoDia(){ return CIRCUITOS[((diaN()*5)%CIRCUITOS.length+CIRCUITOS.length)%CIRCUITOS.length]; }
+
+/* Motivação do dia (textos originais) */
+const MOTIVACAO = [
+  'Ninguém vai levantar por você. Levante.',
+  'A disciplina de hoje é a liberdade de amanhã.',
+  'Você não precisa ter vontade. Precisa ter palavra.',
+  'O desconforto de agora é o preço do homem que você quer ser.',
+  'Quem vence a cama vence o primeiro inimigo do dia.',
+  'Faça o difícil primeiro. O resto do dia fica leve.',
+  'Constância vence talento que não aparece.',
+  'Seus filhos não vão lembrar do que você disse, e sim do que você fez.',
+  'Um homem se mede pelo que faz quando ninguém está olhando.',
+  'Cansado também se vai. Só não se para.',
+  'Pequenas vitórias diárias constroem grandes homens.',
+  'A preguiça pede só cinco minutos. Não dê.',
+  'Hoje é um bom dia para cumprir o que você prometeu.',
+  'Força não é ausência de medo. É ir mesmo com ele.',
+  'O treino que você não quer fazer é o que mais te transforma.',
+  'Seja o homem em quem a sua família pode confiar sem pensar duas vezes.',
+  'A chuva não cancela a missão.',
+  'Não espere motivação. Crie movimento.',
+  'O corpo obedece a mente que não negocia.',
+  'Termine o que começou. É isso que separa os homens dos meninos.',
+  'Cada manhã é uma nova chance de não ser quem você foi ontem.',
+  'Quem planta disciplina colhe respeito.',
+  'Você não está atrasado. Está em construção.',
+  'A dor do esforço passa. A do arrependimento fica.',
+  'Fé sem obra é morta. Levante e trabalhe.',
+  'Ninguém lembra das desculpas. Lembram dos resultados.',
+  'O guerreiro treina em tempo de paz para não sangrar na guerra.',
+  'Seja firme como rocha e manso como quem já venceu a si mesmo.',
+  'Um passo hoje vale mais do que mil planos para amanhã.',
+  'Proteja o seu tempo como protege a sua casa.',
+  'O que você tolera, você ensina.',
+  'Não reclame do peso. Fique mais forte.',
+  'A rotina é chata. Os resultados não.',
+  'Hoje, faça só um pouco melhor do que ontem.',
+  'Coragem é fazer o certo quando o errado é mais fácil.',
+  'Você é exemplo, querendo ou não. Escolha ser um bom.',
+  'O sucesso mora do outro lado do desconforto.',
+  'Fale menos, faça mais.',
+  'Quem domina a manhã domina o dia.',
+  'Ser forte é uma decisão que se renova todos os dias.',
+  'Não deixe o humor decidir o que a disciplina já decidiu.',
+  'A vitória ama o preparo.',
+  'Nenhum soldado escolhe o terreno. Ele luta onde está.',
+  'O homem que se governa não precisa ser governado.',
+  'Sua palavra é o seu nome. Honre os dois.',
+  'Seja grato pelo que tem e incansável pelo que falta.',
+  'Hoje não é dia de desistir. Amanhã também não.',
+  'Treine o caráter como treina o corpo: todos os dias.',
+  'A fé não tira a tempestade. Te mantém de pé dentro dela.',
+  'Comece. A clareza vem com o movimento.',
+  'Firme na fé, forte no corpo, fiel à família.',
+  'Você já sobreviveu a dias piores. Este também é seu.',
+  'O conforto é um bom lugar para descansar e um péssimo lugar para morar.',
+  'Faça hoje o que o homem de daqui a um ano vai agradecer.',
+  'Excelência não se faz num dia. Se faz todo dia.',
+  'Ninguém nasce pronto. A gente se forja.',
+  'Cumpra o básico com perfeição. É assim que se vence.',
+  'Paciência com o processo, exigência com a atitude.',
+  'O mundo dá passagem a quem sabe para onde vai.',
+  'Levante, agradeça e vá à luta.'
+];
+function motivacaoDoDia(){ return MOTIVACAO[((diaN()*11)%MOTIVACAO.length+MOTIVACAO.length)%MOTIVACAO.length]; }
+
 /* Espada 4.0 — gerada por gen_espada4.py */
 const ESP4_DEFS = "<linearGradient id=\"P_aco\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">\n  <stop offset=\"0\" stop-color=\"#6b7078\"/><stop offset=\".22\" stop-color=\"#e9ecef\"/><stop offset=\".46\" stop-color=\"#bfc4ca\"/>\n  <stop offset=\".5\" stop-color=\"#8a9097\"/><stop offset=\".54\" stop-color=\"#dfe2e6\"/><stop offset=\".82\" stop-color=\"#a4a9b0\"/><stop offset=\"1\" stop-color=\"#5f646b\"/>\n</linearGradient>\n<linearGradient id=\"P_acoV\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n  <stop offset=\"0\" stop-color=\"#f4f6f8\"/><stop offset=\".45\" stop-color=\"#b7bcc3\"/><stop offset=\".55\" stop-color=\"#8c9198\"/><stop offset=\"1\" stop-color=\"#d7dbe0\"/>\n</linearGradient>\n<radialGradient id=\"P_acoR\" cx=\".38\" cy=\".3\" r=\".8\">\n  <stop offset=\"0\" stop-color=\"#ffffff\"/><stop offset=\".35\" stop-color=\"#d4d8dd\"/><stop offset=\".8\" stop-color=\"#8b9097\"/><stop offset=\"1\" stop-color=\"#6a6f76\"/>\n</radialGradient>\n<linearGradient id=\"P_cabo\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">\n  <stop offset=\"0\" stop-color=\"#08090b\"/><stop offset=\".35\" stop-color=\"#2b2e34\"/><stop offset=\".5\" stop-color=\"#1a1c20\"/><stop offset=\"1\" stop-color=\"#060708\"/>\n</linearGradient>\n<linearGradient id=\"P_ambar\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n  <stop offset=\"0\" stop-color=\"#ffe59a\"/><stop offset=\".45\" stop-color=\"#f0a91c\"/><stop offset=\"1\" stop-color=\"#7a4300\"/>\n</linearGradient>\n<linearGradient id=\"P_sulco\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\">\n  <stop offset=\"0\" stop-color=\"#7f858c\"/><stop offset=\".5\" stop-color=\"#c9cdd2\"/><stop offset=\"1\" stop-color=\"#7a8087\"/>\n</linearGradient>\n<linearGradient id=\"P_brilho\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">\n  <stop offset=\"0\" stop-color=\"#fff\" stop-opacity=\"0\"/><stop offset=\".5\" stop-color=\"#fff\" stop-opacity=\".85\"/><stop offset=\"1\" stop-color=\"#fff\" stop-opacity=\"0\"/>\n</linearGradient>\n<clipPath id=\"P_clipLamina\"><path d=\"M95 318 H145 L142 760 C141 800 130 846 120 886 C110 846 99 800 98 760 Z\"/></clipPath>";
 const ESP4_CORPO = "<g class=\"esp\"><path d=\"M95 318 H145 L142 760 C141 800 130 846 120 886 C110 846 99 800 98 760 Z\" fill=\"url(#P_aco)\" stroke=\"#4a4f56\" stroke-width=\"1.2\"/><path d=\"M98.5 330 L101 760 C102 798 111 838 120 872\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".55\" stroke-width=\"1.1\"/><path d=\"M141.5 330 L139 760 C138 798 129 838 120 872\" fill=\"none\" stroke=\"#2f3338\" stroke-opacity=\".45\" stroke-width=\"1.1\"/><path d=\"M111 362 H129 L127 792 L120 818 L113 792 Z\" fill=\"url(#P_sulco)\" stroke=\"#5d636a\" stroke-width=\".8\"/><polyline points=\"115.5,372.0 115.5,386.0 112.6,386.0 112.6,400.0 115.7,400.0 115.7,414.0 112.7,414.0 112.7,428.0 115.8,428.0 115.8,442.0 112.8,442.0 112.8,456.0 115.9,456.0 115.9,470.0 112.9,470.0 112.9,484.0 116.0,484.0 116.0,498.0 113.0,498.0 113.0,512.0 116.1,512.0 116.1,526.0 113.2,526.0 113.2,540.0 116.2,540.0 116.2,554.0 113.3,554.0 113.3,568.0 116.3,568.0 116.3,582.0 113.4,582.0 113.4,596.0 116.4,596.0 116.4,610.0 113.5,610.0 113.5,624.0 116.5,624.0 116.5,638.0 113.6,638.0 113.6,652.0 116.7,652.0 116.7,666.0 113.7,666.0 113.7,680.0 116.8,680.0 116.8,694.0 113.8,694.0 113.8,708.0 116.9,708.0 116.9,722.0 113.9,722.0 113.9,736.0 117.0,736.0 117.0,750.0 114.1,750.0 114.1,764.0 117.1,764.0 117.1,778.0 114.2,778.0 114.2,792.0\" fill=\"none\" stroke=\"#3e434a\" stroke-width=\"1.1\" transform=\"translate(.6 .8)\" opacity=\".55\"/><polyline points=\"115.5,372.0 115.5,386.0 112.6,386.0 112.6,400.0 115.7,400.0 115.7,414.0 112.7,414.0 112.7,428.0 115.8,428.0 115.8,442.0 112.8,442.0 112.8,456.0 115.9,456.0 115.9,470.0 112.9,470.0 112.9,484.0 116.0,484.0 116.0,498.0 113.0,498.0 113.0,512.0 116.1,512.0 116.1,526.0 113.2,526.0 113.2,540.0 116.2,540.0 116.2,554.0 113.3,554.0 113.3,568.0 116.3,568.0 116.3,582.0 113.4,582.0 113.4,596.0 116.4,596.0 116.4,610.0 113.5,610.0 113.5,624.0 116.5,624.0 116.5,638.0 113.6,638.0 113.6,652.0 116.7,652.0 116.7,666.0 113.7,666.0 113.7,680.0 116.8,680.0 116.8,694.0 113.8,694.0 113.8,708.0 116.9,708.0 116.9,722.0 113.9,722.0 113.9,736.0 117.0,736.0 117.0,750.0 114.1,750.0 114.1,764.0 117.1,764.0 117.1,778.0 114.2,778.0 114.2,792.0\" fill=\"none\" stroke=\"#f7f9fb\" stroke-width=\"1.1\"/><polyline points=\"124.5,372.0 124.5,386.0 127.4,386.0 127.4,400.0 124.3,400.0 124.3,414.0 127.3,414.0 127.3,428.0 124.2,428.0 124.2,442.0 127.2,442.0 127.2,456.0 124.1,456.0 124.1,470.0 127.1,470.0 127.1,484.0 124.0,484.0 124.0,498.0 127.0,498.0 127.0,512.0 123.9,512.0 123.9,526.0 126.8,526.0 126.8,540.0 123.8,540.0 123.8,554.0 126.7,554.0 126.7,568.0 123.7,568.0 123.7,582.0 126.6,582.0 126.6,596.0 123.6,596.0 123.6,610.0 126.5,610.0 126.5,624.0 123.5,624.0 123.5,638.0 126.4,638.0 126.4,652.0 123.3,652.0 123.3,666.0 126.3,666.0 126.3,680.0 123.2,680.0 123.2,694.0 126.2,694.0 126.2,708.0 123.1,708.0 123.1,722.0 126.1,722.0 126.1,736.0 123.0,736.0 123.0,750.0 125.9,750.0 125.9,764.0 122.9,764.0 122.9,778.0 125.8,778.0 125.8,792.0\" fill=\"none\" stroke=\"#3e434a\" stroke-width=\"1.1\" transform=\"translate(.6 .8)\" opacity=\".55\"/><polyline points=\"124.5,372.0 124.5,386.0 127.4,386.0 127.4,400.0 124.3,400.0 124.3,414.0 127.3,414.0 127.3,428.0 124.2,428.0 124.2,442.0 127.2,442.0 127.2,456.0 124.1,456.0 124.1,470.0 127.1,470.0 127.1,484.0 124.0,484.0 124.0,498.0 127.0,498.0 127.0,512.0 123.9,512.0 123.9,526.0 126.8,526.0 126.8,540.0 123.8,540.0 123.8,554.0 126.7,554.0 126.7,568.0 123.7,568.0 123.7,582.0 126.6,582.0 126.6,596.0 123.6,596.0 123.6,610.0 126.5,610.0 126.5,624.0 123.5,624.0 123.5,638.0 126.4,638.0 126.4,652.0 123.3,652.0 123.3,666.0 126.3,666.0 126.3,680.0 123.2,680.0 123.2,694.0 126.2,694.0 126.2,708.0 123.1,708.0 123.1,722.0 126.1,722.0 126.1,736.0 123.0,736.0 123.0,750.0 125.9,750.0 125.9,764.0 122.9,764.0 122.9,778.0 125.8,778.0 125.8,792.0\" fill=\"none\" stroke=\"#f7f9fb\" stroke-width=\"1.1\"/><line x1=\"120\" y1=\"366\" x2=\"120\" y2=\"806\" stroke=\"#6c7279\" stroke-width=\".9\"/><path d=\"M120 324 C110 334 108 346 120 356 C132 346 130 334 120 324 Z\" fill=\"none\" stroke=\"#f3f5f7\" stroke-width=\"1.2\"/><path d=\"M120 330 V352 M113 340 C116 343 118 344 120 344 C122 344 124 343 127 340\" fill=\"none\" stroke=\"#5a6067\" stroke-width=\".9\"/><g clip-path=\"url(#P_clipLamina)\"><rect class=\"esp-brilho\" x=\"80\" y=\"-160\" width=\"80\" height=\"150\" fill=\"url(#P_brilho)\" opacity=\".75\"/></g><path d=\"M146 290 C170 290 189 286 201 277\" fill=\"none\" stroke=\"#2a2d32\" stroke-width=\"15.5\" stroke-linecap=\"round\" opacity=\"1\" transform=\"translate(0 0)\"/><path d=\"M146 290 C170 290 189 286 201 277\" fill=\"none\" stroke=\"url(#P_acoV)\" stroke-width=\"12.5\" stroke-linecap=\"round\" opacity=\"1\" transform=\"translate(0 0)\"/><path d=\"M146 290 C170 290 189 286 201 277\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.2\" stroke-linecap=\"round\" opacity=\"0.55\" transform=\"translate(0 -3.2)\"/><path d=\"M201 277 C213 267 215 251 205 245 C197 240 189 247 192 255 C194 260 200 260 202 256\" fill=\"none\" stroke=\"#2a2d32\" stroke-width=\"9\" stroke-linecap=\"round\"/><path d=\"M201 277 C213 267 215 251 205 245 C197 240 189 247 192 255 C194 260 200 260 202 256\" fill=\"none\" stroke=\"url(#P_acoV)\" stroke-width=\"6.4\" stroke-linecap=\"round\"/><circle cx=\"202\" cy=\"255\" r=\"3.4\" fill=\"url(#P_acoR)\" stroke=\"#2a2d32\" stroke-width=\"1\"/><path d=\"M147 300 C160 302 168 309 167 320 C166 326 160 327 159 322\" fill=\"none\" stroke=\"#2a2d32\" stroke-width=\"6.5\" stroke-linecap=\"round\"/><path d=\"M147 300 C160 302 168 309 167 320 C166 326 160 327 159 322\" fill=\"none\" stroke=\"url(#P_acoV)\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M156 290 C170 289 182 287 192 282\" fill=\"none\" stroke=\"#5b6168\" stroke-width=\".9\" opacity=\".8\"/><g transform=\"translate(240 0) scale(-1 1)\"><path d=\"M146 290 C170 290 189 286 201 277\" fill=\"none\" stroke=\"#2a2d32\" stroke-width=\"15.5\" stroke-linecap=\"round\" opacity=\"1\" transform=\"translate(0 0)\"/><path d=\"M146 290 C170 290 189 286 201 277\" fill=\"none\" stroke=\"url(#P_acoV)\" stroke-width=\"12.5\" stroke-linecap=\"round\" opacity=\"1\" transform=\"translate(0 0)\"/><path d=\"M146 290 C170 290 189 286 201 277\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.2\" stroke-linecap=\"round\" opacity=\"0.55\" transform=\"translate(0 -3.2)\"/><path d=\"M201 277 C213 267 215 251 205 245 C197 240 189 247 192 255 C194 260 200 260 202 256\" fill=\"none\" stroke=\"#2a2d32\" stroke-width=\"9\" stroke-linecap=\"round\"/><path d=\"M201 277 C213 267 215 251 205 245 C197 240 189 247 192 255 C194 260 200 260 202 256\" fill=\"none\" stroke=\"url(#P_acoV)\" stroke-width=\"6.4\" stroke-linecap=\"round\"/><circle cx=\"202\" cy=\"255\" r=\"3.4\" fill=\"url(#P_acoR)\" stroke=\"#2a2d32\" stroke-width=\"1\"/><path d=\"M147 300 C160 302 168 309 167 320 C166 326 160 327 159 322\" fill=\"none\" stroke=\"#2a2d32\" stroke-width=\"6.5\" stroke-linecap=\"round\"/><path d=\"M147 300 C160 302 168 309 167 320 C166 326 160 327 159 322\" fill=\"none\" stroke=\"url(#P_acoV)\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M156 290 C170 289 182 287 192 282\" fill=\"none\" stroke=\"#5b6168\" stroke-width=\".9\" opacity=\".8\"/></g><path d=\"M90 266 H150 L157 291 L142 320 H98 L83 291 Z\" fill=\"url(#P_acoV)\" stroke=\"#2a2d32\" stroke-width=\"1.6\"/><path d=\"M95 271 H145 L150 291 L138 314 H102 L90 291 Z\" fill=\"none\" stroke=\"#ffffff\" stroke-opacity=\".5\" stroke-width=\"1\"/><path d=\"M97 276 C104 282 104 300 97 306 M143 276 C136 282 136 300 143 306\" fill=\"none\" stroke=\"#5b6168\" stroke-width=\"1\"/><rect x=\"107\" y=\"279\" width=\"26\" height=\"24\" rx=\"3\" fill=\"#8a9097\" stroke=\"#2a2d32\" stroke-width=\"1.2\"/><rect x=\"110\" y=\"282\" width=\"20\" height=\"18\" rx=\"2\" fill=\"url(#P_ambar)\"/><rect x=\"113\" y=\"285\" width=\"14\" height=\"12\" rx=\"1.5\" fill=\"none\" stroke=\"#fff3c4\" stroke-opacity=\".45\" stroke-width=\".8\"/><path d=\"M112 284 H120 L114 289 Z\" fill=\"#fff\" opacity=\".7\"/><path d=\"M105 106 H135 C137 150 138 184 137 218 C137 236 136 248 135 258 H105 C104 248 103 236 103 218 C102 184 103 150 105 106 Z\" fill=\"url(#P_cabo)\" stroke=\"#000\" stroke-width=\"1\"/><path d=\"M120 164 L131 184 L120 204 L109 184 Z\" fill=\"none\" stroke=\"#c9ced4\" stroke-width=\"1.5\"/><circle cx=\"120\" cy=\"184\" r=\"4\" fill=\"none\" stroke=\"#c9ced4\" stroke-width=\"1.3\"/><circle cx=\"120\" cy=\"184\" r=\"1.4\" fill=\"#c9ced4\"/><path d=\"M120 160 C113 152 113 140 120 134 C127 140 127 152 120 160 M120 208 C113 216 113 228 120 234 C127 228 127 216 120 208\" fill=\"none\" stroke=\"#c9ced4\" stroke-width=\"1.3\"/><path d=\"M110 128 C106 132 106 138 110 141 M130 128 C134 132 134 138 130 141 M110 240 C106 236 106 230 110 227 M130 240 C134 236 134 230 130 227\" fill=\"none\" stroke=\"#c9ced4\" stroke-width=\"1.1\" opacity=\".8\"/><path d=\"M108 112 C108 150 107 210 108 252\" fill=\"none\" stroke=\"#fff\" stroke-opacity=\".12\" stroke-width=\"2\"/><rect x=\"101\" y=\"254\" width=\"38\" height=\"12\" rx=\"3\" fill=\"url(#P_acoV)\" stroke=\"#2a2d32\" stroke-width=\"1.2\"/><rect x=\"102\" y=\"98\" width=\"36\" height=\"11\" rx=\"3\" fill=\"url(#P_acoV)\" stroke=\"#2a2d32\" stroke-width=\"1.2\"/><path d=\"M97 22 H143 L156 35 V73 L143 86 H97 L84 73 V35 Z\" fill=\"url(#P_acoR)\" stroke=\"#2a2d32\" stroke-width=\"1.6\"/><path d=\"M100 28 H140 L150 38 V70 L140 80 H100 L90 70 V38 Z\" fill=\"none\" stroke=\"#ffffff\" stroke-opacity=\".55\" stroke-width=\"1\"/><path d=\"M101 31 H139 L147 39 V69 L139 77 H101 L93 69 V39 Z\" fill=\"none\" stroke=\"#5b6168\" stroke-width=\".8\" opacity=\".7\"/><circle cx=\"120\" cy=\"54\" r=\"15\" fill=\"url(#P_acoV)\" stroke=\"#2a2d32\" stroke-width=\"1.2\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(0 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(45 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(90 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(135 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(180 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(225 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(270 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><ellipse cx=\"120\" cy=\"45\" rx=\"3.6\" ry=\"7.5\" transform=\"rotate(315 120 54)\" fill=\"none\" stroke=\"#4d535a\" stroke-width=\"1\"/><circle cx=\"120\" cy=\"54\" r=\"4.2\" fill=\"url(#P_ambar)\" stroke=\"#2a2d32\" stroke-width=\".8\"/><path d=\"M104 86 H136 L132 98 H108 Z\" fill=\"url(#P_acoV)\" stroke=\"#2a2d32\" stroke-width=\"1.2\"/></g>";
@@ -1103,6 +1241,7 @@ function renderHoje(){
     if(d.missao) html += missaoCardHTML(d);
   }
   $('heroC').innerHTML = html;
+  $('cardMotiv').innerHTML = '<div class="mq">'+esc(motivacaoDoDia())+'</div><div class="ms">Circuito de hoje · <b>'+esc(circuitoDoDia().n)+'</b></div>';
   kinetic($('heroC').querySelector('.manchete'), 150);
   const br=$('btnRitual'); if(br) br.onclick = abrirRitual;
   ligarMissao();
@@ -1288,9 +1427,14 @@ const PASSOS = {
     rodape([{t:'Pular',s:1,f:avancar}]);
   },
   oracao(){
-    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Apresente-se ao Comandante</div><div class="r-h">ORAÇÃO DA <em>MANHÃ</em></div>'+
-      '<div class="oracao"><h4>✠ SINAL DA CRUZ</h4>'+ORACOES.sinal+'</div><div class="oracao"><h4>OFERECIMENTO DO DIA</h4>'+ORACOES.oferecimento+'</div><div class="oracao"><h4>A SÃO MIGUEL ARCANJO</h4>'+ORACOES.miguel+'</div></div>';
-    rodape([{t:'🔊 Rezar junto',s:1,f:()=>falar(ORACOES.sinal+' '+ORACOES.oferecimento+' '+ORACOES.miguel)},{t:'Amém ›',f:avancar}]);
+    const g=gratidaoDoDia(), d=db.dias[hojeStr()]||{};
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Antes de pedir, agradeça</div><div class="r-h">ORAÇÃO DE <em>GRATIDÃO</em></div>'+
+      '<div class="oracao"><h4>✠ SINAL DA CRUZ</h4>'+ORACOES.sinal+'</div>'+
+      '<div class="oracao"><h4>'+esc(g.t.toUpperCase())+'</h4>'+esc(g.o)+'</div>'+
+      '<div class="oracao"><h4>GLÓRIA</h4>'+GLORIA+'</div>'+
+      '<div class="r-kicker" style="margin-top:6px">Hoje eu agradeço por…</div><input class="inp" id="grato" maxlength="90" placeholder="Ex.: a saúde das minhas filhas" value="'+esc(d.grato||'')+'"></div>';
+    const amem=()=>{ const v=$('grato').value.trim(); if(v){ const dd=dia(); dd.grato=v; salvar(); } avancar(); };
+    rodape([{t:'🔊 Rezar junto',s:1,f:()=>falar(ORACOES.sinal+' '+g.t+'. '+g.o+' '+GLORIA)},{t:'Amém ›',f:amem}]);
   },
   palavra(){
     const m=mensagemAtual();
@@ -1327,14 +1471,21 @@ const PASSOS = {
     rodape([]);
   },
   corpo(){
-    const alvo={a:20,f:10}; const c={a:0,f:0};
-    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Primeiro sangue</div><div class="r-h">ACORDE O <em>CORPO</em></div><div class="r-p">Sangue circulando, cabeça ligada. Toque no quadro a cada repetição.</div></div>'+
-      '<div class="reps"><div class="rep" id="repA"><b id="nA">0</b><small>AGACHAMENTOS</small><span>meta 20</span></div><div class="rep" id="repF"><b id="nF">0</b><small>FLEXÕES</small><span>meta 10</span></div></div>'+
+    const mmss=t=>Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
+    const cto=circuitoDoDia(), xs=cto.x, c=xs.map(()=>0), ok=xs.map(()=>false);
+    $('rBody').innerHTML='<div class="ent"><div class="r-kicker">Primeiro sangue · '+esc(cto.n)+'</div><div class="r-h">ACORDE O <em>CORPO</em></div><div class="r-p">'+esc(cto.d)+' Toque no quadro a cada repetição; nos de tempo, toque para iniciar.</div></div>'+
+      '<div class="reps'+(xs.length>2?' tres':'')+'">'+xs.map((x,i)=>'<div class="rep'+(x.s?' tempo':'')+'" id="rp'+i+'"><b id="rn'+i+'">'+(x.s? mmss(x.s) : '0')+'</b><small>'+esc(x.e.toUpperCase())+'</small><span>'+(x.s? 'toque para iniciar' : 'meta '+x.m)+'</span></div>').join('')+'</div>'+
       '<a href="../treino/" style="display:block;text-align:center;margin-top:18px;color:var(--gold);font-size:.85rem;font-weight:700;letter-spacing:.06em">Abrir meu treino completo ›</a>';
-    const up=(k,el,n)=>{ if(c[k]>=alvo[k]) return; c[k]++; $(n).textContent=c[k]; som.tique(); $(el).classList.remove('pop'); void $(el).offsetWidth; $(el).classList.add('pop'); vibrar(c[k]===alvo[k]?[40,30,60]:10); if(c[k]===alvo[k]){ $(el).classList.add('ok'); fxRitual.explodir(25); } if(c.a>=alvo.a&&c.f>=alvo.f) timers.push(setTimeout(avancar,700)); };
-    $('repA').onclick=()=>up('a','repA','nA'); $('repF').onclick=()=>up('f','repF','nF');
-    rodape([{t:'Pular',s:1,f:avancar},{t:'Feito ›',f:avancar}]);
+    const fim=i=>{ ok[i]=true; $('rp'+i).classList.add('ok'); vibrar([40,30,60]); fxRitual.explodir(25); if(ok.every(Boolean)) timers.push(setTimeout(avancar,800)); };
+    const pop=el=>{ el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); };
+    xs.forEach((x,i)=>{ const el=$('rp'+i);
+      if(x.s){ let rod=false; el.onclick=()=>{ if(rod||ok[i]) return; rod=true; let t=x.s; som.tique(); vibrar(20); el.querySelector('span').textContent='em andamento…';
+          const iv=setInterval(()=>{ t--; $('rn'+i).textContent=mmss(t); if(t<=3&&t>0) som.tique(); if(t<=0){ clearInterval(iv); $('rn'+i).textContent='✓'; el.querySelector('span').textContent='feito'; fim(i); } },1000); timers.push(iv); }; }
+      else el.onclick=()=>{ if(ok[i]) return; c[i]++; $('rn'+i).textContent=c[i]; som.tique(); pop(el); vibrar(10); if(c[i]>=x.m) fim(i); };
+    });
+    rodape([{t:'Pular',s:1,f:avancar},{t:'Feito ›',f:()=>{ const dd=dia(); dd.circuito=cto.n; salvar(); avancar(); }}]);
   }
+
 };
 function saudacao(){
   const st=stats(); const d=db.dias[hojeStr()]||{};
@@ -1352,13 +1503,13 @@ function concluir(){
   $('rBody').innerHTML='<div class="fim">'+elmoSVG('EF_','#0b0c0f','marte')+'<div class="forjado">'+'FORJADO'.split('').map((c,i)=>'<span style="--i:'+i+'">'+c+'</span>').join('')+'</div>'+
     '<div class="numero" id="numSeq">0<small>DIA'+(st.seq!==1?'S':'')+' SEGUIDO'+(st.seq!==1?'S':'')+'</small></div>'+
     (pt.i>antes.i && novo ? '<div class="promo">🎖 Promovido a '+esc(pt.nome)+'</div>' : '')+
-    '<div class="fim-linhas"><div><b>Patente</b><span>'+esc(pt.nome)+(pt.prox?' · faltam '+pt.falta+' para '+esc(pt.prox):'')+'</span></div><div><b>Despertar</b><span>'+(d.acordou? esc(d.acordou)+' (alvo '+esc(db.alvo)+')' : 'fora da alvorada — amanhã às '+esc(db.alvo))+'</span></div>'+(d.missao?'<div><b>Missão</b><span>'+esc(d.missao)+'</span></div>':'')+(st.escudos?'<div><b>Escudos</b><span>'+'🛡'.repeat(st.escudos)+' protegem sua sequência</span></div>':'')+'</div></div>';
+    '<div class="fim-linhas"><div><b>Patente</b><span>'+esc(pt.nome)+(pt.prox?' · faltam '+pt.falta+' para '+esc(pt.prox):'')+'</span></div><div><b>Despertar</b><span>'+(d.acordou? esc(d.acordou)+' (alvo '+esc(db.alvo)+')' : 'fora da alvorada — amanhã às '+esc(db.alvo))+'</span></div>'+(d.missao?'<div><b>Missão</b><span>'+esc(d.missao)+'</span></div>':'')+(d.grato?'<div><b>Gratidão</b><span>'+esc(d.grato)+'</span></div>':'')+(st.escudos?'<div><b>Escudos</b><span>'+'🛡'.repeat(st.escudos)+' protegem sua sequência</span></div>':'')+'</div></div>';
   rodape([{t:'Ao front ›',f:()=>fecharRitual(false)}]);
   golpeVisual(); setTimeout(()=>{ som.vitoria(); fxRitual.explodir(80); onda(); },700);
   // contagem animada da sequência
   let n=0; const alvoN=st.seq; const iv=setInterval(()=>{ n++; const el=$('numSeq'); if(!el){ clearInterval(iv); return; } el.firstChild.textContent=n; if(n>=alvoN) clearInterval(iv); }, Math.max(30, 600/Math.max(1,alvoN)));
   timers.push(iv);
-  if(db.voz) setTimeout(()=>falar('Forjado. '+st.seq+(st.seq===1?' dia':' dias')+' seguidos. Agora vá e vença o dia.'),900);
+  if(db.voz) setTimeout(()=>falar('Forjado. '+st.seq+(st.seq===1?' dia':' dias')+' seguidos. '+motivacaoDoDia()),900);
 }
 
 /* ============================== render seguro de SVG ============================== */
